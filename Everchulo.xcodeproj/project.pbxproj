@@ -8,12 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		C7157F8E205EBFEE00C652D8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7157F8D205EBFEE00C652D8 /* AppDelegate.swift */; };
-		C7157F90205EBFEE00C652D8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7157F8F205EBFEE00C652D8 /* ViewController.swift */; };
-		C7157F93205EBFEE00C652D8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C7157F91205EBFEE00C652D8 /* Main.storyboard */; };
+		C7157F90205EBFEE00C652D8 /* EverchuloViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7157F8F205EBFEE00C652D8 /* EverchuloViewController.swift */; };
 		C7157F96205EBFEE00C652D8 /* Everchulo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C7157F94205EBFEE00C652D8 /* Everchulo.xcdatamodeld */; };
 		C7157F98205EBFEE00C652D8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C7157F97205EBFEE00C652D8 /* Assets.xcassets */; };
 		C7157F9B205EBFEE00C652D8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C7157F99205EBFEE00C652D8 /* LaunchScreen.storyboard */; };
 		C7157FA6205EBFEE00C652D8 /* EverchuloTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7157FA5205EBFEE00C652D8 /* EverchuloTests.swift */; };
+		C7157FB3205EC8EC00C652D8 /* Date+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7157FB2205EC8EC00C652D8 /* Date+Additions.swift */; };
+		C7157FB5205EC91000C652D8 /* UIViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7157FB4205EC91000C652D8 /* UIViewController+Additions.swift */; };
+		C7157FB9205ED0D400C652D8 /* Tag+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7157FB8205ED0D400C652D8 /* Tag+Extensions.swift */; };
+		C7157FBB205ED0FD00C652D8 /* Notebook+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7157FBA205ED0FD00C652D8 /* Notebook+Extensions.swift */; };
+		C7157FBD205ED10D00C652D8 /* Note+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7157FBC205ED10D00C652D8 /* Note+Extensions.swift */; };
+		C7157FBF205ED11A00C652D8 /* Image+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7157FBE205ED11A00C652D8 /* Image+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,8 +34,7 @@
 /* Begin PBXFileReference section */
 		C7157F8A205EBFEE00C652D8 /* Everchulo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Everchulo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7157F8D205EBFEE00C652D8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		C7157F8F205EBFEE00C652D8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		C7157F92205EBFEE00C652D8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		C7157F8F205EBFEE00C652D8 /* EverchuloViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EverchuloViewController.swift; sourceTree = "<group>"; };
 		C7157F95205EBFEE00C652D8 /* Everchulo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Everchulo.xcdatamodel; sourceTree = "<group>"; };
 		C7157F97205EBFEE00C652D8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C7157F9A205EBFEE00C652D8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -38,6 +42,12 @@
 		C7157FA1205EBFEE00C652D8 /* EverchuloTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EverchuloTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7157FA5205EBFEE00C652D8 /* EverchuloTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EverchuloTests.swift; sourceTree = "<group>"; };
 		C7157FA7205EBFEE00C652D8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C7157FB2205EC8EC00C652D8 /* Date+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Additions.swift"; sourceTree = "<group>"; };
+		C7157FB4205EC91000C652D8 /* UIViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Additions.swift"; sourceTree = "<group>"; };
+		C7157FB8205ED0D400C652D8 /* Tag+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tag+Extensions.swift"; sourceTree = "<group>"; };
+		C7157FBA205ED0FD00C652D8 /* Notebook+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notebook+Extensions.swift"; sourceTree = "<group>"; };
+		C7157FBC205ED10D00C652D8 /* Note+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Note+Extensions.swift"; sourceTree = "<group>"; };
+		C7157FBE205ED11A00C652D8 /* Image+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,13 +89,14 @@
 		C7157F8C205EBFEE00C652D8 /* Everchulo */ = {
 			isa = PBXGroup;
 			children = (
+				C7157FB0205EC8B000C652D8 /* FoundationExtensions */,
+				C7157FB1205EC8C900C652D8 /* UIKitExtensions */,
+				C7157FB6205EC96B00C652D8 /* Model */,
+				C7157FB7205EC9C200C652D8 /* ViewControllers */,
 				C7157F8D205EBFEE00C652D8 /* AppDelegate.swift */,
-				C7157F8F205EBFEE00C652D8 /* ViewController.swift */,
-				C7157F91205EBFEE00C652D8 /* Main.storyboard */,
-				C7157F97205EBFEE00C652D8 /* Assets.xcassets */,
 				C7157F99205EBFEE00C652D8 /* LaunchScreen.storyboard */,
+				C7157F97205EBFEE00C652D8 /* Assets.xcassets */,
 				C7157F9C205EBFEE00C652D8 /* Info.plist */,
-				C7157F94205EBFEE00C652D8 /* Everchulo.xcdatamodeld */,
 			);
 			path = Everchulo;
 			sourceTree = "<group>";
@@ -97,6 +108,42 @@
 				C7157FA7205EBFEE00C652D8 /* Info.plist */,
 			);
 			path = EverchuloTests;
+			sourceTree = "<group>";
+		};
+		C7157FB0205EC8B000C652D8 /* FoundationExtensions */ = {
+			isa = PBXGroup;
+			children = (
+				C7157FB2205EC8EC00C652D8 /* Date+Additions.swift */,
+			);
+			path = FoundationExtensions;
+			sourceTree = "<group>";
+		};
+		C7157FB1205EC8C900C652D8 /* UIKitExtensions */ = {
+			isa = PBXGroup;
+			children = (
+				C7157FB4205EC91000C652D8 /* UIViewController+Additions.swift */,
+			);
+			path = UIKitExtensions;
+			sourceTree = "<group>";
+		};
+		C7157FB6205EC96B00C652D8 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				C7157F94205EBFEE00C652D8 /* Everchulo.xcdatamodeld */,
+				C7157FB8205ED0D400C652D8 /* Tag+Extensions.swift */,
+				C7157FBA205ED0FD00C652D8 /* Notebook+Extensions.swift */,
+				C7157FBC205ED10D00C652D8 /* Note+Extensions.swift */,
+				C7157FBE205ED11A00C652D8 /* Image+Extensions.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		C7157FB7205EC9C200C652D8 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				C7157F8F205EBFEE00C652D8 /* EverchuloViewController.swift */,
+			);
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -184,7 +231,6 @@
 			files = (
 				C7157F9B205EBFEE00C652D8 /* LaunchScreen.storyboard in Resources */,
 				C7157F98205EBFEE00C652D8 /* Assets.xcassets in Resources */,
-				C7157F93205EBFEE00C652D8 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -202,9 +248,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C7157FBF205ED11A00C652D8 /* Image+Extensions.swift in Sources */,
+				C7157FB9205ED0D400C652D8 /* Tag+Extensions.swift in Sources */,
+				C7157FBD205ED10D00C652D8 /* Note+Extensions.swift in Sources */,
 				C7157F96205EBFEE00C652D8 /* Everchulo.xcdatamodeld in Sources */,
-				C7157F90205EBFEE00C652D8 /* ViewController.swift in Sources */,
+				C7157F90205EBFEE00C652D8 /* EverchuloViewController.swift in Sources */,
 				C7157F8E205EBFEE00C652D8 /* AppDelegate.swift in Sources */,
+				C7157FB5205EC91000C652D8 /* UIViewController+Additions.swift in Sources */,
+				C7157FB3205EC8EC00C652D8 /* Date+Additions.swift in Sources */,
+				C7157FBB205ED0FD00C652D8 /* Notebook+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -227,14 +279,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		C7157F91205EBFEE00C652D8 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C7157F92205EBFEE00C652D8 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		C7157F99205EBFEE00C652D8 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
