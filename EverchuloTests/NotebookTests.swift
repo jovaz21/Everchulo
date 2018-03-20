@@ -27,7 +27,7 @@ class NotebookTests: XCTestCase {
         XCTAssertNotNil(notebook)
         
         // Halt
-        notebook!.remove()
+        notebook!.delete()
         XCTAssertNil(Notebook.findByName(name: "Libreta para crear y para borrar"))
     }
     func testNotebookEquality() {
@@ -77,7 +77,7 @@ class NotebookTests: XCTestCase {
         XCTAssertNotNil(note)
         
         // Halt
-        let objectID = note!.objectID; note!.remove()
+        let objectID = note!.objectID; note!.delete()
         XCTAssertNil(Notebook.findById(objectID: objectID))
     }
     func testNoteEquality() {

@@ -20,6 +20,8 @@
 		C7157FBF205ED11A00C652D8 /* Image+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7157FBE205ED11A00C652D8 /* Image+Extensions.swift */; };
 		C71E09772060154C00FE3D52 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E09762060154C00FE3D52 /* DataManager.swift */; };
 		C71E097920602D4F00FE3D52 /* NotebookTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E097820602D4F00FE3D52 /* NotebookTests.swift */; };
+		C741C1B72061AF680049E279 /* NoteTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C741C1B52061AF680049E279 /* NoteTableViewController.swift */; };
+		C741C1B82061AF680049E279 /* NoteTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C741C1B62061AF680049E279 /* NoteTableViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +52,8 @@
 		C7157FBE205ED11A00C652D8 /* Image+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+Extensions.swift"; sourceTree = "<group>"; };
 		C71E09762060154C00FE3D52 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		C71E097820602D4F00FE3D52 /* NotebookTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotebookTests.swift; sourceTree = "<group>"; };
+		C741C1B52061AF680049E279 /* NoteTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteTableViewController.swift; sourceTree = "<group>"; };
+		C741C1B62061AF680049E279 /* NoteTableViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoteTableViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,8 +149,18 @@
 			isa = PBXGroup;
 			children = (
 				C7157F8F205EBFEE00C652D8 /* EverchuloViewController.swift */,
+				C741C1B92061AF720049E279 /* Views */,
+				C741C1B52061AF680049E279 /* NoteTableViewController.swift */,
 			);
 			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		C741C1B92061AF720049E279 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				C741C1B62061AF680049E279 /* NoteTableViewController.xib */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -234,6 +248,7 @@
 			files = (
 				C7157F9B205EBFEE00C652D8 /* LaunchScreen.storyboard in Resources */,
 				C7157F98205EBFEE00C652D8 /* Assets.xcassets in Resources */,
+				C741C1B82061AF680049E279 /* NoteTableViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,6 +273,7 @@
 				C7157F96205EBFEE00C652D8 /* Everchulo.xcdatamodeld in Sources */,
 				C7157F90205EBFEE00C652D8 /* EverchuloViewController.swift in Sources */,
 				C7157F8E205EBFEE00C652D8 /* AppDelegate.swift in Sources */,
+				C741C1B72061AF680049E279 /* NoteTableViewController.swift in Sources */,
 				C7157FB5205EC91000C652D8 /* UIViewController+Additions.swift in Sources */,
 				C7157FB3205EC8EC00C652D8 /* Date+Additions.swift in Sources */,
 				C7157FBB205ED0FD00C652D8 /* Notebook+Extensions.swift in Sources */,

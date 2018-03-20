@@ -12,12 +12,22 @@ import CoreData
 // MARK: - CRUD Helpers
 extension Note {
     
-    // List All
-    static func listAll(from givenCtx: NSManagedObjectContext? = nil, returnsObjectsAsFaults: Bool? = true) -> [Note] {
+    // Returns Fetch Request for All Results
+    static func fetchRequestForAllResults(from givenCtx: NSManagedObjectContext? = nil) -> (ctx: NSManagedObjectContext, fetchRequest: NSFetchRequest<Note>) {
         let ctx: NSManagedObjectContext = givenCtx ?? DataManager.shared.viewContext
         
         /* set */
         let fetchRequest: NSFetchRequest<Note> = Note.fetchRequest()
+        
+        /* done */
+        return((ctx, fetchRequest))
+    }
+    
+    // List All
+    static func listAll(from givenCtx: NSManagedObjectContext? = nil, returnsObjectsAsFaults: Bool? = true) -> [Note] {
+        let (ctx, fetchRequest) = Note.fetchRequestForAllResults(from: givenCtx)
+        
+        /* set */
         fetchRequest.returnsObjectsAsFaults = returnsObjectsAsFaults!
         
         /* fetch */

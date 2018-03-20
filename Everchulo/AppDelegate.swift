@@ -20,7 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
         
         // Set Window Root Controller
-        window?.rootViewController = EverchuloViewController()
+        //window?.rootViewController = EverchuloViewController()
+        window?.rootViewController = NoteTableViewController().wrappedInNavigation()
         
         /* done */
         return true

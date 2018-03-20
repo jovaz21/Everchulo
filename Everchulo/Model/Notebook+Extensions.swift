@@ -12,12 +12,22 @@ import CoreData
 // MARK: - CRUD Helpers
 extension Notebook {
     
-    // List All
-    static func listAll(from givenCtx: NSManagedObjectContext? = nil, returnsObjectsAsFaults: Bool? = true) -> [Notebook] {
+    // Returns Fetch Request for All Results
+    static func fetchRequestForAllResults(from givenCtx: NSManagedObjectContext? = nil) -> (ctx: NSManagedObjectContext, fetchRequest: NSFetchRequest<Notebook>) {
         let ctx: NSManagedObjectContext = givenCtx ?? DataManager.shared.viewContext
         
         /* set */
         let fetchRequest: NSFetchRequest<Notebook> = Notebook.fetchRequest()
+        
+        /* done */
+        return((ctx, fetchRequest))
+    }
+    
+    // List All
+    static func listAll(from givenCtx: NSManagedObjectContext? = nil, returnsObjectsAsFaults: Bool? = true) -> [Notebook] {
+        let (ctx, fetchRequest) = Notebook.fetchRequestForAllResults(from: givenCtx)
+
+        /* set */
         fetchRequest.returnsObjectsAsFaults = returnsObjectsAsFaults!
         
         /* fetch */
