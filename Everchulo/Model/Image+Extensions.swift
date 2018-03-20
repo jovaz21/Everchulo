@@ -10,4 +10,9 @@ import Foundation
 
 // Image Extensions
 extension Image {
+    
+    // Init
+    convenience init(url: String) { self.init()
+        self.url = url
+    }
 }

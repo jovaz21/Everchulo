@@ -10,4 +10,9 @@ import Foundation
 
 // Tag Extensions
 extension Tag {
+    
+    // Init
+    convenience init(name: String) { self.init()
+        self.name = name
+    }
 }

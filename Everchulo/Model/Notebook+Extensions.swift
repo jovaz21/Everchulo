@@ -7,7 +7,147 @@
 //
 
 import Foundation
+import CoreData
 
-// Notebook Extensions
+// MARK: - CRUD Helpers
 extension Notebook {
+    
+    // List All
+    static func listAll(from givenCtx: NSManagedObjectContext? = nil, returnsObjectsAsFaults: Bool? = true) -> [Notebook] {
+        let ctx: NSManagedObjectContext = givenCtx ?? DataManager.shared.viewContext
+        
+        /* set */
+        let fetchRequest: NSFetchRequest<Notebook> = Notebook.fetchRequest()
+        fetchRequest.returnsObjectsAsFaults = returnsObjectsAsFaults!
+        
+        /* fetch */
+        let res = try? ctx.fetch(fetchRequest)
+        return(res ?? [Notebook]())
+    }
+    
+    // FindById
+    static func findById(from givenCtx: NSManagedObjectContext? = nil, objectID oid: NSManagedObjectID) -> Notebook? {
+        let ctx: NSManagedObjectContext = givenCtx ?? DataManager.shared.viewContext
+        return(ctx.object(with: oid) as? Notebook)
+    }
+    
+    // FindBy Name
+    static func findByName(from givenCtx: NSManagedObjectContext? = nil, name: String) -> Notebook? {
+        let ctx: NSManagedObjectContext = givenCtx ?? DataManager.shared.viewContext
+
+        /* set */
+        let fetchRequest: NSFetchRequest<Notebook> = Notebook.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "name == %@", name)
+        
+        /* fetch */
+        guard let resArray = try? ctx.fetch(fetchRequest) else { return(nil) }
+        return(resArray.first)
+    }
+    
+    // Create
+    static func create(into givenCtx: NSManagedObjectContext? = nil, name: String, commit: Bool? = false) -> Notebook? {
+        let ctx: NSManagedObjectContext = givenCtx ?? DataManager.shared.viewContext
+        
+        /* check */
+        if let obj = Notebook.findByName(from: ctx, name: name) {
+            return(obj)
+        }
+        
+        /* insert */
+        guard let nsObj = NSEntityDescription.insertNewObject(forEntityName: "Notebook", into: ctx) as? Notebook else { return(nil) }
+        
+        /* set */
+        nsObj.name = name
+        
+        /* check */
+        if (commit!) {
+            nsObj.save()
+        }
+
+        /* done */
+        return(nsObj)
+    }
+    
+    // Delete
+    static func delete(from givenCtx: NSManagedObjectContext? = nil, object: NSManagedObject, commit: Bool? = false) {
+        let ctx: NSManagedObjectContext = givenCtx ?? DataManager.shared.viewContext
+        
+        /* delete */
+        ctx.delete(object)
+        
+        /* check */
+        if (commit!) {
+            Notebook.save()
+        }
+    }
+    static func deleteAll(from givenCtx: NSManagedObjectContext? = nil, commit: Bool? = false) {
+        let ctx: NSManagedObjectContext = givenCtx ?? DataManager.shared.viewContext
+        
+        /* delete */
+        Notebook.listAll(from: ctx).forEach({(obj: Notebook) in
+            obj.delete(from: ctx)
+        })
+        
+        /* check */
+        if (commit!) {
+            Notebook.save()
+        }
+    }
+    
+    // Save
+    static func save(from givenCtx: NSManagedObjectContext? = nil) {
+        let ctx: NSManagedObjectContext = givenCtx ?? DataManager.shared.viewContext
+        if (!ctx.hasChanges) {
+            return
+        }
+        do {
+            try ctx.save()
+        } catch { print("Save error \(error)") }
+    }
+}
+
+// MARK: - Instance Methods
+extension Notebook {
+    
+    // Save
+    func save(from givenCtx: NSManagedObjectContext? = nil) {
+        return(Notebook.save(from: givenCtx))
+    }
+    
+    // Delete
+    func delete(from givenCtx: NSManagedObjectContext? = nil, commit: Bool? = false) {
+        return(Notebook.delete(from: givenCtx, object: self, commit: commit))
+    }
+}
+
+// MARK: - Notes Stuff
+extension Notebook {
+    var count:          Int     { return(self.notes!.count) }
+    var sortedNotes:    [Note]  {
+        guard let noteArray = self.notes?.allObjects as? [Note] else { return([Note]()) }
+        return(noteArray.sorted(){ return($0 < $1) })
+    }
+    
+    // Add Note
+    func add(note: Note) { self.addToNotes(note) }
+    
+    // Add Notes
+    func add(notes: [Note]) { notes.forEach { add(note: $0) } }
+}
+
+// MARK: - Proxies
+extension Notebook {
+    var proxyForComparison: String {
+        guard let name = self.name else {
+            return("")
+        }
+        return(name.uppercased())
+    }
+}
+
+// MARK: - Comparable
+extension Notebook: Comparable {
+    public static func <(lhs: Notebook, rhs: Notebook) -> Bool {
+        return(lhs.proxyForComparison < rhs.proxyForComparison)
+    }
 }
