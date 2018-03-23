@@ -1,0 +1,19 @@
+/* 
+  Localizable.strings
+  Everchulo
+
+  Created by ATEmobile on 21/3/18.
+  Copyright © 2018 ATEmobile. All rights reserved.
+*/
+
+// Apple UIKit
+"com.apple.UIKit.Edit" = "Editar";
+"com.apple.UIKit.Done" = "Hecho";
+
+// App Globals
+"es.atenet.app.Delete" = "Eliminar";
+"es.atenet.app.Cancel" = "Cancelar";
+
+// NoteTableViewController
+"NoteTableViewController.title" = "Notas";
+"NoteTableViewController.notebooksSettingsMsg" = "Ajustes de Libretas";
