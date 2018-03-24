@@ -26,6 +26,8 @@
 		C7415FF2206437BA00DBEEEE /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7415FF1206437BA00DBEEEE /* Styles.swift */; };
 		C74160232064F7CB00DBEEEE /* NoteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C74160212064F7CB00DBEEEE /* NoteTableViewCell.swift */; };
 		C74160242064F7CB00DBEEEE /* NoteTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C74160222064F7CB00DBEEEE /* NoteTableViewCell.xib */; };
+		C741602720669F5300DBEEEE /* ImagesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C741602520669F5300DBEEEE /* ImagesCollectionViewCell.swift */; };
+		C741602820669F5300DBEEEE /* ImagesCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C741602620669F5300DBEEEE /* ImagesCollectionViewCell.xib */; };
 		C741C1B72061AF680049E279 /* NoteTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C741C1B52061AF680049E279 /* NoteTableViewController.swift */; };
 		C741C1B82061AF680049E279 /* NoteTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C741C1B62061AF680049E279 /* NoteTableViewController.xib */; };
 /* End PBXBuildFile section */
@@ -64,6 +66,8 @@
 		C7415FF1206437BA00DBEEEE /* Styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
 		C74160212064F7CB00DBEEEE /* NoteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteTableViewCell.swift; sourceTree = "<group>"; };
 		C74160222064F7CB00DBEEEE /* NoteTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoteTableViewCell.xib; sourceTree = "<group>"; };
+		C741602520669F5300DBEEEE /* ImagesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesCollectionViewCell.swift; sourceTree = "<group>"; };
+		C741602620669F5300DBEEEE /* ImagesCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImagesCollectionViewCell.xib; sourceTree = "<group>"; };
 		C741C1B52061AF680049E279 /* NoteTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteTableViewController.swift; sourceTree = "<group>"; };
 		C741C1B62061AF680049E279 /* NoteTableViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoteTableViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -177,6 +181,8 @@
 			children = (
 				C741C1B62061AF680049E279 /* NoteTableViewController.xib */,
 				C74160222064F7CB00DBEEEE /* NoteTableViewCell.xib */,
+				C741602520669F5300DBEEEE /* ImagesCollectionViewCell.swift */,
+				C741602620669F5300DBEEEE /* ImagesCollectionViewCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -264,6 +270,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C741602820669F5300DBEEEE /* ImagesCollectionViewCell.xib in Resources */,
 				C7157F9B205EBFEE00C652D8 /* LaunchScreen.storyboard in Resources */,
 				C7415FE62062B6A200DBEEEE /* Localizable.strings in Resources */,
 				C7157F98205EBFEE00C652D8 /* Assets.xcassets in Resources */,
@@ -292,6 +299,7 @@
 				C7157FB9205ED0D400C652D8 /* Tag+Extensions.swift in Sources */,
 				C7415FE82062CE8C00DBEEEE /* NSLocalizedString+Helpers.swift in Sources */,
 				C7157FBD205ED10D00C652D8 /* Note+Extensions.swift in Sources */,
+				C741602720669F5300DBEEEE /* ImagesCollectionViewCell.swift in Sources */,
 				C7157F96205EBFEE00C652D8 /* Everchulo.xcdatamodeld in Sources */,
 				C7157F90205EBFEE00C652D8 /* EverchuloViewController.swift in Sources */,
 				C74160232064F7CB00DBEEEE /* NoteTableViewCell.swift in Sources */,

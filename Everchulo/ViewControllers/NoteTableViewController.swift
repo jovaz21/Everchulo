@@ -274,6 +274,11 @@ extension NoteTableViewController {
         cell.titleLabel.text    = note.title
         cell.dateLabel.text     = "23 mar'18"
         cell.contentLabel.text  = note.content
+        
+        /* test */
+        if (indexPath.row == 2) {
+            cell.setImages(images: [UIImage(named: "Image_0")!,UIImage(named: "Image_1")!,UIImage(named: "Image_2")!,UIImage(named: "Image_3")!,UIImage(named: "Image_4")!])
+        }
 
         /* donde */
         return(cell)
