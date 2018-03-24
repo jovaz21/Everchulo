@@ -47,7 +47,7 @@ class NoteTableViewController: UITableViewController {
     weak var delegate: NoteTableViewControllerDelegate?
     
     // MARK: - Init
-    init() { super.init(style: UITableViewStyle.grouped)
+    init() { super.init(style: UITableViewStyle.plain)
         
         /* set */
         self.title = i18NString("NoteTableViewController.title")
@@ -113,7 +113,7 @@ class NoteTableViewController: UITableViewController {
     
     // Height Constants
     let SECTIONHEADER_HEIGHT    = CGFloat(60)
-    let ROW_HEIGHT              = CGFloat(40)
+    let ROW_HEIGHT              = CGFloat(80)
 }
 
 // MARK: - View Stuff
@@ -124,7 +124,8 @@ extension NoteTableViewController {
     func setupUIView() {
         
         /* init */
-        tableView.estimatedRowHeight = ROW_HEIGHT
+        //tableView.estimatedRowHeight = ROW_HEIGHT
+        tableView.estimatedRowHeight = UITableViewAutomaticDimension
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.sectionHeaderHeight = SECTIONHEADER_HEIGHT
         
@@ -147,7 +148,8 @@ extension NoteTableViewController {
         /* Test Data */
         Notebook.deleteAll()
         let notebook = Notebook.create(name: "Primera libreta")
-        let note1   = Note.create(title: "Lorem ipsum 1/6", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet purus id ex consectetur congue. Nulla ullamcorper mauris ac suscipit eleifend. Aliquam suscipit vehicula dapibus. Suspendisse a varius elit, ut consequat purus. Sed massa arcu, dictum nec ante porta, consequat hendrerit leo. Maecenas risus dolor, aliquam sed sagittis nec, tincidunt sed tellus. Nulla nisl velit, dictum aliquam scelerisque id, dignissim in justo. Praesent eu efficitur nunc. In hac habitasse platea dictumst. Aliquam blandit id ante imperdiet dignissim. Sed fermentum aliquam sapien id tempus. Sed sed nisl vitae velit scelerisque pellentesque.")!
+        //let note1   = Note.create(title: "Lorem ipsum 1/6", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet purus id ex consectetur congue. Nulla ullamcorper mauris ac suscipit eleifend. Aliquam suscipit vehicula dapibus. Suspendisse a varius elit, ut consequat purus. Sed massa arcu, dictum nec ante porta, consequat hendrerit leo. Maecenas risus dolor, aliquam sed sagittis nec, tincidunt sed tellus. Nulla nisl velit, dictum aliquam scelerisque id, dignissim in justo. Praesent eu efficitur nunc. In hac habitasse platea dictumst. Aliquam blandit id ante imperdiet dignissim. Sed fermentum aliquam sapien id tempus. Sed sed nisl vitae velit scelerisque pellentesque.")!
+        let note1   = Note.create(title: "Lorem ipsum 1/6", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ")!
         let note2   = Note.create(title: "Lorem ipsum 2/6", content: "Cras ultrices lorem eget dolor finibus eleifend. Suspendisse bibendum tempus nisi eleifend dictum. Suspendisse potenti. Aenean augue mauris, tempor sit amet orci eu, auctor porta elit. Donec quam metus, lacinia eu urna at, blandit eleifend lorem. Integer semper diam cursus, convallis tortor eget, tempor ipsum. Ut id lorem porttitor, luctus velit at, aliquet eros. Nunc condimentum sagittis est ut varius.")!
         let note3   = Note.create(title: "Lorem ipsum 3/6", content: "Aenean venenatis turpis porta, dictum elit at, posuere quam. Donec fermentum, nulla vel facilisis iaculis, nisi dolor dictum massa, a tincidunt sem sem ac lacus. Cras sit amet laoreet mi, at volutpat mauris. Mauris blandit convallis enim id semper. Mauris et odio ligula. Nam lobortis a elit non semper. Nullam ac viverra enim, semper dictum sem. Integer lobortis eget mi ac eleifend. Aenean eget scelerisque mauris. Vestibulum turpis ligula, elementum vitae hendrerit eu, interdum at mauris.")!
         let note4   = Note.create(title: "Lorem ipsum 4/6", content: "Sed eleifend id ipsum non vestibulum. Mauris cursus nisi eget lorem laoreet commodo. Sed placerat quam sed quam congue condimentum. Vivamus eget lorem mauris. In feugiat nunc sit amet tortor condimentum volutpat. Etiam consequat odio velit, mattis porttitor dolor porttitor ac. Aliquam a mi augue. Aliquam id lacus laoreet, suscipit nunc ac, pharetra quam. In ut elit nec sem tempor tempus. Morbi velit est, finibus at magna at, blandit commodo ex.")!
@@ -262,21 +264,22 @@ extension NoteTableViewController {
         
         /* set */
         let cellId  = "NoteTableViewCell"
-        let cell    = tableView.dequeueReusableCell(withIdentifier: cellId)
-            ?? UITableViewCell(style: .default, reuseIdentifier: cellId)
-        
-        /* donde */
-        return(cell)
-    }
-    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) { let noteCell = cell as! NoteTableViewCell
-        print("Will Display: noteCell=", noteCell)
+        let cell    = tableView.dequeueReusableCell(withIdentifier: cellId) as? NoteTableViewCell
+            ?? NoteTableViewCell(style: .default, reuseIdentifier: cellId)
         
         /* set */
         let note = fetchedResultsController.object(at: indexPath)
         
         /* set */
-        noteCell.titleLabel?.text = note.title
-        noteCell.dateLabel?.text = "23 mar'18"
+        cell.titleLabel.text    = note.title
+        cell.dateLabel.text     = "23 mar'18"
+        cell.contentLabel.text  = note.content
+
+        /* donde */
+        return(cell)
+    }
+    override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return(UITableViewAutomaticDimension)
     }
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.onRowSelected(at: indexPath)

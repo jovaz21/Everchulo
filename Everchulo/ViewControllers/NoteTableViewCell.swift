@@ -10,11 +10,12 @@ import UIKit
 
 class NoteTableViewCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
-    
     @IBOutlet weak var dateLabel: UILabel!
-    
+    @IBOutlet weak var contentLabel: UILabel!
+
     // Awake from NIB
     override func awakeFromNib() { super.awakeFromNib()
+        //firstImage.isHidden = true
     }
 
     // Set Selected
