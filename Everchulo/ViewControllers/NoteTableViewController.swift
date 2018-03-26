@@ -20,6 +20,7 @@ class NoteTableViewController: UITableViewController {
     static let NOTE_KEY                   = "NoteKey"
     
     // MARK: - Properties
+    var viewMode: ViewMode = .SingleView
     var fetchedResultsController: NSFetchedResultsController<Note>!
     
     // Last Selected Note/Row+Section
@@ -69,6 +70,9 @@ class NoteTableViewController: UITableViewController {
     // View Will Appear:
     // Always Set LastSelected Note as Selected
     override func viewWillAppear(_ animated: Bool) { super.viewWillAppear(animated)
+        if (self.viewMode == .SingleView) {
+            return
+        }
         tableView.selectRow(at: IndexPath(row: self.lastSelectedRow, section: self.lastSelectedSection), animated: false, scrollPosition: .none)
     }
     
@@ -100,38 +104,64 @@ class NoteTableViewController: UITableViewController {
     }
     
     // On New Note
-    func onNewNote(_ notebook: Notebook? = nil) {
+    func onNewNote(_ givenNotebook: Notebook? = nil) {
+        var notebook: Notebook? = givenNotebook
+        
+        /* */
         if (notebook == nil) {
             print("NUEVA NOTA <Sin Notebook>")
         }
-        else {
-            let objectID    = notebook!.objectID
-            let name        = notebook!.name!
-            print("NUEVA NOTA <'\(name)', '\(objectID)>'")
+        
+        /* check */
+        if (notebook == nil) {
+            notebook = Notebook.getActive()
+            
+            /* check */
+            if (notebook == nil) {
+                notebook = Notebook.create(name: "Primera libreta")
+                notebook?.setActive()
+            }
         }
+        
+        /* */
+        let objectID    = notebook!.objectID
+        let name        = notebook!.name!
+        print("NUEVA NOTA <'\(name)', '\(objectID)>'")
+        
+        /* create */
+        let note = notebook!.add(note: Note.create()!)
+        let noteDetailVC = NoteDetailViewController(model: note)
+        self.present(noteDetailVC.wrappedInNavigation(), animated: true)
     }
     
     // Height Constants
     let SECTIONHEADER_HEIGHT    = CGFloat(60)
-    let ROW_HEIGHT              = CGFloat(80)
+    let ROW_HEIGHT              = UITableViewAutomaticDimension
+    
+    // Action Buttons
+    var newNoteButtonItem: UIBarButtonItem!
+    var menuBarButtonItem: UIBarButtonItem!
 }
 
 // MARK: - View Stuff
 extension NoteTableViewController {
+    
+    // View Mode
+    enum ViewMode: String {
+        case MasterDetail
+        case SingleView
+    }
     
     // Setup UIView:
     //  - Creates a UIBarButtonItem so that Users can ...
     func setupUIView() {
         
         /* init */
-        //tableView.estimatedRowHeight = ROW_HEIGHT
-        tableView.estimatedRowHeight = UITableViewAutomaticDimension
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = ROW_HEIGHT
+        tableView.rowHeight = ROW_HEIGHT
         tableView.sectionHeaderHeight = SECTIONHEADER_HEIGHT
         
         /* NAVIGATIONBAR */
-        let newNoteButton = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(newNoteAction))
-        newNoteButton.tintColor = Styles.activeColor
         self.editButtonItem.title = i18NString("com.apple.UIKit.Edit")
         self.navigationItem.leftBarButtonItem = self.editButtonItem
         self.navigationItem.leftBarButtonItem?.tintColor = Styles.activeColor
@@ -140,26 +170,35 @@ extension NoteTableViewController {
         /* TOOLBAR */
         navigationController?.toolbar.isHidden  = false
         navigationController?.isToolbarHidden   = false
+        self.menuBarButtonItem = UIBarButtonItem(image: UIImage(named: "dots-horizontal")!, style: .done, target: self, action: #selector(displayNoteMenuAction))
+        self.menuBarButtonItem.tintColor = Styles.activeColor
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let menuBarButton = UIBarButtonItem(image: UIImage(named: "dots-horizontal")!, style: .done, target: self, action: #selector(displayNoteMenuAction))
-        menuBarButton.tintColor = Styles.activeColor
-        self.setToolbarItems([menuBarButton, flexibleSpace, newNoteButton], animated: false)
-        
+        self.newNoteButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(newNoteAction))
+        self.newNoteButtonItem.tintColor = Styles.activeColor
+        self.setToolbarItems([menuBarButtonItem, flexibleSpace, newNoteButtonItem], animated: false)
+
         /* Test Data */
-        Notebook.deleteAll()
-        let notebook = Notebook.create(name: "Primera libreta")
-        //let note1   = Note.create(title: "Lorem ipsum 1/6", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet purus id ex consectetur congue. Nulla ullamcorper mauris ac suscipit eleifend. Aliquam suscipit vehicula dapibus. Suspendisse a varius elit, ut consequat purus. Sed massa arcu, dictum nec ante porta, consequat hendrerit leo. Maecenas risus dolor, aliquam sed sagittis nec, tincidunt sed tellus. Nulla nisl velit, dictum aliquam scelerisque id, dignissim in justo. Praesent eu efficitur nunc. In hac habitasse platea dictumst. Aliquam blandit id ante imperdiet dignissim. Sed fermentum aliquam sapien id tempus. Sed sed nisl vitae velit scelerisque pellentesque.")!
-        let note1   = Note.create(title: "Lorem ipsum 1/6", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ")!
-        let note2   = Note.create(title: "Lorem ipsum 2/6", content: "Cras ultrices lorem eget dolor finibus eleifend. Suspendisse bibendum tempus nisi eleifend dictum. Suspendisse potenti. Aenean augue mauris, tempor sit amet orci eu, auctor porta elit. Donec quam metus, lacinia eu urna at, blandit eleifend lorem. Integer semper diam cursus, convallis tortor eget, tempor ipsum. Ut id lorem porttitor, luctus velit at, aliquet eros. Nunc condimentum sagittis est ut varius.")!
-        let note3   = Note.create(title: "Lorem ipsum 3/6", content: "Aenean venenatis turpis porta, dictum elit at, posuere quam. Donec fermentum, nulla vel facilisis iaculis, nisi dolor dictum massa, a tincidunt sem sem ac lacus. Cras sit amet laoreet mi, at volutpat mauris. Mauris blandit convallis enim id semper. Mauris et odio ligula. Nam lobortis a elit non semper. Nullam ac viverra enim, semper dictum sem. Integer lobortis eget mi ac eleifend. Aenean eget scelerisque mauris. Vestibulum turpis ligula, elementum vitae hendrerit eu, interdum at mauris.")!
-        let note4   = Note.create(title: "Lorem ipsum 4/6", content: "Sed eleifend id ipsum non vestibulum. Mauris cursus nisi eget lorem laoreet commodo. Sed placerat quam sed quam congue condimentum. Vivamus eget lorem mauris. In feugiat nunc sit amet tortor condimentum volutpat. Etiam consequat odio velit, mattis porttitor dolor porttitor ac. Aliquam a mi augue. Aliquam id lacus laoreet, suscipit nunc ac, pharetra quam. In ut elit nec sem tempor tempus. Morbi velit est, finibus at magna at, blandit commodo ex.")!
-        let note5   = Note.create(title: "Lorem ipsum 5/6", content: "Sed sodales magna eu mauris finibus, eu lacinia nunc condimentum. Vestibulum ornare nisi eros, ac lacinia erat sagittis et. Proin facilisis sed ex sit amet convallis. In scelerisque finibus quam vel placerat. Quisque posuere consequat ornare. Phasellus venenatis risus ac turpis blandit blandit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Integer vel tincidunt ipsum. Nam id odio fringilla orci scelerisque porta. Ut non est eu massa efficitur pretium eu venenatis nulla. Fusce volutpat velit eget tortor pharetra, sed venenatis nisl sollicitudin. Sed tincidunt urna vel egestas ullamcorper. Nam gravida tellus quis urna fermentum varius.")!
-        let note6   = Note.create(title: "Lorem ipsum 6/6", content: "Nullam mi massa, ullamcorper nec interdum at, volutpat convallis ipsum. Etiam in augue non velit auctor feugiat id eget urna. Sed fringilla, quam in lobortis auctor, dui lacus commodo mi, eget interdum ipsum velit at felis. Ut imperdiet mattis nisl et sollicitudin. Suspendisse tincidunt vel est ullamcorper porta. Suspendisse vel nunc quis erat tincidunt faucibus non at nunc. Nullam scelerisque, tortor eget malesuada interdum, nunc quam commodo velit, et lacinia magna leo non enim. Suspendisse consequat in lacus eu lacinia. In in purus in dui rutrum accumsan. Donec erat neque, mollis eget feugiat et, venenatis sed libero.")!
-        notebook!.add(notes: [note1, note2, note3, note4, note5, note6])
-        notebook?.save()
+        if (DataManager.getenv() != .testing) {
+            Notebook.deleteAll()
+            let notebook = Notebook.create(name: "Primera libreta")
+            //let note1   = Note.create(title: "Lorem ipsum 1/6", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet purus id ex consectetur congue. Nulla ullamcorper mauris ac suscipit eleifend. Aliquam suscipit vehicula dapibus. Suspendisse a varius elit, ut consequat purus. Sed massa arcu, dictum nec ante porta, consequat hendrerit leo. Maecenas risus dolor, aliquam sed sagittis nec, tincidunt sed tellus. Nulla nisl velit, dictum aliquam scelerisque id, dignissim in justo. Praesent eu efficitur nunc. In hac habitasse platea dictumst. Aliquam blandit id ante imperdiet dignissim. Sed fermentum aliquam sapien id tempus. Sed sed nisl vitae velit scelerisque pellentesque.")!
+            let note1   = Note.create(title: "Lorem ipsum 1/6", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ")!
+            let note2   = Note.create(title: "Lorem ipsum 2/6", content: "Cras ultrices lorem eget dolor finibus eleifend. Suspendisse bibendum tempus nisi eleifend dictum. Suspendisse potenti. Aenean augue mauris, tempor sit amet orci eu, auctor porta elit. Donec quam metus, lacinia eu urna at, blandit eleifend lorem. Integer semper diam cursus, convallis tortor eget, tempor ipsum. Ut id lorem porttitor, luctus velit at, aliquet eros. Nunc condimentum sagittis est ut varius.")!
+            let note3   = Note.create(title: "Lorem ipsum 3/6", content: "Aenean venenatis turpis porta, dictum elit at, posuere quam. Donec fermentum, nulla vel facilisis iaculis, nisi dolor dictum massa, a tincidunt sem sem ac lacus. Cras sit amet laoreet mi, at volutpat mauris. Mauris blandit convallis enim id semper. Mauris et odio ligula. Nam lobortis a elit non semper. Nullam ac viverra enim, semper dictum sem. Integer lobortis eget mi ac eleifend. Aenean eget scelerisque mauris. Vestibulum turpis ligula, elementum vitae hendrerit eu, interdum at mauris.")!
+            let note4   = Note.create(title: "Lorem ipsum 4/6", content: "Sed eleifend id ipsum non vestibulum. Mauris cursus nisi eget lorem laoreet commodo. Sed placerat quam sed quam congue condimentum. Vivamus eget lorem mauris. In feugiat nunc sit amet tortor condimentum volutpat. Etiam consequat odio velit, mattis porttitor dolor porttitor ac. Aliquam a mi augue. Aliquam id lacus laoreet, suscipit nunc ac, pharetra quam. In ut elit nec sem tempor tempus. Morbi velit est, finibus at magna at, blandit commodo ex.")!
+            let note5   = Note.create(title: "Lorem ipsum 5/6", content: "Sed sodales magna eu mauris finibus, eu lacinia nunc condimentum. Vestibulum ornare nisi eros, ac lacinia erat sagittis et. Proin facilisis sed ex sit amet convallis. In scelerisque finibus quam vel placerat. Quisque posuere consequat ornare. Phasellus venenatis risus ac turpis blandit blandit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Integer vel tincidunt ipsum. Nam id odio fringilla orci scelerisque porta. Ut non est eu massa efficitur pretium eu venenatis nulla. Fusce volutpat velit eget tortor pharetra, sed venenatis nisl sollicitudin. Sed tincidunt urna vel egestas ullamcorper. Nam gravida tellus quis urna fermentum varius.")!
+            let note6   = Note.create(title: "Lorem ipsum 6/6", content: "Nullam mi massa, ullamcorper nec interdum at, volutpat convallis ipsum. Etiam in augue non velit auctor feugiat id eget urna. Sed fringilla, quam in lobortis auctor, dui lacus commodo mi, eget interdum ipsum velit at felis. Ut imperdiet mattis nisl et sollicitudin. Suspendisse tincidunt vel est ullamcorper porta. Suspendisse vel nunc quis erat tincidunt faucibus non at nunc. Nullam scelerisque, tortor eget malesuada interdum, nunc quam commodo velit, et lacinia magna leo non enim. Suspendisse consequat in lacus eu lacinia. In in purus in dui rutrum accumsan. Donec erat neque, mollis eget feugiat et, venenatis sed libero.")!
+            let note7   = Note.create(title: "Nota Borrada", content: "Un ejemplo de nota enviada a la papelera")!
+            note7.moveToTrash()
+            _ = notebook?.add(notes: [note1, note2, note3, note4, note5, note6, note7])
+            notebook?.setActive()
+            notebook?.save()
+        }
         
-        /* Fetch All Notes */
+        // Fetch All Notes
         let (ctx, fetchRequest) = Note.fetchRequestForAllResults()
+        //let sortByNotebookStatus = NSSortDescriptor(key: "notebook.@status", ascending: true)
+        //let sortByNotebookName = NSSortDescriptor(key: "notebook.@name", ascending: true)
         let sortByTitle = NSSortDescriptor(key: "title", ascending: true)
         fetchRequest.sortDescriptors = [sortByTitle]
         fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: ctx, sectionNameKeyPath: "notebook", cacheName: nil)
@@ -170,13 +209,33 @@ extension NoteTableViewController {
         self.onNewNote()
     })}
     @objc func displayNoteMenuAction() { DispatchQueue.main.asyncAfter(deadline: .now() + 0.025, execute: {
+        let trashedNotesCount = Note.listTrashed().count
         
         /* menu */
         let actionSheetMenu = makeActionSheetMenu(title: nil, message: nil, items:
             (
+                title:      i18NString("NoteTableViewController.notebookSettingsMsg"),
+                style:      .default,
+                image:      UIImage(named: "notebook"),
+                hidden:     (self.fetchedResultsController.sections!.count != 1),
+                handler:    { (alertAction) in
+                    //self.present(imagePicker, animated: true, completion: nil)
+                }
+            ),
+            (
                 title:      i18NString("NoteTableViewController.notebooksSettingsMsg"),
                 style:      .default,
                 image:      UIImage(named: "notebook"),
+                hidden:     (self.fetchedResultsController.sections!.count <= 1),
+                handler:    { (alertAction) in
+                    //self.present(imagePicker, animated: true, completion: nil)
+                }
+            ),
+            (
+                title:      "\(i18NString("NoteTableViewController.trashMsg")) (\(trashedNotesCount))",
+                style:      .default,
+                image:      UIImage(named: "trash_img"),
+                hidden:     (trashedNotesCount <= 0),
                 handler:    { (alertAction) in
                     //self.present(imagePicker, animated: true, completion: nil)
                 }
@@ -185,6 +244,7 @@ extension NoteTableViewController {
                 title:      i18NString("es.atenet.app.Cancel"),
                 style:      .cancel,
                 image:      nil,
+                hidden:     false,
                 handler:    nil
             )
         )
@@ -192,6 +252,16 @@ extension NoteTableViewController {
         /* present */
         self.present(actionSheetMenu, animated: true, completion: nil)
     })}
+    
+    // MARK: - Instance Methods
+    func setViewMode(_ value: ViewMode) {
+        
+        /* set */
+        self.viewMode = value
+        
+        /* done */
+        return
+    }
     
     // MARK: - Table View DISPLAY Delegate Functions
     
@@ -205,6 +275,7 @@ extension NoteTableViewController {
         
         /* set */
         let backView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.width, height: SECTIONHEADER_HEIGHT))
+        backView.layer.insertSublayer(Styles.whiteBackgroundGradientLayerForView(backView), at: 0)
         
         /* ICON */
         let icon = UIImageView()
@@ -223,6 +294,9 @@ extension NoteTableViewController {
         //button.tintColor = UIColor.gray
         button.layer.setValue(notebook, forKey: "notebook")
         button.addTarget(self, action: #selector(newNotebookNoteAction), for: UIControlEvents.primaryActionTriggered)
+        if (notebook != nil) {
+            button.isHidden = (notebook?.isActive())!
+        }
         
         /* set */
         icon.translatesAutoresizingMaskIntoConstraints = false
@@ -278,6 +352,7 @@ extension NoteTableViewController {
         /* test */
         if (indexPath.row == 2) {
             cell.setImages(images: [UIImage(named: "Image_0")!,UIImage(named: "Image_1")!,UIImage(named: "Image_2")!,UIImage(named: "Image_3")!,UIImage(named: "Image_4")!])
+            cell.cellDelegate = self
         }
 
         /* donde */
@@ -315,6 +390,8 @@ extension NoteTableViewController {
 
 // NSFetchedResultsController Delegate
 extension NoteTableViewController: NSFetchedResultsControllerDelegate {
+    
+    // Feched Results Did Changed
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         DispatchQueue.main.async {
             
@@ -323,13 +400,31 @@ extension NoteTableViewController: NSFetchedResultsControllerDelegate {
             
             /* check */
             if (self.fetchedResultsController.fetchedObjects!.count <= 0) {
-                self.navigationItem.leftBarButtonItem?.isEnabled = false
-                self.navigationItem.leftBarButtonItem?.tintColor = UIColor.clear
+                self.editButtonItem.setHidden(true)
+                self.menuBarButtonItem.setHidden(true)
             }
             else {
-                self.navigationItem.leftBarButtonItem?.isEnabled = true
-                self.navigationItem.leftBarButtonItem?.tintColor = Styles.activeColor
+                self.editButtonItem.setHidden(false)
+                self.menuBarButtonItem.setHidden(false)
             }
         }
     }
 }
+
+// ImagesCollectionCell Delegate
+extension NoteTableViewController: ImagesCollectionCellDelegate {
+    
+    // Image Cell Tapped
+    func collectionView(imageCell: ImagesCollectionViewCell?, didTappedInTableView tableCell: NoteTableViewCell) {
+        
+        /* set */
+        let imageDetailVC = ImageDetailViewController(image: imageCell!.imageView.image!)
+        self.present(imageDetailVC, animated: true) {
+            imageDetailVC.closeButton.addTarget(self, action: #selector(self.dismissImageDetailVC), for: .touchUpInside)
+        }
+    }
+    @objc func dismissImageDetailVC() {
+        self.dismiss(animated: true)
+    }
+}
+

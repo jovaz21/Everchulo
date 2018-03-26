@@ -17,8 +17,11 @@ class NoteTableViewCell: UITableViewCell {
     @IBOutlet weak var imagesStackView: UIStackView!
     @IBOutlet weak var imagesCollectionView: UICollectionView!
 
-    weak var cellDelegate: ImagesCollectionCellDelegate?
+    // Images CollectionView
+    static let IMAGES_SIZE      = CGSize(width: 100, height: 140)
+    static let IMAGES_CELLID    = "ImagesCollectionViewCell"
     
+    weak var cellDelegate: ImagesCollectionCellDelegate?
     var images: [UIImage]? = [UIImage]()
     
     // Awake from NIB
@@ -33,9 +36,9 @@ class NoteTableViewCell: UITableViewCell {
     }
 }
 
-// Images CollectionView Stuff
+// Images CollectionView Management
 protocol ImagesCollectionCellDelegate:class {
-    func collectionView(collectioncell: ImagesCollectionViewCell?, didTappedInTableView tableCell: NoteTableViewCell)
+    func collectionView(imageCell: ImagesCollectionViewCell?, didTappedInTableView tableCell: NoteTableViewCell)
 }
 extension NoteTableViewCell: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout  {
     
@@ -45,20 +48,12 @@ extension NoteTableViewCell: UICollectionViewDataSource, UICollectionViewDelegat
         /* init */
         imagesStackView.isHidden = true
         
-        /* register */
-        imagesCollectionView.register(UINib.init(nibName: "ImagesCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "ImagesCollectionViewCell")
+        /* Register Custom Cell */
+        imagesCollectionView.register(UINib.init(nibName: "ImagesCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: NoteTableViewCell.IMAGES_CELLID)
         
-        /* layout */
-        /*
-        let flowLayout = UICollectionViewFlowLayout()
-        flowLayout.scrollDirection = .horizontal
-        flowLayout.itemSize = CGSize(width: 100, height: 140)
-        flowLayout.minimumLineSpacing = 2.0
-        flowLayout.minimumInteritemSpacing = 5.0
-        self.imagesCollectionView.collectionViewLayout = flowLayout
- */
+        /* Layout Images Size */
         let flowLayout = self.imagesCollectionView.collectionViewLayout as! UICollectionViewFlowLayout
-        flowLayout.itemSize = CGSize(width: 100, height: 140)
+        flowLayout.itemSize = NoteTableViewCell.IMAGES_SIZE
         
         /* set */
         self.imagesCollectionView.dataSource    = self
@@ -74,7 +69,7 @@ extension NoteTableViewCell: UICollectionViewDataSource, UICollectionViewDelegat
     //MARK: CollectionView Datasource+Delegate
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as? ImagesCollectionViewCell
-        self.cellDelegate?.collectionView(collectioncell: cell, didTappedInTableView: self)
+        self.cellDelegate?.collectionView(imageCell: cell, didTappedInTableView: self)
     }
     func numberOfSections(in collectionView: UICollectionView) -> Int { return(1) }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -83,19 +78,12 @@ extension NoteTableViewCell: UICollectionViewDataSource, UICollectionViewDelegat
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         /* set */
-        let cellId  = "ImagesCollectionViewCell"
-        let cell    = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ImagesCollectionViewCell
-
-        /* set */
-        let image = images![indexPath.item]
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NoteTableViewCell.IMAGES_CELLID, for: indexPath) as! ImagesCollectionViewCell
         
         /* set */
-        cell.imageView.image = image
+        cell.imageView.image = images![indexPath.item]
         
         /* donde */
         return(cell)
-    }
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsetsMake(0, 5, 0, 5)
     }
 }

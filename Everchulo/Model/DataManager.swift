@@ -21,6 +21,7 @@ final class DataManager: NSObject { static let persistentContainerName = "Everch
     /* Environment */
     private static var env: DataManagerEnvironment = .production
     public static func setenv(value: DataManagerEnvironment) { DataManager.env = value }
+    public static func getenv() -> DataManagerEnvironment { return(DataManager.env) }
     
     // Shared Singleton
     static let shared = DataManager()
@@ -82,4 +83,32 @@ final class DataManager: NSObject { static let persistentContainerName = "Everch
         /* done */
         return(container)
     }()
+}
+
+// MARK: - DataManager Functions
+extension DataManager {
+    
+    // Delete
+    static func delete(from givenCtx: NSManagedObjectContext? = nil, object: NSManagedObject, commit: Bool? = false) {
+        let ctx: NSManagedObjectContext = givenCtx ?? DataManager.shared.viewContext
+        
+        /* delete */
+        ctx.delete(object)
+        
+        /* check */
+        if (commit!) {
+            DataManager.save()
+        }
+    }
+    
+    // Save
+    static func save(from givenCtx: NSManagedObjectContext? = nil) {
+        let ctx: NSManagedObjectContext = givenCtx ?? DataManager.shared.viewContext
+        if (!ctx.hasChanges) {
+            return
+        }
+        do {
+            try ctx.save()
+        } catch { print("Save error \(error)") }
+    }
 }

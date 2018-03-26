@@ -12,6 +12,12 @@ import CoreData
 // MARK: - CRUD Helpers
 extension Notebook {
     
+    // Status
+    enum Status: String {
+        case IDLE
+        case ACTIVE
+    }
+    
     // Returns Fetch Request for All Results
     static func fetchRequestForAllResults(from givenCtx: NSManagedObjectContext? = nil) -> (ctx: NSManagedObjectContext, fetchRequest: NSFetchRequest<Notebook>) {
         let ctx: NSManagedObjectContext = givenCtx ?? DataManager.shared.viewContext
@@ -54,6 +60,19 @@ extension Notebook {
         return(resArray.first)
     }
     
+    // Get Active
+    static func getActive(from givenCtx: NSManagedObjectContext? = nil) -> Notebook? {
+        let ctx: NSManagedObjectContext = givenCtx ?? DataManager.shared.viewContext
+        
+        /* set */
+        let fetchRequest: NSFetchRequest<Notebook> = Notebook.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "status == %@", Status.ACTIVE.rawValue)
+        
+        /* fetch */
+        guard let resArray = try? ctx.fetch(fetchRequest) else { return(nil) }
+        return(resArray.first)
+    }
+    
     // Create
     static func create(into givenCtx: NSManagedObjectContext? = nil, name: String, commit: Bool? = false) -> Notebook? {
         let ctx: NSManagedObjectContext = givenCtx ?? DataManager.shared.viewContext
@@ -67,7 +86,8 @@ extension Notebook {
         guard let nsObj = NSEntityDescription.insertNewObject(forEntityName: "Notebook", into: ctx) as? Notebook else { return(nil) }
         
         /* set */
-        nsObj.name = name
+        nsObj.name      = name
+        nsObj.status    = Status.IDLE.rawValue
         
         /* check */
         if (commit!) {
@@ -78,18 +98,7 @@ extension Notebook {
         return(nsObj)
     }
     
-    // Delete
-    static func delete(from givenCtx: NSManagedObjectContext? = nil, object: NSManagedObject, commit: Bool? = false) {
-        let ctx: NSManagedObjectContext = givenCtx ?? DataManager.shared.viewContext
-        
-        /* delete */
-        ctx.delete(object)
-        
-        /* check */
-        if (commit!) {
-            Notebook.save()
-        }
-    }
+    // Delete All
     static func deleteAll(from givenCtx: NSManagedObjectContext? = nil, commit: Bool? = false) {
         let ctx: NSManagedObjectContext = givenCtx ?? DataManager.shared.viewContext
         
@@ -100,19 +109,8 @@ extension Notebook {
         
         /* check */
         if (commit!) {
-            Notebook.save()
+            DataManager.save()
         }
-    }
-    
-    // Save
-    static func save(from givenCtx: NSManagedObjectContext? = nil) {
-        let ctx: NSManagedObjectContext = givenCtx ?? DataManager.shared.viewContext
-        if (!ctx.hasChanges) {
-            return
-        }
-        do {
-            try ctx.save()
-        } catch { print("Save error \(error)") }
     }
 }
 
@@ -121,13 +119,29 @@ extension Notebook {
     
     // Save
     func save(from givenCtx: NSManagedObjectContext? = nil) {
-        return(Notebook.save(from: givenCtx))
+        return(DataManager.save(from: givenCtx))
     }
     
     // Delete
     func delete(from givenCtx: NSManagedObjectContext? = nil, commit: Bool? = false) {
-        return(Notebook.delete(from: givenCtx, object: self, commit: commit))
+        return(DataManager.delete(from: givenCtx, object: self, commit: commit))
     }
+    
+    // Set Active
+    func setActive(with givenCtx: NSManagedObjectContext? = nil, commit: Bool? = false) {
+        
+        /* reset */
+        Notebook.listAll(from: givenCtx).forEach() { $0.status = Status.IDLE.rawValue }
+        
+        /* set */
+        self.status = Status.ACTIVE.rawValue
+        if (commit!) {
+            self.save(from: givenCtx)
+        }
+    }
+    
+    // Is Active
+    func isActive() -> Bool { return(self.status == Status.ACTIVE.rawValue) }
 }
 
 // MARK: - Notes Stuff
@@ -139,10 +153,10 @@ extension Notebook {
     }
     
     // Add Note
-    func add(note: Note) { self.addToNotes(note) }
+    func add(note: Note) -> Note { self.addToNotes(note); return(note) }
     
     // Add Notes
-    func add(notes: [Note]) { notes.forEach { add(note: $0) } }
+    func add(notes: [Note]) -> [Note] { notes.forEach { _ = add(note: $0) }; return(notes) }
 }
 
 // MARK: - Proxies

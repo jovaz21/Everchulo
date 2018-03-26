@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NoteDetailViewController" customModule="Everchulo" customModuleProvider="target">
+            <connections>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ILs-Bj-4Be" userLabel="NoteDetailView">
+                    <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="Nq1-IT-T9N" userLabel="NotebookSelector">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="24"/>
+                            <subviews>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="notebook" translatesAutoresizingMaskIntoConstraints="NO" id="iNo-cA-wSJ" userLabel="Icon">
+                                    <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="24" id="QNb-Cc-iWe"/>
+                                        <constraint firstAttribute="height" constant="24" id="sPa-xe-WUQ"/>
+                                    </constraints>
+                                </imageView>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HBE-db-hUI" userLabel="Name">
+                                    <rect key="frame" x="30" y="0.0" width="106" height="24"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                    <state key="normal" title="Primera libreta">
+                                        <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="esj-Cj-QT5" userLabel="Down">
+                                    <rect key="frame" x="142" y="0.0" width="233" height="24"/>
+                                    <state key="normal" image="chevron-down"/>
+                                </button>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="HBE-db-hUI" firstAttribute="centerY" secondItem="Nq1-IT-T9N" secondAttribute="centerY" id="9yc-5t-5dp"/>
+                                <constraint firstItem="iNo-cA-wSJ" firstAttribute="centerY" secondItem="Nq1-IT-T9N" secondAttribute="centerY" id="N7f-Wv-kHT"/>
+                                <constraint firstItem="iNo-cA-wSJ" firstAttribute="top" secondItem="Nq1-IT-T9N" secondAttribute="top" id="Tmb-XS-4se"/>
+                                <constraint firstItem="esj-Cj-QT5" firstAttribute="centerY" secondItem="Nq1-IT-T9N" secondAttribute="centerY" id="hba-VN-zhO"/>
+                                <constraint firstItem="iNo-cA-wSJ" firstAttribute="leading" secondItem="Nq1-IT-T9N" secondAttribute="leading" id="iDc-q2-bfL"/>
+                                <constraint firstAttribute="trailing" secondItem="esj-Cj-QT5" secondAttribute="trailing" id="pbO-AV-vAa"/>
+                            </constraints>
+                        </stackView>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="oNM-Ci-Guv" userLabel="EditorView">
+                            <rect key="frame" x="0.0" y="24" width="375" height="623"/>
+                        </stackView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="Nq1-IT-T9N" secondAttribute="trailing" id="Gua-Wh-nCD"/>
+                        <constraint firstItem="Nq1-IT-T9N" firstAttribute="leading" secondItem="ILs-Bj-4Be" secondAttribute="leading" constant="15" id="wiA-x1-It7"/>
+                        <constraint firstItem="Nq1-IT-T9N" firstAttribute="top" secondItem="ILs-Bj-4Be" secondAttribute="top" constant="15" id="yuh-0N-6MA"/>
+                    </constraints>
+                </stackView>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="ILs-Bj-4Be" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="6Yn-pO-gAX"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="ILs-Bj-4Be" secondAttribute="bottom" id="PIt-87-s5j"/>
+                <constraint firstItem="ILs-Bj-4Be" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="sgy-wq-nQP"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="ILs-Bj-4Be" secondAttribute="trailing" id="yjN-Tf-Nba"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="chevron-down" width="24" height="24"/>
+        <image name="notebook" width="32" height="32"/>
+    </resources>
+</document>

@@ -30,6 +30,11 @@
 		C741602820669F5300DBEEEE /* ImagesCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C741602620669F5300DBEEEE /* ImagesCollectionViewCell.xib */; };
 		C741C1B72061AF680049E279 /* NoteTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C741C1B52061AF680049E279 /* NoteTableViewController.swift */; };
 		C741C1B82061AF680049E279 /* NoteTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C741C1B62061AF680049E279 /* NoteTableViewController.xib */; };
+		C7613E9F2067A82500AAEE2E /* UIBarButtonItem+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7613E9E2067A82500AAEE2E /* UIBarButtonItem+Additions.swift */; };
+		C7613EA22067B3AA00AAEE2E /* ImageDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7613EA02067B3AA00AAEE2E /* ImageDetailViewController.swift */; };
+		C7613EA32067B3AA00AAEE2E /* ImageDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C7613EA12067B3AA00AAEE2E /* ImageDetailViewController.xib */; };
+		C7613EA62069A98000AAEE2E /* NoteDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7613EA42069A98000AAEE2E /* NoteDetailViewController.swift */; };
+		C7613EA72069A98000AAEE2E /* NoteDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C7613EA52069A98000AAEE2E /* NoteDetailViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +75,11 @@
 		C741602620669F5300DBEEEE /* ImagesCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImagesCollectionViewCell.xib; sourceTree = "<group>"; };
 		C741C1B52061AF680049E279 /* NoteTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteTableViewController.swift; sourceTree = "<group>"; };
 		C741C1B62061AF680049E279 /* NoteTableViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoteTableViewController.xib; sourceTree = "<group>"; };
+		C7613E9E2067A82500AAEE2E /* UIBarButtonItem+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+Additions.swift"; sourceTree = "<group>"; };
+		C7613EA02067B3AA00AAEE2E /* ImageDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDetailViewController.swift; sourceTree = "<group>"; };
+		C7613EA12067B3AA00AAEE2E /* ImageDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageDetailViewController.xib; sourceTree = "<group>"; };
+		C7613EA42069A98000AAEE2E /* NoteDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDetailViewController.swift; sourceTree = "<group>"; };
+		C7613EA52069A98000AAEE2E /* NoteDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoteDetailViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,8 +126,10 @@
 				C7157FB6205EC96B00C652D8 /* Model */,
 				C7157FB7205EC9C200C652D8 /* ViewControllers */,
 				C7157F8D205EBFEE00C652D8 /* AppDelegate.swift */,
+				C7415FF1206437BA00DBEEEE /* Styles.swift */,
 				C7157F99205EBFEE00C652D8 /* LaunchScreen.storyboard */,
 				C7157F97205EBFEE00C652D8 /* Assets.xcassets */,
+				C7415FE52062B6A200DBEEEE /* Localizable.strings */,
 				C7157F9C205EBFEE00C652D8 /* Info.plist */,
 			);
 			path = Everchulo;
@@ -146,6 +158,7 @@
 			children = (
 				C7157FB4205EC91000C652D8 /* UIViewController+Additions.swift */,
 				C7415FE92062D54000DBEEEE /* UIAlertController+Helpers.swift */,
+				C7613E9E2067A82500AAEE2E /* UIBarButtonItem+Additions.swift */,
 			);
 			path = UIKitExtensions;
 			sourceTree = "<group>";
@@ -166,12 +179,11 @@
 		C7157FB7205EC9C200C652D8 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				C7415FF1206437BA00DBEEEE /* Styles.swift */,
-				C7415FE52062B6A200DBEEEE /* Localizable.strings */,
-				C7157F8F205EBFEE00C652D8 /* EverchuloViewController.swift */,
 				C741C1B92061AF720049E279 /* Views */,
+				C7157F8F205EBFEE00C652D8 /* EverchuloViewController.swift */,
 				C741C1B52061AF680049E279 /* NoteTableViewController.swift */,
-				C74160212064F7CB00DBEEEE /* NoteTableViewCell.swift */,
+				C7613EA42069A98000AAEE2E /* NoteDetailViewController.swift */,
+				C7613EA52069A98000AAEE2E /* NoteDetailViewController.xib */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -179,12 +191,23 @@
 		C741C1B92061AF720049E279 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				C7613E9D2067A43400AAEE2E /* NoteTableViewController */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		C7613E9D2067A43400AAEE2E /* NoteTableViewController */ = {
+			isa = PBXGroup;
+			children = (
 				C741C1B62061AF680049E279 /* NoteTableViewController.xib */,
+				C74160212064F7CB00DBEEEE /* NoteTableViewCell.swift */,
 				C74160222064F7CB00DBEEEE /* NoteTableViewCell.xib */,
 				C741602520669F5300DBEEEE /* ImagesCollectionViewCell.swift */,
 				C741602620669F5300DBEEEE /* ImagesCollectionViewCell.xib */,
+				C7613EA02067B3AA00AAEE2E /* ImageDetailViewController.swift */,
+				C7613EA12067B3AA00AAEE2E /* ImageDetailViewController.xib */,
 			);
-			path = Views;
+			path = NoteTableViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -271,9 +294,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				C741602820669F5300DBEEEE /* ImagesCollectionViewCell.xib in Resources */,
+				C7613EA32067B3AA00AAEE2E /* ImageDetailViewController.xib in Resources */,
 				C7157F9B205EBFEE00C652D8 /* LaunchScreen.storyboard in Resources */,
 				C7415FE62062B6A200DBEEEE /* Localizable.strings in Resources */,
 				C7157F98205EBFEE00C652D8 /* Assets.xcassets in Resources */,
+				C7613EA72069A98000AAEE2E /* NoteDetailViewController.xib in Resources */,
 				C74160242064F7CB00DBEEEE /* NoteTableViewCell.xib in Resources */,
 				C741C1B82061AF680049E279 /* NoteTableViewController.xib in Resources */,
 			);
@@ -294,12 +319,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				C7157FBF205ED11A00C652D8 /* Image+Extensions.swift in Sources */,
+				C7613EA62069A98000AAEE2E /* NoteDetailViewController.swift in Sources */,
 				C7415FF2206437BA00DBEEEE /* Styles.swift in Sources */,
 				C71E09772060154C00FE3D52 /* DataManager.swift in Sources */,
 				C7157FB9205ED0D400C652D8 /* Tag+Extensions.swift in Sources */,
 				C7415FE82062CE8C00DBEEEE /* NSLocalizedString+Helpers.swift in Sources */,
 				C7157FBD205ED10D00C652D8 /* Note+Extensions.swift in Sources */,
 				C741602720669F5300DBEEEE /* ImagesCollectionViewCell.swift in Sources */,
+				C7613EA22067B3AA00AAEE2E /* ImageDetailViewController.swift in Sources */,
 				C7157F96205EBFEE00C652D8 /* Everchulo.xcdatamodeld in Sources */,
 				C7157F90205EBFEE00C652D8 /* EverchuloViewController.swift in Sources */,
 				C74160232064F7CB00DBEEEE /* NoteTableViewCell.swift in Sources */,
@@ -307,6 +334,7 @@
 				C741C1B72061AF680049E279 /* NoteTableViewController.swift in Sources */,
 				C7415FEA2062D54000DBEEEE /* UIAlertController+Helpers.swift in Sources */,
 				C7157FB5205EC91000C652D8 /* UIViewController+Additions.swift in Sources */,
+				C7613E9F2067A82500AAEE2E /* UIBarButtonItem+Additions.swift in Sources */,
 				C7157FB3205EC8EC00C652D8 /* Date+Additions.swift in Sources */,
 				C7157FBB205ED0FD00C652D8 /* Notebook+Extensions.swift in Sources */,
 			);

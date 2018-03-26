@@ -8,14 +8,21 @@
 
 import UIKit
 
-typealias UIAlertActionItem = (title: String, style: UIAlertActionStyle, image: UIImage?, handler: ((UIAlertAction) -> Void)?)
+typealias UIAlertActionItem = (title: String, style: UIAlertActionStyle, hidden: Bool, image: UIImage?, handler: ((UIAlertAction) -> Void)?)
 
 // Make ActionSheet Menu
 func makeActionSheetMenu(title: String?, message: String?, items: UIAlertActionItem...) -> UIAlertController {
     let actionSheetMenu = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
     
     /* add */
-    items.map({ (item: UIAlertActionItem) -> UIAlertAction in
+    items.map({ (item: UIAlertActionItem) -> UIAlertAction? in
+        
+        /* check */
+        if (item.hidden) {
+            return(nil)
+        }
+        
+        /* set */
         let action = UIAlertAction(title: item.title, style: item.style, handler: item.handler)
         if (item.image != nil) {
             action.setValue(item.image?.withRenderingMode(.alwaysTemplate), forKey: "image")
@@ -23,7 +30,8 @@ func makeActionSheetMenu(title: String?, message: String?, items: UIAlertActionI
         }
         return(action)
     }).forEach {
-        actionSheetMenu.addAction($0)
+        guard let action = $0 else { return }
+        actionSheetMenu.addAction(action)
     }
     actionSheetMenu.view.tintColor = Styles.activeColor
 

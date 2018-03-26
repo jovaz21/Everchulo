@@ -12,12 +12,36 @@ import CoreData
 // MARK: - CRUD Helpers
 extension Note {
     
+    // Status
+    enum Status: String {
+        case ACTIVE
+        case TIMEDOUT
+        case TRASHED
+    }
+    
+    // Returns Fetch Request for Results with Status
+    static func fetchRequestForResultsWithStatus(_ status: String, from givenCtx: NSManagedObjectContext? = nil) -> (ctx: NSManagedObjectContext, fetchRequest: NSFetchRequest<Note>) {
+        let ctx: NSManagedObjectContext = givenCtx ?? DataManager.shared.viewContext
+        
+        /* set */
+        let fetchRequest: NSFetchRequest<Note> = Note.fetchRequest()
+        fetchRequest.predicate = NSCompoundPredicate(orPredicateWithSubpredicates: [
+            NSPredicate(format: "status == %@", status)
+        ])
+        
+        /* done */
+        return((ctx, fetchRequest))
+    }
+    
     // Returns Fetch Request for All Results
     static func fetchRequestForAllResults(from givenCtx: NSManagedObjectContext? = nil) -> (ctx: NSManagedObjectContext, fetchRequest: NSFetchRequest<Note>) {
         let ctx: NSManagedObjectContext = givenCtx ?? DataManager.shared.viewContext
         
         /* set */
         let fetchRequest: NSFetchRequest<Note> = Note.fetchRequest()
+        fetchRequest.predicate = NSCompoundPredicate(orPredicateWithSubpredicates: [
+            NSPredicate(format: "status == %@", Status.ACTIVE.rawValue)
+        ])
         
         /* done */
         return((ctx, fetchRequest))
@@ -26,6 +50,18 @@ extension Note {
     // List All
     static func listAll(from givenCtx: NSManagedObjectContext? = nil, returnsObjectsAsFaults: Bool? = true) -> [Note] {
         let (ctx, fetchRequest) = Note.fetchRequestForAllResults(from: givenCtx)
+        
+        /* set */
+        fetchRequest.returnsObjectsAsFaults = returnsObjectsAsFaults!
+        
+        /* fetch */
+        let res = try? ctx.fetch(fetchRequest)
+        return(res ?? [Note]())
+    }
+    
+    // List Trashed
+    static func listTrashed(from givenCtx: NSManagedObjectContext? = nil, returnsObjectsAsFaults: Bool? = true) -> [Note] {
+        let (ctx, fetchRequest) = Note.fetchRequestForResultsWithStatus(Status.TRASHED.rawValue, from: givenCtx)
         
         /* set */
         fetchRequest.returnsObjectsAsFaults = returnsObjectsAsFaults!
@@ -59,7 +95,7 @@ extension Note {
     }
     
     // Create
-    static func create(into givenCtx: NSManagedObjectContext? = nil, title givenTitle: String? = nil, content: String, tags: String? = nil, commit: Bool? = false) -> Note? {
+    static func create(into givenCtx: NSManagedObjectContext? = nil, title givenTitle: String? = nil, content: String? = nil, tags: String? = nil, commit: Bool? = false) -> Note? {
         let ctx: NSManagedObjectContext = givenCtx ?? DataManager.shared.viewContext
         
         /* insert */
@@ -78,6 +114,9 @@ extension Note {
         nsObj.tags       = tags
         
         /* set */
+        nsObj.status = Status.ACTIVE.rawValue
+        
+        /* set */
         nsObj.createdTimestamp   = Date().timeIntervalSince1970
         nsObj.updatedTimestamp   = 0
         nsObj.alarmTimestamp     = 0
@@ -91,18 +130,7 @@ extension Note {
         return(nsObj)
     }
     
-    // Delete
-    fileprivate static func delete(from givenCtx: NSManagedObjectContext? = nil, object: NSManagedObject, commit: Bool? = false) {
-        let ctx: NSManagedObjectContext = givenCtx ?? DataManager.shared.viewContext
-        
-        /* delete */
-        ctx.delete(object)
-        
-        /* check */
-        if (commit!) {
-            Note.save()
-        }
-    }
+    // Delete All
     static func deleteAll(from givenCtx: NSManagedObjectContext? = nil, commit: Bool? = false) {
         let ctx: NSManagedObjectContext = givenCtx ?? DataManager.shared.viewContext
         
@@ -113,19 +141,8 @@ extension Note {
         
         /* check */
         if (commit!) {
-            Note.save()
+            DataManager.save()
         }
-    }
-    
-    // Save
-    static func save(from givenCtx: NSManagedObjectContext? = nil) {
-        let ctx: NSManagedObjectContext = givenCtx ?? DataManager.shared.viewContext
-        if (!ctx.hasChanges) {
-            return
-        }
-        do {
-            try ctx.save()
-        } catch { print("Save error \(error)") }
     }
 }
 
@@ -134,13 +151,24 @@ extension Note {
     
     // Save
     func save(from givenCtx: NSManagedObjectContext? = nil) {
-        return(Note.save(from: givenCtx))
+        return(DataManager.save(from: givenCtx))
     }
     
     // Delete
     func delete(from givenCtx: NSManagedObjectContext? = nil, commit: Bool? = false) {
-        return(Note.delete(from: givenCtx, object: self, commit: commit))
+        return(DataManager.delete(from: givenCtx, object: self, commit: commit))
     }
+    
+    // Move to Trash
+    func moveToTrash(with givenCtx: NSManagedObjectContext? = nil, commit: Bool? = false) {
+        self.status = Status.TRASHED.rawValue
+        if (commit!) {
+            self.save(from: givenCtx)
+        }
+    }
+    
+    // Is Trashed
+    func isTrashed() -> Bool { return(self.status == Status.TRASHED.rawValue) }
 }
 
 // MARK: - Proxies
@@ -156,6 +184,21 @@ extension Note {
 // MARK: - Comparable
 extension Note: Comparable {
     public static func <(lhs: Note, rhs: Note) -> Bool {
-        return(lhs.proxyForComparison < rhs.proxyForComparison)
+        if (lhs.notebook?.objectID == rhs.notebook?.objectID) {
+            return(lhs.proxyForComparison < rhs.proxyForComparison)
+        }
+        if ((lhs.notebook != nil) && (rhs.notebook == nil)) {
+            return(true)
+        }
+        if ((lhs.notebook == nil) && (rhs.notebook != nil)) {
+            return(false)
+        }
+        if (lhs.notebook!.status == Notebook.Status.ACTIVE.rawValue) {
+            return(true)
+        }
+        if (rhs.notebook!.status == Notebook.Status.ACTIVE.rawValue) {
+            return(false)
+        }
+        return(lhs.notebook! < rhs.notebook!)
     }
 }

@@ -16,4 +16,6 @@
 
 // NoteTableViewController
 "NoteTableViewController.title" = "Notas";
+"NoteTableViewController.notebookSettingsMsg" = "Ajustes de Libreta";
 "NoteTableViewController.notebooksSettingsMsg" = "Ajustes de Libretas";
+"NoteTableViewController.trashMsg" = "Papelera";
