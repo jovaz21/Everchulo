@@ -39,7 +39,9 @@ class NoteDetailViewController: UIViewController {
     }
     
     // MARK: - Outlets for View Stuff
-    
+    @IBOutlet weak var notebookImageView: UIImageView!
+    @IBOutlet weak var selectTextButton: UIButton!
+    @IBOutlet weak var selectIcon: UIImageView!
     
     // Paint UIView
     //  - Map Model Properties with View Data
@@ -67,12 +69,25 @@ extension NoteDetailViewController {
     // Setup UIView
     func setupUIView() {
         
+        /* NOTEBOOOK SELECTOR */
+        notebookImageView.image = UIImage(named: "notebook")!.withRenderingMode(.alwaysTemplate)
+        notebookImageView.tintColor = UIColor.gray
+        
+        selectTextButton.tintColor = Styles.activeColor
+        selectTextButton.setTitleColor(Styles.activeColor, for: UIControlState.normal)
+        selectTextButton.addTarget(self, action: #selector(onSelectNotebook), for: UIControlEvents.touchUpInside)
+        
+        selectIcon.image = UIImage(named: "chevron-down")!.withRenderingMode(.alwaysTemplate)
+        selectIcon.tintColor = Styles.activeColor
+        
         /* NAVIGATIONBAR */
         self.okButtonItem = UIBarButtonItem(title: "OK", style: .done, target: self, action: #selector(doneAction))
         self.okButtonItem.tintColor = Styles.activeColor
         self.navigationItem.leftBarButtonItem = self.okButtonItem
         self.navigationItem.leftBarButtonItem?.tintColor = Styles.activeColor
         //self.navigationItem.rightBarButtonItems = [self.editButtonItem]
+    }
+    @objc func onSelectNotebook() {
     }
     @objc func doneAction() {
         

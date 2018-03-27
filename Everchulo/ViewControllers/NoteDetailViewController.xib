@@ -12,6 +12,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NoteDetailViewController" customModule="Everchulo" customModuleProvider="target">
             <connections>
+                <outlet property="notebookImageView" destination="iNo-cA-wSJ" id="tub-OT-W3T"/>
+                <outlet property="selectIcon" destination="vyw-E8-2Wh" id="yMp-Xn-z4m"/>
+                <outlet property="selectTextButton" destination="HBE-db-hUI" id="h9n-Ax-hGc"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -40,18 +43,15 @@
                                         <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
                                 </button>
-                                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="esj-Cj-QT5" userLabel="Down">
+                                <imageView userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" image="chevron-down" translatesAutoresizingMaskIntoConstraints="NO" id="vyw-E8-2Wh" userLabel="Down">
                                     <rect key="frame" x="142" y="0.0" width="233" height="24"/>
-                                    <state key="normal" image="chevron-down"/>
-                                </button>
+                                </imageView>
                             </subviews>
                             <constraints>
                                 <constraint firstItem="HBE-db-hUI" firstAttribute="centerY" secondItem="Nq1-IT-T9N" secondAttribute="centerY" id="9yc-5t-5dp"/>
                                 <constraint firstItem="iNo-cA-wSJ" firstAttribute="centerY" secondItem="Nq1-IT-T9N" secondAttribute="centerY" id="N7f-Wv-kHT"/>
                                 <constraint firstItem="iNo-cA-wSJ" firstAttribute="top" secondItem="Nq1-IT-T9N" secondAttribute="top" id="Tmb-XS-4se"/>
-                                <constraint firstItem="esj-Cj-QT5" firstAttribute="centerY" secondItem="Nq1-IT-T9N" secondAttribute="centerY" id="hba-VN-zhO"/>
                                 <constraint firstItem="iNo-cA-wSJ" firstAttribute="leading" secondItem="Nq1-IT-T9N" secondAttribute="leading" id="iDc-q2-bfL"/>
-                                <constraint firstAttribute="trailing" secondItem="esj-Cj-QT5" secondAttribute="trailing" id="pbO-AV-vAa"/>
                             </constraints>
                         </stackView>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="oNM-Ci-Guv" userLabel="EditorView">
