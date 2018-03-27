@@ -12,9 +12,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NoteDetailViewController" customModule="Everchulo" customModuleProvider="target">
             <connections>
+                <outlet property="contentTextField" destination="rFz-6G-Hgd" id="VEg-9D-GjM"/>
                 <outlet property="notebookImageView" destination="iNo-cA-wSJ" id="tub-OT-W3T"/>
                 <outlet property="selectIcon" destination="vyw-E8-2Wh" id="yMp-Xn-z4m"/>
                 <outlet property="selectTextButton" destination="HBE-db-hUI" id="h9n-Ax-hGc"/>
+                <outlet property="titleTextField" destination="r7j-WQ-WPp" id="dPt-d8-hyI"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -26,7 +28,7 @@
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ILs-Bj-4Be" userLabel="NoteDetailView">
                     <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                     <subviews>
-                        <stackView opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="Nq1-IT-T9N" userLabel="NotebookSelector">
+                        <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="Nq1-IT-T9N" userLabel="NotebookSelector">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="24"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="notebook" translatesAutoresizingMaskIntoConstraints="NO" id="iNo-cA-wSJ" userLabel="Icon">
@@ -54,12 +56,43 @@
                                 <constraint firstItem="iNo-cA-wSJ" firstAttribute="leading" secondItem="Nq1-IT-T9N" secondAttribute="leading" id="iDc-q2-bfL"/>
                             </constraints>
                         </stackView>
-                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="oNM-Ci-Guv" userLabel="EditorView">
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="oNM-Ci-Guv" userLabel="EditorView">
                             <rect key="frame" x="0.0" y="24" width="375" height="623"/>
+                            <subviews>
+                                <view contentMode="scaleToFill" verticalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="wLj-E4-XpN" userLabel="Separator">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="1"/>
+                                    <color key="backgroundColor" red="0.81389821780000005" green="0.81389821780000005" blue="0.81389821780000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="1" id="Jg8-tV-u4T"/>
+                                    </constraints>
+                                </view>
+                                <textField opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="24" translatesAutoresizingMaskIntoConstraints="NO" id="r7j-WQ-WPp">
+                                    <rect key="frame" x="0.0" y="11" width="375" height="10"/>
+                                    <nil key="textColor"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                </textField>
+                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="rFz-6G-Hgd">
+                                    <rect key="frame" x="0.0" y="31" width="375" height="592"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                </textView>
+                            </subviews>
+                            <constraints>
+                                <constraint firstAttribute="trailing" secondItem="wLj-E4-XpN" secondAttribute="trailing" constant="1" id="BC3-xE-6ba"/>
+                                <constraint firstItem="rFz-6G-Hgd" firstAttribute="leading" secondItem="oNM-Ci-Guv" secondAttribute="leading" constant="5" id="J6D-B6-Nm2"/>
+                                <constraint firstItem="wLj-E4-XpN" firstAttribute="top" secondItem="oNM-Ci-Guv" secondAttribute="top" constant="12" id="KT9-s3-FnF"/>
+                                <constraint firstAttribute="trailing" secondItem="r7j-WQ-WPp" secondAttribute="trailing" constant="10" id="POq-At-Roe"/>
+                                <constraint firstAttribute="trailing" secondItem="rFz-6G-Hgd" secondAttribute="trailing" constant="5" id="egu-ud-aqz"/>
+                                <constraint firstItem="wLj-E4-XpN" firstAttribute="leading" secondItem="oNM-Ci-Guv" secondAttribute="leading" constant="1" id="i4B-iW-tTQ"/>
+                                <constraint firstItem="r7j-WQ-WPp" firstAttribute="leading" secondItem="oNM-Ci-Guv" secondAttribute="leading" constant="10" id="xvJ-3E-Dte"/>
+                            </constraints>
                         </stackView>
                     </subviews>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="Nq1-IT-T9N" secondAttribute="trailing" id="Gua-Wh-nCD"/>
+                        <constraint firstItem="oNM-Ci-Guv" firstAttribute="leading" secondItem="ILs-Bj-4Be" secondAttribute="leading" constant="1" id="edx-rg-Ux5"/>
                         <constraint firstItem="Nq1-IT-T9N" firstAttribute="leading" secondItem="ILs-Bj-4Be" secondAttribute="leading" constant="15" id="wiA-x1-It7"/>
                         <constraint firstItem="Nq1-IT-T9N" firstAttribute="top" secondItem="ILs-Bj-4Be" secondAttribute="top" constant="15" id="yuh-0N-6MA"/>
                     </constraints>

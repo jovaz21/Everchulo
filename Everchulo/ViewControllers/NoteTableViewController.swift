@@ -76,6 +76,9 @@ class NoteTableViewController: UITableViewController {
         tableView.selectRow(at: IndexPath(row: self.lastSelectedRow, section: self.lastSelectedSection), animated: false, scrollPosition: .none)
     }
     
+    override func viewDidAppear(_ animated: Bool) { super.viewDidAppear(animated)
+    }
+    
     // View Will Disappear:
     // Resets UISplitVC's Display Mode to .Automatic
     override func viewWillDisappear(_ animated: Bool) { super.viewWillAppear(animated)
@@ -119,6 +122,7 @@ class NoteTableViewController: UITableViewController {
             /* check */
             if (notebook == nil) {
                 notebook = Notebook.create(name: "Primera libreta")
+                print("NEW NOTEBOOK", notebook!.objectID)
                 notebook?.setActive()
             }
         }
@@ -130,6 +134,11 @@ class NoteTableViewController: UITableViewController {
         
         /* create */
         let note = notebook!.add(note: Note.create()!)
+        DispatchQueue.main.async {
+            self.fetchAllNotes()
+        }
+        
+        /* show */
         let noteDetailVC = NoteDetailViewController(model: note)
         self.present(noteDetailVC.wrappedInNavigation(), animated: true)
     }
@@ -193,17 +202,11 @@ extension NoteTableViewController {
             _ = notebook?.add(notes: [note1, note2, note3, note4, note5, note6, note7])
             notebook?.setActive()
             notebook?.save()
+            print("TEST NOTEBOOK", notebook!.objectID, notebook!)
         }
         
         // Fetch All Notes
-        let (ctx, fetchRequest) = Note.fetchRequestForAllResults()
-        //let sortByNotebookStatus = NSSortDescriptor(key: "notebook.@status", ascending: true)
-        //let sortByNotebookName = NSSortDescriptor(key: "notebook.@name", ascending: true)
-        let sortByTitle = NSSortDescriptor(key: "title", ascending: true)
-        fetchRequest.sortDescriptors = [sortByTitle]
-        fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: ctx, sectionNameKeyPath: "notebook", cacheName: nil)
-        fetchedResultsController.delegate = self
-        try! fetchedResultsController.performFetch()
+        self.fetchAllNotes()
     }
     @objc func newNoteAction() { DispatchQueue.main.asyncAfter(deadline: .now() + 0.025, execute: {
         self.onNewNote()
@@ -261,6 +264,16 @@ extension NoteTableViewController {
         
         /* done */
         return
+    }
+    func fetchAllNotes() {
+        let (ctx, fetchRequest) = Note.fetchRequestForAllResults()
+        //let sortByNotebookStatus = NSSortDescriptor(key: "notebook.@status", ascending: true)
+        //let sortByNotebookName = NSSortDescriptor(key: "notebook.@name", ascending: true)
+        let sortByTitle = NSSortDescriptor(key: "title", ascending: true, selector: #selector(NSString.caseInsensitiveCompare))
+        fetchRequest.sortDescriptors = [sortByTitle]
+        self.fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: ctx, sectionNameKeyPath: "notebook", cacheName: nil)
+        self.fetchedResultsController.delegate = self
+        try! self.fetchedResultsController.performFetch()
     }
     
     // MARK: - Table View DISPLAY Delegate Functions
@@ -335,11 +348,9 @@ extension NoteTableViewController {
         return(fetchedResultsController.sections![section].numberOfObjects)
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        /* set */
         let cellId  = "NoteTableViewCell"
         let cell    = tableView.dequeueReusableCell(withIdentifier: cellId) as? NoteTableViewCell
-            ?? NoteTableViewCell(style: .default, reuseIdentifier: cellId)
+                    ?? NoteTableViewCell.newLoadedCell
         
         /* set */
         let note = fetchedResultsController.object(at: indexPath)
@@ -348,8 +359,9 @@ extension NoteTableViewController {
         cell.titleLabel.text    = note.title
         cell.dateLabel.text     = "23 mar'18"
         cell.contentLabel.text  = note.content
+        cell.setImages(images: [UIImage]())
         
-        /* test */
+        /* TEST */
         if (indexPath.row == 2) {
             cell.setImages(images: [UIImage(named: "Image_0")!,UIImage(named: "Image_1")!,UIImage(named: "Image_2")!,UIImage(named: "Image_3")!,UIImage(named: "Image_4")!])
             cell.cellDelegate = self
@@ -357,6 +369,9 @@ extension NoteTableViewController {
 
         /* donde */
         return(cell)
+    }
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return(UITableViewAutomaticDimension)
     }
     override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return(UITableViewAutomaticDimension)
@@ -393,6 +408,7 @@ extension NoteTableViewController: NSFetchedResultsControllerDelegate {
     
     // Feched Results Did Changed
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        print("!!!!!controllerDidChangeContent", self.view.isHidden)
         DispatchQueue.main.async {
             
             /* reload */
@@ -423,8 +439,7 @@ extension NoteTableViewController: ImagesCollectionCellDelegate {
             imageDetailVC.closeButton.addTarget(self, action: #selector(self.dismissImageDetailVC), for: .touchUpInside)
         }
     }
-    @objc func dismissImageDetailVC() {
+    @objc func dismissImageDetailVC() { DispatchQueue.main.asyncAfter(deadline: .now() + 0.025, execute: {
         self.dismiss(animated: true)
-    }
+    })}
 }
-

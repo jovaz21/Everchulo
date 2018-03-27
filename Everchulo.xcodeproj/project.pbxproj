@@ -18,6 +18,7 @@
 		C7157FBB205ED0FD00C652D8 /* Notebook+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7157FBA205ED0FD00C652D8 /* Notebook+Extensions.swift */; };
 		C7157FBD205ED10D00C652D8 /* Note+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7157FBC205ED10D00C652D8 /* Note+Extensions.swift */; };
 		C7157FBF205ED11A00C652D8 /* Image+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7157FBE205ED11A00C652D8 /* Image+Extensions.swift */; };
+		C715BE64206AB83C009071FD /* UITextView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C715BE63206AB83C009071FD /* UITextView+Additions.swift */; };
 		C71E09772060154C00FE3D52 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E09762060154C00FE3D52 /* DataManager.swift */; };
 		C71E097920602D4F00FE3D52 /* NotebookTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E097820602D4F00FE3D52 /* NotebookTests.swift */; };
 		C7415FE62062B6A200DBEEEE /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C7415FE52062B6A200DBEEEE /* Localizable.strings */; };
@@ -63,6 +64,7 @@
 		C7157FBA205ED0FD00C652D8 /* Notebook+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notebook+Extensions.swift"; sourceTree = "<group>"; };
 		C7157FBC205ED10D00C652D8 /* Note+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Note+Extensions.swift"; sourceTree = "<group>"; };
 		C7157FBE205ED11A00C652D8 /* Image+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+Extensions.swift"; sourceTree = "<group>"; };
+		C715BE63206AB83C009071FD /* UITextView+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+Additions.swift"; sourceTree = "<group>"; };
 		C71E09762060154C00FE3D52 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		C71E097820602D4F00FE3D52 /* NotebookTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotebookTests.swift; sourceTree = "<group>"; };
 		C7415FE52062B6A200DBEEEE /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
@@ -159,6 +161,7 @@
 				C7157FB4205EC91000C652D8 /* UIViewController+Additions.swift */,
 				C7415FE92062D54000DBEEEE /* UIAlertController+Helpers.swift */,
 				C7613E9E2067A82500AAEE2E /* UIBarButtonItem+Additions.swift */,
+				C715BE63206AB83C009071FD /* UITextView+Additions.swift */,
 			);
 			path = UIKitExtensions;
 			sourceTree = "<group>";
@@ -331,6 +334,7 @@
 				C7157F90205EBFEE00C652D8 /* EverchuloViewController.swift in Sources */,
 				C74160232064F7CB00DBEEEE /* NoteTableViewCell.swift in Sources */,
 				C7157F8E205EBFEE00C652D8 /* AppDelegate.swift in Sources */,
+				C715BE64206AB83C009071FD /* UITextView+Additions.swift in Sources */,
 				C741C1B72061AF680049E279 /* NoteTableViewController.swift in Sources */,
 				C7415FEA2062D54000DBEEEE /* UIAlertController+Helpers.swift in Sources */,
 				C7157FB5205EC91000C652D8 /* UIViewController+Additions.swift in Sources */,

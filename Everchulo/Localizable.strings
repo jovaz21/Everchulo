@@ -8,7 +8,7 @@
 
 // Apple UIKit
 "com.apple.UIKit.Edit" = "Editar";
-"com.apple.UIKit.Done" = "Hecho";
+"com.apple.UIKit.Done" = "Cancelar";
 
 // App Globals
 "es.atenet.app.Delete" = "Eliminar";
@@ -19,3 +19,8 @@
 "NoteTableViewController.notebookSettingsMsg" = "Ajustes de Libreta";
 "NoteTableViewController.notebooksSettingsMsg" = "Ajustes de Libretas";
 "NoteTableViewController.trashMsg" = "Papelera";
+
+// NoteDetailViewController
+"NoteDetasilViewController.titlePlaceHolder" = "Título";
+"NoteDetasilViewController.contentPlaceHolder" = "Empieza a escribir...";
+

@@ -24,6 +24,11 @@ class NoteTableViewCell: UITableViewCell {
     weak var cellDelegate: ImagesCollectionCellDelegate?
     var images: [UIImage]? = [UIImage]()
     
+    class var newLoadedCell: NoteTableViewCell {
+        let cell = Bundle.main.loadNibNamed("NoteTableViewCell", owner: self, options: nil)?.last
+        return(cell as! NoteTableViewCell)
+    }
+    
     // Awake from NIB
     override func awakeFromNib() { super.awakeFromNib()
         
@@ -63,7 +68,7 @@ extension NoteTableViewCell: UICollectionViewDataSource, UICollectionViewDelegat
     //MARK: Instance Methods
     func setImages(images: [UIImage]) {
         self.images = images
-        self.imagesStackView.isHidden = false
+        self.imagesStackView.isHidden = (self.images!.count <= 0)
     }
     
     //MARK: CollectionView Datasource+Delegate
