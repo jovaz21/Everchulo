@@ -46,6 +46,11 @@ class NoteDetailViewController: UIViewController {
         self.paintUIView()
     }
     
+    override func viewDidAppear(_ animated: Bool) { super.viewDidAppear(animated)
+        // Paint UIView
+        self.paintUIView()
+    }
+    
     // MARK: - Outlets
     @IBOutlet weak var notebookImageView: UIImageView!
     @IBOutlet weak var selectTextButton: UIButton!
@@ -54,11 +59,19 @@ class NoteDetailViewController: UIViewController {
     @IBOutlet weak var contentTextField: UITextView!
     
     // On Select Notebook
-    func onSelectNotebook() { }
+    func onSelectNotebook() {
+        
+        /* set */
+        let notebookSelectorVC = NotebookSelectorTableViewController(model: self.model)
+        notebookSelectorVC.delegate = self
+        
+        /* show */
+        self.present(notebookSelectorVC.wrappedInNavigation(), animated: true)
+    }
     
     // On Note Done
     func onNoteDone() {
-        var titleText = self.titleTextField.text
+        let titleText = self.titleTextField.text
         let contentText = self.contentTextField.text
         
         /* check */
@@ -136,6 +149,8 @@ class NoteDetailViewController: UIViewController {
     
     // Action Buttons
     var okButtonItem: UIBarButtonItem!
+    var infosButtonItem: UIBarButtonItem!
+    var menuBarButtonItem: UIBarButtonItem!
 }
 
 // MARK: - View Stuff
@@ -162,17 +177,22 @@ extension NoteDetailViewController {
         
         // TEXT FIELDS
         titleTextField.tintColor = Styles.activeColor
-        titleTextField.placeholder = i18NString("NoteDetasilViewController.titlePlaceHolder")
+        titleTextField.placeholder = i18NString("NoteDetailsViewController.titlePlaceHolder")
         
         contentTextField.tintColor = Styles.activeColor
-        contentTextField.placeholder = i18NString("NoteDetasilViewController.contentPlaceHolder")
+        contentTextField.placeholder = i18NString("NoteDetailsViewController.contentPlaceHolder")
         
         /* NAVIGATIONBAR */
         self.okButtonItem = UIBarButtonItem(title: "OK", style: .done, target: self, action: #selector(noteDoneAction))
         self.okButtonItem.tintColor = Styles.activeColor
         self.navigationItem.leftBarButtonItem = self.okButtonItem
         self.navigationItem.leftBarButtonItem?.tintColor = Styles.activeColor
-        //self.navigationItem.rightBarButtonItems = [self.editButtonItem]
+        
+        self.menuBarButtonItem = UIBarButtonItem(image: UIImage(named: "dots-horizontal")!, style: .done, target: self, action: #selector(displayNoteMenuAction))
+        self.menuBarButtonItem.tintColor = Styles.activeColor
+        self.infosButtonItem = UIBarButtonItem(image: UIImage(named: "information-outline")!, style: .done, target: self, action: #selector(displayInfosAction))
+        self.infosButtonItem.tintColor = Styles.activeColor
+        self.navigationItem.rightBarButtonItems = [self.menuBarButtonItem, self.infosButtonItem]
     }
     @objc func selectNotebookAction() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.025, execute: {
@@ -180,11 +200,36 @@ extension NoteDetailViewController {
         })
     }
     @objc func noteDoneAction() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.025, execute: {
             self.onNoteDone()
+        })
+    }
+    @objc func displayNoteMenuAction() {
+    }
+    @objc func displayInfosAction() {
     }
     
     // Set UIView Data
     //  - Makes UIView Display ViewData
     func setUIViewData(_ data: NoteViewData) {
+        print("!!! setUIViewData: Entering, data=", data)
+        self.selectTextButton.setTitle(data.notebookName, for: .normal)
+        if (data.title != nil) {
+            self.titleTextField.text = data.title
+        }
+        if (data.content != nil) {
+            self.contentTextField.text = data.content
+        }
+        print("!!! setUIViewData: Done")
+    }
+}
+
+// NotebookSelectorTableViewController Delegate
+extension NoteDetailViewController: NotebookSelectorTableViewControllerDelegate {
+    func notebookSelectorTableViewController(_ vc: NotebookSelectorTableViewController, didSelectNotebook notebook: Notebook) {
+        print("!!! didSelectNotebook: Entering, notebook=", notebook)
+        self.model.notebook?.removeFromNotes(self.model)
+        _ = notebook.add(note: self.model)
+        print("!!! didSelectNotebook: Done")
     }
 }

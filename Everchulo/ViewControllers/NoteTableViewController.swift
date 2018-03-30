@@ -189,7 +189,9 @@ extension NoteTableViewController {
         /* Test Data */
         if (DataManager.getenv() != .testing) {
             Notebook.deleteAll()
-            let notebook = Notebook.create(name: "Primera libreta")
+            let notebook1 = Notebook.create(name: "Primera libreta")
+            let notebook2 = Notebook.create(name: "Segunda libreta")
+            let notebook3 = Notebook.create(name: "Tercera libreta")
             //let note1   = Note.create(title: "Lorem ipsum 1/6", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet purus id ex consectetur congue. Nulla ullamcorper mauris ac suscipit eleifend. Aliquam suscipit vehicula dapibus. Suspendisse a varius elit, ut consequat purus. Sed massa arcu, dictum nec ante porta, consequat hendrerit leo. Maecenas risus dolor, aliquam sed sagittis nec, tincidunt sed tellus. Nulla nisl velit, dictum aliquam scelerisque id, dignissim in justo. Praesent eu efficitur nunc. In hac habitasse platea dictumst. Aliquam blandit id ante imperdiet dignissim. Sed fermentum aliquam sapien id tempus. Sed sed nisl vitae velit scelerisque pellentesque.")!
             let note1   = Note.create(title: "Lorem ipsum 1/6", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ")!
             let note2   = Note.create(title: "Lorem ipsum 2/6", content: "Cras ultrices lorem eget dolor finibus eleifend. Suspendisse bibendum tempus nisi eleifend dictum. Suspendisse potenti. Aenean augue mauris, tempor sit amet orci eu, auctor porta elit. Donec quam metus, lacinia eu urna at, blandit eleifend lorem. Integer semper diam cursus, convallis tortor eget, tempor ipsum. Ut id lorem porttitor, luctus velit at, aliquet eros. Nunc condimentum sagittis est ut varius.")!
@@ -199,10 +201,10 @@ extension NoteTableViewController {
             let note6   = Note.create(title: "Lorem ipsum 6/6", content: "Nullam mi massa, ullamcorper nec interdum at, volutpat convallis ipsum. Etiam in augue non velit auctor feugiat id eget urna. Sed fringilla, quam in lobortis auctor, dui lacus commodo mi, eget interdum ipsum velit at felis. Ut imperdiet mattis nisl et sollicitudin. Suspendisse tincidunt vel est ullamcorper porta. Suspendisse vel nunc quis erat tincidunt faucibus non at nunc. Nullam scelerisque, tortor eget malesuada interdum, nunc quam commodo velit, et lacinia magna leo non enim. Suspendisse consequat in lacus eu lacinia. In in purus in dui rutrum accumsan. Donec erat neque, mollis eget feugiat et, venenatis sed libero.")!
             let note7   = Note.create(title: "Nota Borrada", content: "Un ejemplo de nota enviada a la papelera")!
             note7.moveToTrash()
-            _ = notebook?.add(notes: [note1, note2, note3, note4, note5, note6, note7])
-            notebook?.setActive()
-            notebook?.save()
-            print("TEST NOTEBOOK", notebook!.objectID, notebook!)
+            _ = notebook1?.add(notes: [note1, note2, note3, note4, note5, note6, note7])
+            notebook1?.setActive()
+            notebook1?.save()
+            print("TEST NOTEBOOK", notebook1!.objectID, notebook1!)
         }
         
         // Fetch All Notes
@@ -280,6 +282,7 @@ extension NoteTableViewController {
     
     /* SECTIONS */
     override func numberOfSections(in tableView: UITableView) -> Int {
+        print("!!! numberOfSections: ", fetchedResultsController.sections!.count)
         return(fetchedResultsController.sections!.count)
     }
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -345,6 +348,7 @@ extension NoteTableViewController {
     
     /* ROWS */
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print("!!! numberOfRowsInSection: ", section, fetchedResultsController.sections![section].numberOfObjects)
         return(fetchedResultsController.sections![section].numberOfObjects)
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

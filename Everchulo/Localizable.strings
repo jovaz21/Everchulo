@@ -21,6 +21,11 @@
 "NoteTableViewController.trashMsg" = "Papelera";
 
 // NoteDetailViewController
-"NoteDetasilViewController.titlePlaceHolder" = "Título";
-"NoteDetasilViewController.contentPlaceHolder" = "Empieza a escribir...";
+"NoteDetailsViewController.titlePlaceHolder" = "Título";
+"NoteDetailsViewController.contentPlaceHolder" = "Empieza a escribir...";
+
+// NotebookSelectorTableViewController
+"NotebookSelectorTableViewController.title" = "Trasladar Nota";
+"NotebookSelectorTableViewController.confirmMsg" = "¿Estás seguro que quieres trasladar esta nota hacia la libreta";
+"NotebookSelectorTableViewController.moveMsg" = "Trasladar";
 

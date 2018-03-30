@@ -19,6 +19,8 @@
 		C7157FBD205ED10D00C652D8 /* Note+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7157FBC205ED10D00C652D8 /* Note+Extensions.swift */; };
 		C7157FBF205ED11A00C652D8 /* Image+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7157FBE205ED11A00C652D8 /* Image+Extensions.swift */; };
 		C715BE64206AB83C009071FD /* UITextView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C715BE63206AB83C009071FD /* UITextView+Additions.swift */; };
+		C715BE6B206BBD25009071FD /* NotebookSelectorTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C715BE69206BBD25009071FD /* NotebookSelectorTableViewController.swift */; };
+		C715BE6C206BBD25009071FD /* NotebookSelectorTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C715BE6A206BBD25009071FD /* NotebookSelectorTableViewController.xib */; };
 		C71E09772060154C00FE3D52 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E09762060154C00FE3D52 /* DataManager.swift */; };
 		C71E097920602D4F00FE3D52 /* NotebookTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E097820602D4F00FE3D52 /* NotebookTests.swift */; };
 		C7415FE62062B6A200DBEEEE /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C7415FE52062B6A200DBEEEE /* Localizable.strings */; };
@@ -36,6 +38,22 @@
 		C7613EA32067B3AA00AAEE2E /* ImageDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C7613EA12067B3AA00AAEE2E /* ImageDetailViewController.xib */; };
 		C7613EA62069A98000AAEE2E /* NoteDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7613EA42069A98000AAEE2E /* NoteDetailViewController.swift */; };
 		C7613EA72069A98000AAEE2E /* NoteDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C7613EA52069A98000AAEE2E /* NoteDetailViewController.xib */; };
+		C7BEAD42206C3D60008483A0 /* Notebook+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BEAD3A206C3D60008483A0 /* Notebook+CoreDataClass.swift */; };
+		C7BEAD43206C3D60008483A0 /* Notebook+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BEAD3A206C3D60008483A0 /* Notebook+CoreDataClass.swift */; };
+		C7BEAD44206C3D60008483A0 /* Notebook+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BEAD3B206C3D60008483A0 /* Notebook+CoreDataProperties.swift */; };
+		C7BEAD45206C3D60008483A0 /* Notebook+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BEAD3B206C3D60008483A0 /* Notebook+CoreDataProperties.swift */; };
+		C7BEAD46206C3D60008483A0 /* Tag+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BEAD3C206C3D60008483A0 /* Tag+CoreDataClass.swift */; };
+		C7BEAD47206C3D60008483A0 /* Tag+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BEAD3C206C3D60008483A0 /* Tag+CoreDataClass.swift */; };
+		C7BEAD48206C3D60008483A0 /* Tag+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BEAD3D206C3D60008483A0 /* Tag+CoreDataProperties.swift */; };
+		C7BEAD49206C3D60008483A0 /* Tag+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BEAD3D206C3D60008483A0 /* Tag+CoreDataProperties.swift */; };
+		C7BEAD4A206C3D60008483A0 /* Note+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BEAD3E206C3D60008483A0 /* Note+CoreDataClass.swift */; };
+		C7BEAD4B206C3D60008483A0 /* Note+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BEAD3E206C3D60008483A0 /* Note+CoreDataClass.swift */; };
+		C7BEAD4C206C3D60008483A0 /* Note+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BEAD3F206C3D60008483A0 /* Note+CoreDataProperties.swift */; };
+		C7BEAD4D206C3D60008483A0 /* Note+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BEAD3F206C3D60008483A0 /* Note+CoreDataProperties.swift */; };
+		C7BEAD4E206C3D60008483A0 /* Image+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BEAD40206C3D60008483A0 /* Image+CoreDataClass.swift */; };
+		C7BEAD4F206C3D60008483A0 /* Image+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BEAD40206C3D60008483A0 /* Image+CoreDataClass.swift */; };
+		C7BEAD50206C3D60008483A0 /* Image+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BEAD41206C3D60008483A0 /* Image+CoreDataProperties.swift */; };
+		C7BEAD51206C3D60008483A0 /* Image+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BEAD41206C3D60008483A0 /* Image+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +83,8 @@
 		C7157FBC205ED10D00C652D8 /* Note+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Note+Extensions.swift"; sourceTree = "<group>"; };
 		C7157FBE205ED11A00C652D8 /* Image+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+Extensions.swift"; sourceTree = "<group>"; };
 		C715BE63206AB83C009071FD /* UITextView+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+Additions.swift"; sourceTree = "<group>"; };
+		C715BE69206BBD25009071FD /* NotebookSelectorTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotebookSelectorTableViewController.swift; sourceTree = "<group>"; };
+		C715BE6A206BBD25009071FD /* NotebookSelectorTableViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotebookSelectorTableViewController.xib; sourceTree = "<group>"; };
 		C71E09762060154C00FE3D52 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		C71E097820602D4F00FE3D52 /* NotebookTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotebookTests.swift; sourceTree = "<group>"; };
 		C7415FE52062B6A200DBEEEE /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
@@ -82,6 +102,14 @@
 		C7613EA12067B3AA00AAEE2E /* ImageDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageDetailViewController.xib; sourceTree = "<group>"; };
 		C7613EA42069A98000AAEE2E /* NoteDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDetailViewController.swift; sourceTree = "<group>"; };
 		C7613EA52069A98000AAEE2E /* NoteDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoteDetailViewController.xib; sourceTree = "<group>"; };
+		C7BEAD3A206C3D60008483A0 /* Notebook+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notebook+CoreDataClass.swift"; sourceTree = "<group>"; };
+		C7BEAD3B206C3D60008483A0 /* Notebook+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notebook+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		C7BEAD3C206C3D60008483A0 /* Tag+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tag+CoreDataClass.swift"; sourceTree = "<group>"; };
+		C7BEAD3D206C3D60008483A0 /* Tag+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tag+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		C7BEAD3E206C3D60008483A0 /* Note+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Note+CoreDataClass.swift"; sourceTree = "<group>"; };
+		C7BEAD3F206C3D60008483A0 /* Note+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Note+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		C7BEAD40206C3D60008483A0 /* Image+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+CoreDataClass.swift"; sourceTree = "<group>"; };
+		C7BEAD41206C3D60008483A0 /* Image+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -169,6 +197,7 @@
 		C7157FB6205EC96B00C652D8 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				C7BEAD39206C3D00008483A0 /* NSModelEntities */,
 				C71E09762060154C00FE3D52 /* DataManager.swift */,
 				C7157F94205EBFEE00C652D8 /* Everchulo.xcdatamodeld */,
 				C7157FBA205ED0FD00C652D8 /* Notebook+Extensions.swift */,
@@ -186,7 +215,8 @@
 				C7157F8F205EBFEE00C652D8 /* EverchuloViewController.swift */,
 				C741C1B52061AF680049E279 /* NoteTableViewController.swift */,
 				C7613EA42069A98000AAEE2E /* NoteDetailViewController.swift */,
-				C7613EA52069A98000AAEE2E /* NoteDetailViewController.xib */,
+				C715BE69206BBD25009071FD /* NotebookSelectorTableViewController.swift */,
+				C715BE6A206BBD25009071FD /* NotebookSelectorTableViewController.xib */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -195,6 +225,7 @@
 			isa = PBXGroup;
 			children = (
 				C7613E9D2067A43400AAEE2E /* NoteTableViewController */,
+				C7613EA52069A98000AAEE2E /* NoteDetailViewController.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -211,6 +242,21 @@
 				C7613EA12067B3AA00AAEE2E /* ImageDetailViewController.xib */,
 			);
 			path = NoteTableViewController;
+			sourceTree = "<group>";
+		};
+		C7BEAD39206C3D00008483A0 /* NSModelEntities */ = {
+			isa = PBXGroup;
+			children = (
+				C7BEAD3A206C3D60008483A0 /* Notebook+CoreDataClass.swift */,
+				C7BEAD3B206C3D60008483A0 /* Notebook+CoreDataProperties.swift */,
+				C7BEAD3C206C3D60008483A0 /* Tag+CoreDataClass.swift */,
+				C7BEAD3D206C3D60008483A0 /* Tag+CoreDataProperties.swift */,
+				C7BEAD3E206C3D60008483A0 /* Note+CoreDataClass.swift */,
+				C7BEAD3F206C3D60008483A0 /* Note+CoreDataProperties.swift */,
+				C7BEAD40206C3D60008483A0 /* Image+CoreDataClass.swift */,
+				C7BEAD41206C3D60008483A0 /* Image+CoreDataProperties.swift */,
+			);
+			path = NSModelEntities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -301,6 +347,7 @@
 				C7157F9B205EBFEE00C652D8 /* LaunchScreen.storyboard in Resources */,
 				C7415FE62062B6A200DBEEEE /* Localizable.strings in Resources */,
 				C7157F98205EBFEE00C652D8 /* Assets.xcassets in Resources */,
+				C715BE6C206BBD25009071FD /* NotebookSelectorTableViewController.xib in Resources */,
 				C7613EA72069A98000AAEE2E /* NoteDetailViewController.xib in Resources */,
 				C74160242064F7CB00DBEEEE /* NoteTableViewCell.xib in Resources */,
 				C741C1B82061AF680049E279 /* NoteTableViewController.xib in Resources */,
@@ -328,18 +375,27 @@
 				C7157FB9205ED0D400C652D8 /* Tag+Extensions.swift in Sources */,
 				C7415FE82062CE8C00DBEEEE /* NSLocalizedString+Helpers.swift in Sources */,
 				C7157FBD205ED10D00C652D8 /* Note+Extensions.swift in Sources */,
+				C7BEAD4A206C3D60008483A0 /* Note+CoreDataClass.swift in Sources */,
+				C7BEAD4C206C3D60008483A0 /* Note+CoreDataProperties.swift in Sources */,
 				C741602720669F5300DBEEEE /* ImagesCollectionViewCell.swift in Sources */,
 				C7613EA22067B3AA00AAEE2E /* ImageDetailViewController.swift in Sources */,
 				C7157F96205EBFEE00C652D8 /* Everchulo.xcdatamodeld in Sources */,
+				C7BEAD46206C3D60008483A0 /* Tag+CoreDataClass.swift in Sources */,
 				C7157F90205EBFEE00C652D8 /* EverchuloViewController.swift in Sources */,
 				C74160232064F7CB00DBEEEE /* NoteTableViewCell.swift in Sources */,
+				C7BEAD42206C3D60008483A0 /* Notebook+CoreDataClass.swift in Sources */,
 				C7157F8E205EBFEE00C652D8 /* AppDelegate.swift in Sources */,
 				C715BE64206AB83C009071FD /* UITextView+Additions.swift in Sources */,
+				C7BEAD48206C3D60008483A0 /* Tag+CoreDataProperties.swift in Sources */,
 				C741C1B72061AF680049E279 /* NoteTableViewController.swift in Sources */,
 				C7415FEA2062D54000DBEEEE /* UIAlertController+Helpers.swift in Sources */,
 				C7157FB5205EC91000C652D8 /* UIViewController+Additions.swift in Sources */,
 				C7613E9F2067A82500AAEE2E /* UIBarButtonItem+Additions.swift in Sources */,
+				C7BEAD4E206C3D60008483A0 /* Image+CoreDataClass.swift in Sources */,
 				C7157FB3205EC8EC00C652D8 /* Date+Additions.swift in Sources */,
+				C7BEAD50206C3D60008483A0 /* Image+CoreDataProperties.swift in Sources */,
+				C715BE6B206BBD25009071FD /* NotebookSelectorTableViewController.swift in Sources */,
+				C7BEAD44206C3D60008483A0 /* Notebook+CoreDataProperties.swift in Sources */,
 				C7157FBB205ED0FD00C652D8 /* Notebook+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -348,7 +404,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C7BEAD51206C3D60008483A0 /* Image+CoreDataProperties.swift in Sources */,
+				C7BEAD43206C3D60008483A0 /* Notebook+CoreDataClass.swift in Sources */,
+				C7BEAD4D206C3D60008483A0 /* Note+CoreDataProperties.swift in Sources */,
+				C7BEAD49206C3D60008483A0 /* Tag+CoreDataProperties.swift in Sources */,
+				C7BEAD4F206C3D60008483A0 /* Image+CoreDataClass.swift in Sources */,
 				C71E097920602D4F00FE3D52 /* NotebookTests.swift in Sources */,
+				C7BEAD4B206C3D60008483A0 /* Note+CoreDataClass.swift in Sources */,
+				C7BEAD47206C3D60008483A0 /* Tag+CoreDataClass.swift in Sources */,
+				C7BEAD45206C3D60008483A0 /* Notebook+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
