@@ -2,7 +2,7 @@
 //  Note+CoreDataProperties.swift
 //  Everchulo
 //
-//  Created by ATEmobile on 28/3/18.
+//  Created by ATEmobile on 31/3/18.
 //  Copyright © 2018 ATEmobile. All rights reserved.
 //
 //
@@ -26,6 +26,7 @@ extension Note {
     @NSManaged public var tags: String?
     @NSManaged public var title: String?
     @NSManaged public var updatedTimestamp: Double
+    @NSManaged public var notebookSortCriteria: String?
     @NSManaged public var images: NSSet?
     @NSManaged public var notebook: Notebook?
 

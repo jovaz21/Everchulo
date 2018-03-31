@@ -10,6 +10,7 @@ import UIKit
 
 // NoteDetailViewControllerDelegate: class {
 protocol NoteDetailViewControllerDelegate: AnyObject {
+    func noteDetailViewController(_ vc: NoteDetailViewController, willCreateNote note: Note)
     func noteDetailViewController(_ vc: NoteDetailViewController, didCreateNote note: Note)
 }
 
@@ -86,13 +87,11 @@ class NoteDetailViewController: UIViewController {
         if ((self.model.title == nil) && (self.model.content == nil)) {
             
             /* delete */
-            if (self.model.notebook!.notes!.count <= 1) {
-                self.model.notebook?.delete()
-            }
             self.model.delete()
             
             /* done */
             self.presentingViewController?.dismiss(animated: false)
+            return
         }
         
         /* check */
@@ -104,7 +103,16 @@ class NoteDetailViewController: UIViewController {
         }
             
         /* save */
+        print("!!!<NoteDetailViewController> onNoteDone: Setting New Note ACTIVE, notebookActiveNotesCount=", self.model.notebook!.activeNotes.count)
+        if (self.delegate != nil) { // Delegate
+            self.delegate!.noteDetailViewController(self, willCreateNote: self.model)
+        }
+        self.model.notebook!.setActive()
+        self.model.notebook!.save()
+        self.model.setActive()
+        print("!!!<NoteDetailViewController> onNoteDone: Saving Data, notebookActiveNotesCount=", self.model.notebook!.activeNotes.count)
         self.model.save()
+        print("!!!<NoteDetailViewController> onNoteDone: New Note Added, notebookActiveNotesCount=", self.model.notebook!.activeNotes.count)
         if (self.delegate != nil) { // Delegate
             self.delegate!.noteDetailViewController(self, didCreateNote: self.model)
         }
@@ -228,8 +236,8 @@ extension NoteDetailViewController {
 extension NoteDetailViewController: NotebookSelectorTableViewControllerDelegate {
     func notebookSelectorTableViewController(_ vc: NotebookSelectorTableViewController, didSelectNotebook notebook: Notebook) {
         print("!!! didSelectNotebook: Entering, notebook=", notebook)
-        self.model.notebook?.removeFromNotes(self.model)
-        _ = notebook.add(note: self.model)
+        //self.model.notebook?.removeFromNotes(self.model)
+        self.model.moveToNotebook(notebook)
         print("!!! didSelectNotebook: Done")
     }
 }

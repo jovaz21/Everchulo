@@ -21,10 +21,11 @@ class NoteTableViewController: UITableViewController {
     
     // MARK: - Properties
     var viewMode: ViewMode = .SingleView
-    var fetchedResultsController: NSFetchedResultsController<Note>!
+    var fetchedNotebooksController: NSFetchedResultsController<Notebook>!
+    var fetchedNotesController: NSFetchedResultsController<Note>!
     
     // Last Selected Note/Row+Section
-    var lastSelectedNote: Note { return(fetchedResultsController.object(at: IndexPath(row: lastSelectedRow, section: lastSelectedSection))) }
+    var lastSelectedNote: Note { return(fetchedNotebooksController.object(at: IndexPath(row: lastSelectedSection, section: 0)).sortedNotes[lastSelectedRow]) }
     var lastSelectedRow: Int {
         get {
             return(UserDefaults.standard.integer(forKey: "NoteTableView.LastSelectedRow"))
@@ -90,7 +91,11 @@ class NoteTableViewController: UITableViewController {
     //  - Notify Observers
     //  - Remember Row as Last Selected
     func onRowSelected(at indexPath: IndexPath) {
-        let note = fetchedResultsController.object(at: indexPath)
+        var notebooks = fetchedNotebooksController.fetchedObjects?.filter() {
+            return($0.activeNotes.count > 0)
+        }
+        let notebook    = notebooks![indexPath.section]
+        let note        = notebook.sortedNotes[indexPath.row]
         
         /* delegate */
         if (delegate != nil) { // Delegate
@@ -106,13 +111,17 @@ class NoteTableViewController: UITableViewController {
         self.lastSelectedRow        = indexPath.row
     }
     
-    // On New Note
+    // MARK: - On New Note:
+    // - If no Notebook is given, retrieve Active one
+    // - If no Active Notebook is retrieved, create a default one
+    // - Add an empty Note to the Notebook
+    // - Present NoteDetailViewController to the user...
     func onNewNote(_ givenNotebook: Notebook? = nil) {
         var notebook: Notebook? = givenNotebook
         
         /* */
         if (notebook == nil) {
-            print("NUEVA NOTA <Sin Notebook>")
+            print("!!!NUEVA NOTA <Sin Notebook>")
         }
         
         /* check */
@@ -122,7 +131,7 @@ class NoteTableViewController: UITableViewController {
             /* check */
             if (notebook == nil) {
                 notebook = Notebook.create(name: "Primera libreta")
-                print("NEW NOTEBOOK", notebook!.objectID)
+                print("!!!NEW NOTEBOOK", notebook!.objectID)
                 notebook?.setActive()
             }
         }
@@ -130,16 +139,14 @@ class NoteTableViewController: UITableViewController {
         /* */
         let objectID    = notebook!.objectID
         let name        = notebook!.name!
-        print("NUEVA NOTA <'\(name)', '\(objectID)>'")
+        print("!!!NUEVA NOTA <'\(name)', '\(objectID)>'")
         
         /* create */
-        let note = notebook!.add(note: Note.create()!)
-        DispatchQueue.main.async {
-            self.fetchAllNotes()
-        }
+        let note = Note.create(notebook!)!
         
         /* show */
         let noteDetailVC = NoteDetailViewController(model: note)
+        noteDetailVC.delegate = self
         self.present(noteDetailVC.wrappedInNavigation(), animated: true)
     }
     
@@ -190,25 +197,24 @@ extension NoteTableViewController {
         if (DataManager.getenv() != .testing) {
             Notebook.deleteAll()
             let notebook1 = Notebook.create(name: "Primera libreta")
-            let notebook2 = Notebook.create(name: "Segunda libreta")
-            let notebook3 = Notebook.create(name: "Tercera libreta")
+            _ = Notebook.create(name: "Segunda libreta")
+            _ = Notebook.create(name: "Tercera libreta")
             //let note1   = Note.create(title: "Lorem ipsum 1/6", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet purus id ex consectetur congue. Nulla ullamcorper mauris ac suscipit eleifend. Aliquam suscipit vehicula dapibus. Suspendisse a varius elit, ut consequat purus. Sed massa arcu, dictum nec ante porta, consequat hendrerit leo. Maecenas risus dolor, aliquam sed sagittis nec, tincidunt sed tellus. Nulla nisl velit, dictum aliquam scelerisque id, dignissim in justo. Praesent eu efficitur nunc. In hac habitasse platea dictumst. Aliquam blandit id ante imperdiet dignissim. Sed fermentum aliquam sapien id tempus. Sed sed nisl vitae velit scelerisque pellentesque.")!
-            let note1   = Note.create(title: "Lorem ipsum 1/6", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ")!
-            let note2   = Note.create(title: "Lorem ipsum 2/6", content: "Cras ultrices lorem eget dolor finibus eleifend. Suspendisse bibendum tempus nisi eleifend dictum. Suspendisse potenti. Aenean augue mauris, tempor sit amet orci eu, auctor porta elit. Donec quam metus, lacinia eu urna at, blandit eleifend lorem. Integer semper diam cursus, convallis tortor eget, tempor ipsum. Ut id lorem porttitor, luctus velit at, aliquet eros. Nunc condimentum sagittis est ut varius.")!
-            let note3   = Note.create(title: "Lorem ipsum 3/6", content: "Aenean venenatis turpis porta, dictum elit at, posuere quam. Donec fermentum, nulla vel facilisis iaculis, nisi dolor dictum massa, a tincidunt sem sem ac lacus. Cras sit amet laoreet mi, at volutpat mauris. Mauris blandit convallis enim id semper. Mauris et odio ligula. Nam lobortis a elit non semper. Nullam ac viverra enim, semper dictum sem. Integer lobortis eget mi ac eleifend. Aenean eget scelerisque mauris. Vestibulum turpis ligula, elementum vitae hendrerit eu, interdum at mauris.")!
-            let note4   = Note.create(title: "Lorem ipsum 4/6", content: "Sed eleifend id ipsum non vestibulum. Mauris cursus nisi eget lorem laoreet commodo. Sed placerat quam sed quam congue condimentum. Vivamus eget lorem mauris. In feugiat nunc sit amet tortor condimentum volutpat. Etiam consequat odio velit, mattis porttitor dolor porttitor ac. Aliquam a mi augue. Aliquam id lacus laoreet, suscipit nunc ac, pharetra quam. In ut elit nec sem tempor tempus. Morbi velit est, finibus at magna at, blandit commodo ex.")!
-            let note5   = Note.create(title: "Lorem ipsum 5/6", content: "Sed sodales magna eu mauris finibus, eu lacinia nunc condimentum. Vestibulum ornare nisi eros, ac lacinia erat sagittis et. Proin facilisis sed ex sit amet convallis. In scelerisque finibus quam vel placerat. Quisque posuere consequat ornare. Phasellus venenatis risus ac turpis blandit blandit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Integer vel tincidunt ipsum. Nam id odio fringilla orci scelerisque porta. Ut non est eu massa efficitur pretium eu venenatis nulla. Fusce volutpat velit eget tortor pharetra, sed venenatis nisl sollicitudin. Sed tincidunt urna vel egestas ullamcorper. Nam gravida tellus quis urna fermentum varius.")!
-            let note6   = Note.create(title: "Lorem ipsum 6/6", content: "Nullam mi massa, ullamcorper nec interdum at, volutpat convallis ipsum. Etiam in augue non velit auctor feugiat id eget urna. Sed fringilla, quam in lobortis auctor, dui lacus commodo mi, eget interdum ipsum velit at felis. Ut imperdiet mattis nisl et sollicitudin. Suspendisse tincidunt vel est ullamcorper porta. Suspendisse vel nunc quis erat tincidunt faucibus non at nunc. Nullam scelerisque, tortor eget malesuada interdum, nunc quam commodo velit, et lacinia magna leo non enim. Suspendisse consequat in lacus eu lacinia. In in purus in dui rutrum accumsan. Donec erat neque, mollis eget feugiat et, venenatis sed libero.")!
-            let note7   = Note.create(title: "Nota Borrada", content: "Un ejemplo de nota enviada a la papelera")!
+            let note1   = Note.create(notebook1!, title: "Lorem ipsum 1/6", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ")!;note1.setActive()
+            let note2   = Note.create(notebook1!, title: "Lorem ipsum 2/6", content: "Cras ultrices lorem eget dolor finibus eleifend. Suspendisse bibendum tempus nisi eleifend dictum. Suspendisse potenti. Aenean augue mauris, tempor sit amet orci eu, auctor porta elit. Donec quam metus, lacinia eu urna at, blandit eleifend lorem. Integer semper diam cursus, convallis tortor eget, tempor ipsum. Ut id lorem porttitor, luctus velit at, aliquet eros. Nunc condimentum sagittis est ut varius.")!;note2.setActive()
+            let note3   = Note.create(notebook1!, title: "Lorem ipsum 3/6", content: "Aenean venenatis turpis porta, dictum elit at, posuere quam. Donec fermentum, nulla vel facilisis iaculis, nisi dolor dictum massa, a tincidunt sem sem ac lacus. Cras sit amet laoreet mi, at volutpat mauris. Mauris blandit convallis enim id semper. Mauris et odio ligula. Nam lobortis a elit non semper. Nullam ac viverra enim, semper dictum sem. Integer lobortis eget mi ac eleifend. Aenean eget scelerisque mauris. Vestibulum turpis ligula, elementum vitae hendrerit eu, interdum at mauris.")!;note3.setActive()
+            let note4   = Note.create(notebook1!, title: "Lorem ipsum 4/6", content: "Sed eleifend id ipsum non vestibulum. Mauris cursus nisi eget lorem laoreet commodo. Sed placerat quam sed quam congue condimentum. Vivamus eget lorem mauris. In feugiat nunc sit amet tortor condimentum volutpat. Etiam consequat odio velit, mattis porttitor dolor porttitor ac. Aliquam a mi augue. Aliquam id lacus laoreet, suscipit nunc ac, pharetra quam. In ut elit nec sem tempor tempus. Morbi velit est, finibus at magna at, blandit commodo ex.")!;note4.setActive()
+            let note5   = Note.create(notebook1!, title: "Lorem ipsum 5/6", content: "Sed sodales magna eu mauris finibus, eu lacinia nunc condimentum. Vestibulum ornare nisi eros, ac lacinia erat sagittis et. Proin facilisis sed ex sit amet convallis. In scelerisque finibus quam vel placerat. Quisque posuere consequat ornare. Phasellus venenatis risus ac turpis blandit blandit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Integer vel tincidunt ipsum. Nam id odio fringilla orci scelerisque porta. Ut non est eu massa efficitur pretium eu venenatis nulla. Fusce volutpat velit eget tortor pharetra, sed venenatis nisl sollicitudin. Sed tincidunt urna vel egestas ullamcorper. Nam gravida tellus quis urna fermentum varius.")!;note5.setActive()
+            let note6   = Note.create(notebook1!, title: "Lorem ipsum 6/6", content: "Nullam mi massa, ullamcorper nec interdum at, volutpat convallis ipsum. Etiam in augue non velit auctor feugiat id eget urna. Sed fringilla, quam in lobortis auctor, dui lacus commodo mi, eget interdum ipsum velit at felis. Ut imperdiet mattis nisl et sollicitudin. Suspendisse tincidunt vel est ullamcorper porta. Suspendisse vel nunc quis erat tincidunt faucibus non at nunc. Nullam scelerisque, tortor eget malesuada interdum, nunc quam commodo velit, et lacinia magna leo non enim. Suspendisse consequat in lacus eu lacinia. In in purus in dui rutrum accumsan. Donec erat neque, mollis eget feugiat et, venenatis sed libero.")!;note6.setActive()
+            let note7   = Note.create(notebook1!, title: "Nota Borrada", content: "Un ejemplo de nota enviada a la papelera")!
             note7.moveToTrash()
-            _ = notebook1?.add(notes: [note1, note2, note3, note4, note5, note6, note7])
             notebook1?.setActive()
             notebook1?.save()
-            print("TEST NOTEBOOK", notebook1!.objectID, notebook1!)
+            print("!!!TEST NOTEBOOK", notebook1!.objectID, notebook1!)
         }
         
-        // Fetch All Notes
-        self.fetchAllNotes()
+        // Fetch All
+        self.fetchAll()
     }
     @objc func newNoteAction() { DispatchQueue.main.asyncAfter(deadline: .now() + 0.025, execute: {
         self.onNewNote()
@@ -222,7 +228,7 @@ extension NoteTableViewController {
                 title:      i18NString("NoteTableViewController.notebookSettingsMsg"),
                 style:      .default,
                 image:      UIImage(named: "notebook"),
-                hidden:     (self.fetchedResultsController.sections!.count != 1),
+                hidden:     (self.fetchedNotebooksController.fetchedObjects!.count != 1),
                 handler:    { (alertAction) in
                     //self.present(imagePicker, animated: true, completion: nil)
                 }
@@ -231,7 +237,7 @@ extension NoteTableViewController {
                 title:      i18NString("NoteTableViewController.notebooksSettingsMsg"),
                 style:      .default,
                 image:      UIImage(named: "notebook"),
-                hidden:     (self.fetchedResultsController.sections!.count <= 1),
+                hidden:     (self.fetchedNotebooksController.fetchedObjects!.count <= 1),
                 handler:    { (alertAction) in
                     //self.present(imagePicker, animated: true, completion: nil)
                 }
@@ -267,27 +273,44 @@ extension NoteTableViewController {
         /* done */
         return
     }
+    func fetchAll() {
+        fetchAllNotebooks()
+        fetchAllNotes()
+    }
+    func fetchAllNotebooks() {
+        let (ctx, fetchRequest) = Notebook.fetchRequestForAllResults()
+        let sortByStatus = NSSortDescriptor(key: "status", ascending: true, selector: nil)
+        let sortByName = NSSortDescriptor(key: "name", ascending: true, selector: #selector(NSString.caseInsensitiveCompare))
+        fetchRequest.sortDescriptors = [sortByStatus, sortByName]
+        self.fetchedNotebooksController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: ctx, sectionNameKeyPath: nil, cacheName: nil)
+        self.fetchedNotebooksController.delegate = self
+        try! self.fetchedNotebooksController.performFetch()
+    }
     func fetchAllNotes() {
         let (ctx, fetchRequest) = Note.fetchRequestForAllResults()
-        //let sortByNotebookStatus = NSSortDescriptor(key: "notebook.@status", ascending: true)
-        //let sortByNotebookName = NSSortDescriptor(key: "notebook.@name", ascending: true)
+        let sortByNotebookCriteria = NSSortDescriptor(key: "notebookSortCriteria", ascending: true, selector: #selector(NSString.caseInsensitiveCompare))
         let sortByTitle = NSSortDescriptor(key: "title", ascending: true, selector: #selector(NSString.caseInsensitiveCompare))
-        fetchRequest.sortDescriptors = [sortByTitle]
-        self.fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: ctx, sectionNameKeyPath: "notebook", cacheName: nil)
-        self.fetchedResultsController.delegate = self
-        try! self.fetchedResultsController.performFetch()
+        fetchRequest.sortDescriptors = [sortByNotebookCriteria, sortByTitle]
+        self.fetchedNotesController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: ctx, sectionNameKeyPath: "notebookName", cacheName: nil)
+        self.fetchedNotesController.delegate = self
+        try! self.fetchedNotesController.performFetch()
     }
     
     // MARK: - Table View DISPLAY Delegate Functions
     
     /* SECTIONS */
     override func numberOfSections(in tableView: UITableView) -> Int {
-        print("!!! numberOfSections: ", fetchedResultsController.sections!.count)
-        return(fetchedResultsController.sections!.count)
+        let notebooks = fetchedNotebooksController.fetchedObjects?.filter() {
+            return($0.activeNotes.count > 0)
+        }
+        print("numberOfSections: ", notebooks!.count)
+        return(notebooks!.count)
     }
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let notes       = fetchedResultsController.sections![section].objects as! [Note]
-        let notebook    = notes.first?.notebook
+        var notebooks = fetchedNotebooksController.fetchedObjects?.filter() {
+            return($0.activeNotes.count > 0)
+        }
+        let notebook = notebooks![section]
         
         /* set */
         let backView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.width, height: SECTIONHEADER_HEIGHT))
@@ -302,7 +325,7 @@ extension NoteTableViewController {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 20)
         label.textColor = UIColor.darkGray
-        label.text = notebook?.name?.uppercased()
+        label.text = notebook.name?.uppercased()
         
         /* BUTTON */
         let button = UIButton(type: .contactAdd)
@@ -310,9 +333,7 @@ extension NoteTableViewController {
         //button.tintColor = UIColor.gray
         button.layer.setValue(notebook, forKey: "notebook")
         button.addTarget(self, action: #selector(newNotebookNoteAction), for: UIControlEvents.primaryActionTriggered)
-        if (notebook != nil) {
-            button.isHidden = (notebook?.isActive())!
-        }
+        button.isHidden = (notebook.isActive())
         
         /* set */
         icon.translatesAutoresizingMaskIntoConstraints = false
@@ -348,16 +369,27 @@ extension NoteTableViewController {
     
     /* ROWS */
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("!!! numberOfRowsInSection: ", section, fetchedResultsController.sections![section].numberOfObjects)
-        return(fetchedResultsController.sections![section].numberOfObjects)
+        var notebooks = fetchedNotebooksController.fetchedObjects?.filter() {
+            return($0.activeNotes.count > 0)
+        }
+        //print("!!! numberOfRowsInSection: ", section, notebooks![section].activeNotes.count)
+        //return(notebooks![section].activeNotes.count)
+        
+        print("!!! numberOfRowsInSection: ", section, fetchedNotesController.sections![section].numberOfObjects)
+        return(fetchedNotesController.sections![section].numberOfObjects)
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cellId  = "NoteTableViewCell"
-        let cell    = tableView.dequeueReusableCell(withIdentifier: cellId) as? NoteTableViewCell
-                    ?? NoteTableViewCell.newLoadedCell
+        //let cellId  = "NoteTableViewCell"
+        //let cell    = tableView.dequeueReusableCell(withIdentifier: cellId) as? NoteTableViewCell
+        //            ?? NoteTableViewCell.newLoadedCell
+        let cell = NoteTableViewCell.newLoadedCell
         
         /* set */
-        let note = fetchedResultsController.object(at: indexPath)
+        let notebooks = fetchedNotebooksController.fetchedObjects?.filter() {
+            return($0.activeNotes.count > 0)
+        }
+        let notebook    = notebooks![indexPath.section]
+        let note        = notebook.sortedNotes[indexPath.row]
         
         /* set */
         cell.titleLabel.text    = note.title
@@ -366,6 +398,7 @@ extension NoteTableViewController {
         cell.setImages(images: [UIImage]())
         
         /* TEST */
+        print("!!!CELL FOR ROW AT: row=", indexPath.row, ", title='", note.title ?? "", "'")
         if (indexPath.row == 2) {
             cell.setImages(images: [UIImage(named: "Image_0")!,UIImage(named: "Image_1")!,UIImage(named: "Image_2")!,UIImage(named: "Image_3")!,UIImage(named: "Image_4")!])
             cell.cellDelegate = self
@@ -402,7 +435,11 @@ extension NoteTableViewController {
      }
      override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            fetchedResultsController.object(at: indexPath).delete(commit: true)
+            let notebooks = fetchedNotebooksController.fetchedObjects?.filter() {
+                return($0.activeNotes.count > 0)
+            }
+            let notebook    = notebooks![indexPath.section]
+            notebook.sortedNotes[indexPath.row].delete(commit: true)
         }
      }
 }
@@ -410,8 +447,9 @@ extension NoteTableViewController {
 // NSFetchedResultsController Delegate
 extension NoteTableViewController: NSFetchedResultsControllerDelegate {
     
-    // Feched Results Did Changed
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+    // Fetched Results Did Changed
+    func controllerDidChangeContentxxx(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        print("!!!controllerDidChangeContent: objectsCount=", controller.fetchedObjects?.count ?? 0)
         print("!!!!!controllerDidChangeContent", self.view.isHidden)
         DispatchQueue.main.async {
             
@@ -419,7 +457,7 @@ extension NoteTableViewController: NSFetchedResultsControllerDelegate {
             self.tableView.reloadData()
             
             /* check */
-            if (self.fetchedResultsController.fetchedObjects!.count <= 0) {
+            if (self.fetchedNotesController.fetchedObjects!.count <= 0) {
                 self.editButtonItem.setHidden(true)
                 self.menuBarButtonItem.setHidden(true)
             }
@@ -427,6 +465,130 @@ extension NoteTableViewController: NSFetchedResultsControllerDelegate {
                 self.editButtonItem.setHidden(false)
                 self.menuBarButtonItem.setHidden(false)
             }
+        }
+    }
+    
+    // Begin Updates on UITableView
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        print("!!!controllerWillChangeContent: numberOfSections", self.tableView.numberOfSections)
+        var i = 0
+        while (i < self.tableView.numberOfSections) {
+            print("!!!controllerWillChangeContent: numberOfObjects[", i, "]=", self.tableView.numberOfRows(inSection: i))
+            i = i + 1
+        }
+        self.tableView.beginUpdates()
+    }
+    
+    // Sections Inserted|Deleted
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
+        print("!!!controllerDidChangeSection: Entering, sectionIndex=", sectionIndex, "controllerSectionsCount=", controller.sections?.count ?? 0, ", tableSectionsCount=", self.tableView.numberOfSections)
+        switch (type) {
+        case .insert:
+            print("!!!controllerDidChangeSection: INSERT")
+            self.tableView.insertSections(IndexSet(integer: sectionIndex), with: .none)
+            break
+        case .delete:
+            print("!!!controllerDidChangeSection: DELETE")
+            self.tableView.deleteSections(IndexSet(integer: sectionIndex), with: .none)
+            break
+        default:
+            break
+        }
+        print("!!!controllerDidChangeSection: Done, tableSectionsCount=", self.tableView.numberOfSections)
+    }
+    
+    // Rows Inserted|Deleted|Updated|Moved
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        print("!!!controllerDidChangeObject: Entering, anObject=", anObject, ", indexPath=", indexPath as Any, ", newIndexPath=", newIndexPath as Any, "controllerSectionsCount=", controller.sections?.count ?? 0, ", controllerFetchedObjectsCount=", controller.fetchedObjects?.count ?? 0, ", tableSectionsCount=", self.tableView.numberOfSections)
+        if (controller == self.fetchedNotebooksController) {
+            switch (type) {
+            case .insert:
+                print("!!!controllerDidChangeObject: INSERT")
+                break
+            case .delete:
+                print("!!!controllerDidChangeObject: DELETE")
+                break
+            case .update:
+                print("!!!controllerDidChangeObject: UPDATE")
+                break
+            case .move:
+                print("!!!controllerDidChangeObject: MOVE")
+                break
+            }
+            print("!!!controllerDidChangeObject: Done (Ignored)")
+            return
+        }
+        switch (type) {
+        case .insert:
+            let atIndexPath = controller.indexPath(forObject: anObject as! NSFetchRequestResult)!
+            print("!!!controllerDidChangeObject: INSERT, atIndexPath=", atIndexPath, ", whereNumberOfRows=", self.tableView.numberOfRows(inSection: atIndexPath.section))
+            self.tableView.insertRows(at: [atIndexPath], with: .none)
+            print("!!!controllerDidChangeObject: AFTER INSERT, numberOfRows=", self.tableView.numberOfRows(inSection: atIndexPath.section))
+            break
+        case .delete:
+            print("!!!controllerDidChangeObject: DELETE")
+            self.tableView.deleteRows(at: [indexPath!], with: .none)
+            break
+        case .update:
+            print("!!!controllerDidChangeObject: <ReloadData>")
+            //self.tableView.reloadData()
+            break
+        case .move:
+            print("!!!controllerDidChangeObject: MOVE")
+            //self.tableView.deleteRows(at: [indexPath!], with: .none)
+            //self.tableView.insertRows(at: [newIndexPath!], with: .none)
+            //self.tableView.reloadData()
+            if (newIndexPath != indexPath) {
+                print("!!!controllerDidChangeObject: MOVING from ", indexPath!, " to ", newIndexPath!)
+                self.tableView.moveRow(at: indexPath!, to: newIndexPath!)
+            }
+            break;
+        }
+        print("!!!controllerDidChangeObject: Done (UITableView Updated)")
+    }
+    
+    // End Updates on UITableView
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        print("!!!controllerDidChangeContent: numberOfSections", self.tableView.numberOfSections)
+        //DispatchQueue.main.async {
+        
+            /* */
+            self.tableView.endUpdates()
+            self.tableView.reloadData()
+        
+            /* check */
+            if (controller.fetchedObjects!.count <= 0) {
+                self.editButtonItem.setHidden(true)
+                self.menuBarButtonItem.setHidden(true)
+            }
+            else {
+                self.editButtonItem.setHidden(false)
+                self.menuBarButtonItem.setHidden(false)
+            }
+        //}
+        var i = 0
+        while (i < self.tableView.numberOfSections) {
+            print("!!!controllerDidChangeContent: numberOfObjects[", i, "]=", self.tableView.numberOfRows(inSection: i))
+            i = i + 1
+        }
+    }
+}
+
+extension NoteTableViewController: NoteDetailViewControllerDelegate {
+    func noteDetailViewController(_ vc: NoteDetailViewController, willCreateNote note: Note) {
+        print("!!!willCreateNote: numberOfSections", self.tableView.numberOfSections)
+        var i = 0
+        while (i < self.tableView.numberOfSections) {
+            print("!!!willCreateNote: numberOfObjects[", i, "]=", self.tableView.numberOfRows(inSection: i))
+            i = i + 1
+        }
+    }
+    func noteDetailViewController(_ vc: NoteDetailViewController, didCreateNote note: Note) {
+        print("!!!didCreateNote: numberOfSections", self.tableView.numberOfSections)
+        var i = 0
+        while (i < self.tableView.numberOfSections) {
+            print("!!!didCreateNote: numberOfObjects[", i, "]=", self.tableView.numberOfRows(inSection: i))
+            i = i + 1
         }
     }
 }

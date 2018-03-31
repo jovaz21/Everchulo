@@ -14,9 +14,27 @@ extension Note {
     
     // Status
     enum Status: String {
+        case IDLE
         case ACTIVE
         case TIMEDOUT
         case TRASHED
+    }
+    
+    // Notebook Name
+    var notebookName: String {
+        if (self.notebook == nil) {
+            return("")
+        }
+        return(self.notebook!.name!)
+    }
+    override public func setValue(_ value: Any?, forUndefinedKey key: String) {
+        super.setValue(value, forKey: key)
+    }
+    override public func value(forUndefinedKey key: String) -> Any? {
+        if (key == "notebookName") {
+            return(self.notebookName)
+        }
+        return(super.value(forUndefinedKey: key))
     }
     
     // Returns Fetch Request for Results with Status
@@ -95,7 +113,7 @@ extension Note {
     }
     
     // Create
-    static func create(into givenCtx: NSManagedObjectContext? = nil, title givenTitle: String? = nil, content: String? = nil, tags: String? = nil, commit: Bool? = false) -> Note? {
+    static func create(into givenCtx: NSManagedObjectContext? = nil, _ notebook: Notebook, title givenTitle: String? = nil, content: String? = nil, tags: String? = nil, commit: Bool? = false) -> Note? {
         let ctx: NSManagedObjectContext = givenCtx ?? DataManager.shared.viewContext
         
         /* insert */
@@ -110,11 +128,14 @@ extension Note {
         }
         
         /* set */
+        nsObj.moveToNotebook(notebook)
+        
+        /* set */
         nsObj.content    = content
         nsObj.tags       = tags
         
         /* set */
-        nsObj.status = Status.ACTIVE.rawValue
+        nsObj.status = Status.IDLE.rawValue
         
         /* set */
         nsObj.createdTimestamp   = Date().timeIntervalSince1970
@@ -158,6 +179,35 @@ extension Note {
     func delete(from givenCtx: NSManagedObjectContext? = nil, commit: Bool? = false) {
         return(DataManager.delete(from: givenCtx, object: self, commit: commit))
     }
+    
+    // Set Notebook
+    func moveToNotebook(with givenCtx: NSManagedObjectContext? = nil, _ notebook: Notebook, commit: Bool? = false) {
+        
+        /* set */
+        self.notebook = notebook
+        self.notebookDidUpdate()
+        
+        /* */
+        if (commit!) {
+            self.save(from: givenCtx)
+        }
+    }
+    func notebookDidUpdate() {
+        self.notebookSortCriteria = "\(notebook!.status!)-\(notebook!.name!)"
+    }
+    
+    // Set Active
+    func setActive(with givenCtx: NSManagedObjectContext? = nil, commit: Bool? = false) {
+        
+        /* set */
+        self.status = Status.ACTIVE.rawValue
+        if (commit!) {
+            self.save(from: givenCtx)
+        }
+    }
+    
+    // Is Active
+    func isActive() -> Bool { return(self.status == Status.ACTIVE.rawValue) }
     
     // Move to Trash
     func moveToTrash(with givenCtx: NSManagedObjectContext? = nil, commit: Bool? = false) {

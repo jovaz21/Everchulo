@@ -131,10 +131,22 @@ extension Notebook {
     func setActive(with givenCtx: NSManagedObjectContext? = nil, commit: Bool? = false) {
         
         /* reset */
-        Notebook.listAll(from: givenCtx).forEach() { $0.status = Status.IDLE.rawValue }
+        Notebook.listAll(from: givenCtx).forEach() {
+            $0.status = Status.IDLE.rawValue
+            $0.notes?.forEach() {(o: Any) in
+                let note = o as! Note
+                note.notebookDidUpdate()
+            }
+        }
         
         /* set */
         self.status = Status.ACTIVE.rawValue
+        self.notes?.forEach() {(o: Any) in
+            let note = o as! Note
+            note.notebookDidUpdate()
+        }
+        
+        /* */
         if (commit!) {
             self.save(from: givenCtx)
         }
@@ -146,14 +158,20 @@ extension Notebook {
 
 // MARK: - Notes Stuff
 extension Notebook {
-    var count:          Int     { return(self.notes!.count) }
-    var sortedNotes:    [Note]  {
+    var count: Int { return(self.notes!.count) }
+    var activeNotes: [Note] {
         guard let noteArray = self.notes?.allObjects as? [Note] else { return([Note]()) }
-        return(noteArray.sorted(){ return($0 < $1) })
+        return(noteArray.filter() { $0.status! == Note.Status.ACTIVE.rawValue })
+    }
+    var sortedNotes: [Note] {
+        return(activeNotes.sorted(){ return($0 < $1) })
     }
     
     // Add Note
-    func add(note: Note) -> Note { self.addToNotes(note); return(note) }
+    func add(note: Note) -> Note {
+        note.notebook = self
+        return(note)
+    }
     
     // Add Notes
     func add(notes: [Note]) -> [Note] { notes.forEach { _ = add(note: $0) }; return(notes) }
