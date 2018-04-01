@@ -150,10 +150,11 @@ extension NotebookSelectorTableViewController {
         self.fetchAllNotebooks()
     }
     @objc func cancelAction() {
-        self.presentingViewController?.dismiss(animated: false)
+        self.presentingViewController?.dismiss(animated: true)
     }
     @objc func addNotebookAction() {
         let newNotebookVC = NewNotebookViewController()
+        newNotebookVC.delegate = self
         self.present(newNotebookVC.wrappedInNavigation(), animated: true, completion: nil)
     }
     
@@ -233,5 +234,56 @@ extension NotebookSelectorTableViewController: NSFetchedResultsControllerDelegat
     // Feched Results Did Changed
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         DispatchQueue.main.async { self.tableView.reloadData() }
+    }
+}
+
+// NewNotebookViewController Delegate
+extension NotebookSelectorTableViewController: NewNotebookViewControllerDelegate {
+    
+    // New Notebook Did Create
+    func newNotebookViewController(_ vc: NewNotebookViewController, didCreateNotebook notebook: Notebook) {
+        
+        /* check */
+        if (self.viewMode == .select) {
+
+            /* delegate */
+            if (self.delegate != nil) { // Delegate
+                self.delegate!.notebookSelectorTableViewController(self, didSelectNotebook: notebook)
+            }
+                
+            /* */
+            self.presentingViewController?.dismiss(animated: false)
+            return
+        }
+        
+        // Declare Alert message
+        let dialogMessage = UIAlertController(title: "\(i18NString("NotebookSelectorTableViewController.confirmMsg")) '\(notebook.name!)'?", message: "", preferredStyle: .alert)
+        
+        // Create OK button with action handler
+        let ok = UIAlertAction(title: i18NString("NotebookSelectorTableViewController.moveMsg"), style: .default, handler: { (action) -> Void in
+            DispatchQueue.main.async {
+                
+                /* delegate */
+                if (self.delegate != nil) { // Delegate
+                    self.delegate!.notebookSelectorTableViewController(self, didSelectNotebook: notebook)
+                }
+                
+                /* */
+                self.presentingViewController?.dismiss(animated: true)
+            }
+        })
+        ok.setValue(Styles.activeColor, forKey: "titleTextColor")
+        
+        // Create Cancel button with action handlder
+        let cancel = UIAlertAction(title: i18NString("es.atenet.app.Cancel"), style: .cancel)
+        cancel.setValue(Styles.activeColor, forKey: "titleTextColor")
+        
+        //Add OK and Cancel button to dialog message
+        dialogMessage.addAction(ok)
+        dialogMessage.addAction(cancel)
+        
+        // Present dialog message to user
+        self.present(dialogMessage, animated: true, completion: nil)
+
     }
 }

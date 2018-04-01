@@ -70,7 +70,7 @@
                                     <rect key="frame" x="0.0" y="11" width="375" height="10"/>
                                     <nil key="textColor"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                    <textInputTraits key="textInputTraits"/>
+                                    <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="yes"/>
                                 </textField>
                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="rFz-6G-Hgd">
                                     <rect key="frame" x="0.0" y="31" width="375" height="592"/>

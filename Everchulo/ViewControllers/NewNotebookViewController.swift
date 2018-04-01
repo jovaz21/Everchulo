@@ -8,8 +8,16 @@
 
 import UIKit
 
+// NewNotebookViewControllerDelegate {
+protocol NewNotebookViewControllerDelegate: AnyObject {
+    func newNotebookViewController(_ vc: NewNotebookViewController, didCreateNotebook notebook: Notebook)
+}
+
 // MARK: - Controller Stuff
 class NewNotebookViewController: UIViewController {
+    
+    // Delegate
+    weak var delegate: NewNotebookViewControllerDelegate?
     
     // MARK: - Init
     init() {
@@ -43,6 +51,12 @@ class NewNotebookViewController: UIViewController {
     // On New Notebook Done
     func onNewNotebookDone() {
         
+        /* create */
+        let notebook = Notebook.create(name: nameTextField.text!)
+        if (self.delegate != nil) { // Delegate
+            self.delegate!.newNotebookViewController(self, didCreateNotebook: notebook!)
+        }
+        
         /* done */
         self.presentingViewController?.dismiss(animated: true)
     }
@@ -71,6 +85,7 @@ extension NewNotebookViewController {
         
         // TEXT FIELD
         nameTextField.tintColor = Styles.activeColor
+        nameTextField.addTarget(self, action: #selector(nameTextFieldDidChange), for: UIControlEvents.editingChanged)
         
         /* NAVIGATIONBAR */
         self.cancelButtonItem = UIBarButtonItem(title: i18NString("es.atenet.app.Cancel"), style: .done, target: self, action: #selector(cancelAction))
@@ -91,6 +106,9 @@ extension NewNotebookViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.025, execute: {
             self.presentingViewController?.dismiss(animated: true)
         })
+    }
+    @objc func nameTextFieldDidChange(textField: UITextField) {
+        self.navigationItem.rightBarButtonItem?.isEnabled = (textField.text!.count > 0)
     }
     
     // MARK: - Instance Methods

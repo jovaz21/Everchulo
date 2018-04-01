@@ -143,6 +143,13 @@ class NoteDetailViewController: UIViewController {
         if (self.delegate != nil) { // Delegate
             self.delegate!.noteDetailViewController(self, didCreateNote: self.note!)
         }
+        
+        /* cleanup */
+        Notebook.listAll().forEach() {
+            if ($0.activeNotes.count <= 0) {
+                $0.delete()
+            }
+        }
 
         /* done */
         self.presentingViewController?.dismiss(animated: false)
