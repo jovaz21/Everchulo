@@ -19,6 +19,7 @@ class NotebookSelectorTableViewController: UITableViewController {
     let model: Note
         
     // MARK: - Properties
+    var viewMode: ViewMode = .move
     var fetchedResultsController: NSFetchedResultsController<Notebook>!
     var selectedRow: Int = -1
     var lastTappedRow: Int = -1
@@ -34,7 +35,7 @@ class NotebookSelectorTableViewController: UITableViewController {
         
         /* set */
         super.init(style: UITableViewStyle.plain)
-        self.title = i18NString("NotebookSelectorTableViewController.title")
+        self.title = i18NString("NotebookSelectorTableViewController.\(viewMode.rawValue).title")
     }
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
     
@@ -53,6 +54,25 @@ class NotebookSelectorTableViewController: UITableViewController {
         
     // On Row Selected:
     func onRowSelected(at indexPath: IndexPath) {
+        
+        /* check */
+        if (self.viewMode == .select) {
+            DispatchQueue.main.async {
+                
+                /* set */
+                self.selectedRow = self.lastTappedRow
+                let notebook = self.fetchedResultsController.object(at: IndexPath(row: self.selectedRow, section: 0))
+                
+                /* delegate */
+                if (self.delegate != nil) { // Delegate
+                    self.delegate!.notebookSelectorTableViewController(self, didSelectNotebook: notebook)
+                }
+                
+                /* */
+                self.presentingViewController?.dismiss(animated: true)
+            }
+            return
+        }
         
         // Declare Alert message
         let dialogMessage = UIAlertController(title: "\(i18NString("NotebookSelectorTableViewController.confirmMsg")) '\(fetchedResultsController.object(at: IndexPath(row: self.lastTappedRow, section: 0)).name!)'?", message: "", preferredStyle: .alert)
@@ -102,6 +122,12 @@ class NotebookSelectorTableViewController: UITableViewController {
 // MARK: - View Stuff
 extension NotebookSelectorTableViewController {
     
+    // View Mode
+    enum ViewMode: String {
+        case select
+        case move
+    }
+    
     // Setup UIView:
     //  - Creates a UIBarButtonItem so that Users can ...
     func setupUIView() {
@@ -138,6 +164,17 @@ extension NotebookSelectorTableViewController {
         self.fetchedResultsController.delegate = self
         try! self.fetchedResultsController.performFetch()
     }
+    func setViewMode(_ value: ViewMode) {
+        
+        /* set */
+        self.viewMode = value
+        
+        /* set */
+        self.title = i18NString("NotebookSelectorTableViewController.\(viewMode.rawValue).title")
+        
+        /* done */
+        return
+    }
     
     // MARK: - Table View DISPLAY Delegate Functions
     
@@ -160,7 +197,7 @@ extension NotebookSelectorTableViewController {
         
         /* set */
         cell.imageView?.image = UIImage(named: "notebook")
-        cell.textLabel?.text = "\(notebook.name ?? "") (\(notebook.notes?.count ?? 0))"
+        cell.textLabel?.text = "\(notebook.name ?? "") (\(notebook.activeNotes.count))"
         if (self.model.notebook == notebook) {
             cell.accessoryType = UITableViewCellAccessoryType.checkmark
             self.selectedRow = indexPath.row

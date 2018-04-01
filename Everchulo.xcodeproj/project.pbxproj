@@ -216,7 +216,6 @@
 				C741C1B52061AF680049E279 /* NoteTableViewController.swift */,
 				C7613EA42069A98000AAEE2E /* NoteDetailViewController.swift */,
 				C715BE69206BBD25009071FD /* NotebookSelectorTableViewController.swift */,
-				C715BE6A206BBD25009071FD /* NotebookSelectorTableViewController.xib */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -226,6 +225,7 @@
 			children = (
 				C7613E9D2067A43400AAEE2E /* NoteTableViewController */,
 				C7613EA52069A98000AAEE2E /* NoteDetailViewController.xib */,
+				C715BE6A206BBD25009071FD /* NotebookSelectorTableViewController.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";

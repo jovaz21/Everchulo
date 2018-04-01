@@ -16,16 +16,17 @@ protocol NoteDetailViewControllerDelegate: AnyObject {
 
 // MARK: - Controller Stuff
 class NoteDetailViewController: UIViewController {
-    let model: Note
+    var viewMode: ViewMode = .edit
+    var notebook: Notebook? = nil
+    var note: Note? = nil
     
     // Delegate
     weak var delegate: NoteDetailViewControllerDelegate?
     
     // MARK: - Init
-    init(model: Note) {
-        
-        /* set */
-        self.model = model
+    init(notebook: Notebook? = nil, note: Note? = nil) {
+        self.notebook = notebook
+        self.note = note
         
         /* set */
         super.init(nibName: nil, bundle: Bundle(for: type(of: self)))
@@ -42,6 +43,27 @@ class NoteDetailViewController: UIViewController {
     // View Will Appear:
     //  - Paint UIView
     override func viewWillAppear(_ animated: Bool) { super.viewWillAppear(animated)
+        
+        /* check */
+        if (self.notebook == nil) {
+            self.notebook = Notebook.getActive()
+            
+            /* check */
+            if (self.notebook == nil) {
+                self.notebook = Notebook.create(name: "Primera libreta")
+                self.notebook?.setActive()
+            }
+        }
+        
+        /* check */
+        if (self.note == nil) {
+            
+            /* New Note */
+            self.viewMode = .new
+            
+            /* create */
+            self.note = Note.create(notebook!)!
+        }
         
         // Paint UIView
         self.paintUIView()
@@ -63,8 +85,13 @@ class NoteDetailViewController: UIViewController {
     func onSelectNotebook() {
         
         /* set */
-        let notebookSelectorVC = NotebookSelectorTableViewController(model: self.model)
+        let notebookSelectorVC = NotebookSelectorTableViewController(model: self.note!)
         notebookSelectorVC.delegate = self
+        
+        /* check */
+        if (self.viewMode == .new) {
+            notebookSelectorVC.setViewMode(.select)
+        }
         
         /* show */
         self.present(notebookSelectorVC.wrappedInNavigation(), animated: true)
@@ -77,17 +104,17 @@ class NoteDetailViewController: UIViewController {
         
         /* check */
         if (titleText!.count > 0) {
-            self.model.title = titleText
+            self.note!.title = titleText
         }
         if (contentText!.count > 0) {
-            self.model.content = contentText
+            self.note!.content = contentText
         }
         
         /* check */
-        if ((self.model.title == nil) && (self.model.content == nil)) {
+        if ((self.note!.title == nil) && (self.note!.content == nil)) {
             
             /* delete */
-            self.model.delete()
+            self.note!.delete()
             
             /* done */
             self.presentingViewController?.dismiss(animated: false)
@@ -95,26 +122,26 @@ class NoteDetailViewController: UIViewController {
         }
         
         /* check */
-        if (self.model.title == nil) {
-            self.model.title = self.model.content
+        if (self.note!.title == nil) {
+            self.note!.title = self.note!.content
         }
-        if (self.model.content == nil) {
-            self.model.content = self.model.title
+        if (self.note!.content == nil) {
+            self.note!.content = self.note!.title
         }
             
         /* save */
-        print("!!!<NoteDetailViewController> onNoteDone: Setting New Note ACTIVE, notebookActiveNotesCount=", self.model.notebook!.activeNotes.count)
+        print("!!!<NoteDetailViewController> onNoteDone: Setting New Note ACTIVE, notebookActiveNotesCount=", self.note!.notebook!.activeNotes.count)
         if (self.delegate != nil) { // Delegate
-            self.delegate!.noteDetailViewController(self, willCreateNote: self.model)
+            self.delegate!.noteDetailViewController(self, willCreateNote: self.note!)
         }
-        self.model.notebook!.setActive()
-        self.model.notebook!.save()
-        self.model.setActive()
-        print("!!!<NoteDetailViewController> onNoteDone: Saving Data, notebookActiveNotesCount=", self.model.notebook!.activeNotes.count)
-        self.model.save()
-        print("!!!<NoteDetailViewController> onNoteDone: New Note Added, notebookActiveNotesCount=", self.model.notebook!.activeNotes.count)
+        self.note!.notebook!.setActive()
+        self.note!.notebook!.save()
+        self.note!.setActive()
+        print("!!!<NoteDetailViewController> onNoteDone: Saving Data, notebookActiveNotesCount=", self.note!.notebook!.activeNotes.count)
+        self.note!.save()
+        print("!!!<NoteDetailViewController> onNoteDone: New Note Added, notebookActiveNotesCount=", self.note!.notebook!.activeNotes.count)
         if (self.delegate != nil) { // Delegate
-            self.delegate!.noteDetailViewController(self, didCreateNote: self.model)
+            self.delegate!.noteDetailViewController(self, didCreateNote: self.note!)
         }
 
         /* done */
@@ -128,9 +155,9 @@ class NoteDetailViewController: UIViewController {
         
         /* set */
         self.setUIViewData(NoteViewData(
-            notebookName:   model.notebook?.name,
-            title:          model.title,
-            content:        model.content
+            notebookName:   note!.notebook?.name,
+            title:          note!.title,
+            content:        note!.content
         ))
         
         /* focus */
@@ -168,6 +195,12 @@ struct NoteViewData {
     let content:        String?
 }
 extension NoteDetailViewController {
+    
+    // View Mode
+    enum ViewMode: String {
+        case new
+        case edit
+    }
     
     // Setup UIView
     func setupUIView() {
@@ -230,6 +263,16 @@ extension NoteDetailViewController {
         }
         print("!!! setUIViewData: Done")
     }
+    
+    // MARK: - Instance Methods
+    func setViewMode(_ value: ViewMode) {
+        
+        /* set */
+        self.viewMode = value
+        
+        /* done */
+        return
+    }
 }
 
 // NotebookSelectorTableViewController Delegate
@@ -237,7 +280,7 @@ extension NoteDetailViewController: NotebookSelectorTableViewControllerDelegate 
     func notebookSelectorTableViewController(_ vc: NotebookSelectorTableViewController, didSelectNotebook notebook: Notebook) {
         print("!!! didSelectNotebook: Entering, notebook=", notebook)
         //self.model.notebook?.removeFromNotes(self.model)
-        self.model.moveToNotebook(notebook)
+        self.note!.moveToNotebook(notebook)
         print("!!! didSelectNotebook: Done")
     }
 }

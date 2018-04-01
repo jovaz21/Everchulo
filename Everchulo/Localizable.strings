@@ -25,7 +25,8 @@
 "NoteDetailsViewController.contentPlaceHolder" = "Empieza a escribir...";
 
 // NotebookSelectorTableViewController
-"NotebookSelectorTableViewController.title" = "Trasladar Nota";
+"NotebookSelectorTableViewController.move.title" = "Trasladar Nota";
+"NotebookSelectorTableViewController.select.title" = "Seleccionar Libreta";
 "NotebookSelectorTableViewController.confirmMsg" = "¿Estás seguro que quieres trasladar esta nota hacia la libreta";
 "NotebookSelectorTableViewController.moveMsg" = "Trasladar";
 

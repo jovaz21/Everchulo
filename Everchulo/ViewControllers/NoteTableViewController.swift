@@ -116,36 +116,8 @@ class NoteTableViewController: UITableViewController {
     // - If no Active Notebook is retrieved, create a default one
     // - Add an empty Note to the Notebook
     // - Present NoteDetailViewController to the user...
-    func onNewNote(_ givenNotebook: Notebook? = nil) {
-        var notebook: Notebook? = givenNotebook
-        
-        /* */
-        if (notebook == nil) {
-            print("!!!NUEVA NOTA <Sin Notebook>")
-        }
-        
-        /* check */
-        if (notebook == nil) {
-            notebook = Notebook.getActive()
-            
-            /* check */
-            if (notebook == nil) {
-                notebook = Notebook.create(name: "Primera libreta")
-                print("!!!NEW NOTEBOOK", notebook!.objectID)
-                notebook?.setActive()
-            }
-        }
-        
-        /* */
-        let objectID    = notebook!.objectID
-        let name        = notebook!.name!
-        print("!!!NUEVA NOTA <'\(name)', '\(objectID)>'")
-        
-        /* create */
-        let note = Note.create(notebook!)!
-        
-        /* show */
-        let noteDetailVC = NoteDetailViewController(model: note)
+    func onNewNote(_ notebook: Notebook? = nil) {
+        let noteDetailVC = NoteDetailViewController(notebook: notebook)
         noteDetailVC.delegate = self
         self.present(noteDetailVC.wrappedInNavigation(), animated: true)
     }
@@ -228,7 +200,7 @@ extension NoteTableViewController {
                 title:      i18NString("NoteTableViewController.notebookSettingsMsg"),
                 style:      .default,
                 image:      UIImage(named: "notebook"),
-                hidden:     (self.fetchedNotebooksController.fetchedObjects!.count != 1),
+                hidden:     (self.fetchedNotesController.sections!.count != 1),
                 handler:    { (alertAction) in
                     //self.present(imagePicker, animated: true, completion: nil)
                 }
@@ -237,7 +209,7 @@ extension NoteTableViewController {
                 title:      i18NString("NoteTableViewController.notebooksSettingsMsg"),
                 style:      .default,
                 image:      UIImage(named: "notebook"),
-                hidden:     (self.fetchedNotebooksController.fetchedObjects!.count <= 1),
+                hidden:     (self.fetchedNotesController.sections!.count <= 1),
                 handler:    { (alertAction) in
                     //self.present(imagePicker, animated: true, completion: nil)
                 }
@@ -300,11 +272,14 @@ extension NoteTableViewController {
     
     /* SECTIONS */
     override func numberOfSections(in tableView: UITableView) -> Int {
-        let notebooks = fetchedNotebooksController.fetchedObjects?.filter() {
-            return($0.activeNotes.count > 0)
-        }
-        print("numberOfSections: ", notebooks!.count)
-        return(notebooks!.count)
+        //let notebooks = fetchedNotebooksController.fetchedObjects?.filter() {
+        //    return($0.activeNotes.count > 0)
+        //}
+        //print("numberOfSections: ", notebooks!.count)
+        //return(notebooks!.count)
+        
+        print("!!! numberOfSections: ", fetchedNotesController.sections!.count)
+        return(fetchedNotesController.sections!.count)
     }
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         var notebooks = fetchedNotebooksController.fetchedObjects?.filter() {
@@ -369,9 +344,9 @@ extension NoteTableViewController {
     
     /* ROWS */
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        var notebooks = fetchedNotebooksController.fetchedObjects?.filter() {
-            return($0.activeNotes.count > 0)
-        }
+        //var notebooks = fetchedNotebooksController.fetchedObjects?.filter() {
+        //    return($0.activeNotes.count > 0)
+        //}
         //print("!!! numberOfRowsInSection: ", section, notebooks![section].activeNotes.count)
         //return(notebooks![section].activeNotes.count)
         
@@ -435,38 +410,33 @@ extension NoteTableViewController {
      }
      override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let notebooks = fetchedNotebooksController.fetchedObjects?.filter() {
+            var notebooks = fetchedNotebooksController.fetchedObjects?.filter() {
                 return($0.activeNotes.count > 0)
             }
             let notebook    = notebooks![indexPath.section]
-            notebook.sortedNotes[indexPath.row].delete(commit: true)
+            var notes       = notebook.sortedNotes
+            let note        = notes[indexPath.row]
+            
+            /* trash */
+            note.moveToTrash()
+            notes.remove(at: notes.index(of: note)!)
+            
+            /* check */
+            if (notes.count <= 0) {
+                notebooks!.remove(at: notebooks!.index(of: notebook)!)
+                if (notebook.isActive() && (notebooks!.count > 0)) {
+                    notebooks![0].setActive()
+                }
+            }
+            
+            /* commit */
+            DataManager.save()
         }
      }
 }
 
-// NSFetchedResultsController Delegate
+// MARK: NSFetchedResultsController Delegate
 extension NoteTableViewController: NSFetchedResultsControllerDelegate {
-    
-    // Fetched Results Did Changed
-    func controllerDidChangeContentxxx(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        print("!!!controllerDidChangeContent: objectsCount=", controller.fetchedObjects?.count ?? 0)
-        print("!!!!!controllerDidChangeContent", self.view.isHidden)
-        DispatchQueue.main.async {
-            
-            /* reload */
-            self.tableView.reloadData()
-            
-            /* check */
-            if (self.fetchedNotesController.fetchedObjects!.count <= 0) {
-                self.editButtonItem.setHidden(true)
-                self.menuBarButtonItem.setHidden(true)
-            }
-            else {
-                self.editButtonItem.setHidden(false)
-                self.menuBarButtonItem.setHidden(false)
-            }
-        }
-    }
     
     // Begin Updates on UITableView
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
@@ -531,7 +501,10 @@ extension NoteTableViewController: NSFetchedResultsControllerDelegate {
             break
         case .update:
             print("!!!controllerDidChangeObject: <ReloadData>")
-            //self.tableView.reloadData()
+            if (newIndexPath != indexPath) {
+                print("!!!controllerDidChangeObject: UPDATING from ", indexPath!, " to ", newIndexPath!)
+                self.tableView.moveRow(at: indexPath!, to: newIndexPath!)
+            }
             break
         case .move:
             print("!!!controllerDidChangeObject: MOVE")
@@ -559,7 +532,7 @@ extension NoteTableViewController: NSFetchedResultsControllerDelegate {
             /* check */
             if (controller.fetchedObjects!.count <= 0) {
                 self.editButtonItem.setHidden(true)
-                self.menuBarButtonItem.setHidden(true)
+                self.menuBarButtonItem.setHidden(Note.listTrashed().count <= 0)
             }
             else {
                 self.editButtonItem.setHidden(false)
