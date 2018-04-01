@@ -38,13 +38,13 @@ extension Note {
     }
     
     // Returns Fetch Request for Results with Status
-    static func fetchRequestForResultsWithStatus(_ status: String, from givenCtx: NSManagedObjectContext? = nil) -> (ctx: NSManagedObjectContext, fetchRequest: NSFetchRequest<Note>) {
+    static func fetchRequestForResultsWithStatus(_ status: Status, from givenCtx: NSManagedObjectContext? = nil) -> (ctx: NSManagedObjectContext, fetchRequest: NSFetchRequest<Note>) {
         let ctx: NSManagedObjectContext = givenCtx ?? DataManager.shared.viewContext
         
         /* set */
         let fetchRequest: NSFetchRequest<Note> = Note.fetchRequest()
         fetchRequest.predicate = NSCompoundPredicate(orPredicateWithSubpredicates: [
-            NSPredicate(format: "status == %@", status)
+            NSPredicate(format: "status == %@", status.rawValue)
         ])
         
         /* done */
@@ -79,7 +79,7 @@ extension Note {
     
     // List Trashed
     static func listTrashed(from givenCtx: NSManagedObjectContext? = nil, returnsObjectsAsFaults: Bool? = true) -> [Note] {
-        let (ctx, fetchRequest) = Note.fetchRequestForResultsWithStatus(Status.TRASHED.rawValue, from: givenCtx)
+        let (ctx, fetchRequest) = Note.fetchRequestForResultsWithStatus(Status.TRASHED, from: givenCtx)
         
         /* set */
         fetchRequest.returnsObjectsAsFaults = returnsObjectsAsFaults!

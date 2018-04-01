@@ -71,13 +71,14 @@ class NoteTableViewController: UITableViewController {
     // View Will Appear:
     // Always Set LastSelected Note as Selected
     override func viewWillAppear(_ animated: Bool) { super.viewWillAppear(animated)
+        
+        /* check */
         if (self.viewMode == .SingleView) {
             return
         }
+        
+        /* select */
         tableView.selectRow(at: IndexPath(row: self.lastSelectedRow, section: self.lastSelectedSection), animated: false, scrollPosition: .none)
-    }
-    
-    override func viewDidAppear(_ animated: Bool) { super.viewDidAppear(animated)
     }
     
     // View Will Disappear:
@@ -91,11 +92,7 @@ class NoteTableViewController: UITableViewController {
     //  - Notify Observers
     //  - Remember Row as Last Selected
     func onRowSelected(at indexPath: IndexPath) {
-        var notebooks = fetchedNotebooksController.fetchedObjects?.filter() {
-            return($0.activeNotes.count > 0)
-        }
-        let notebook    = notebooks![indexPath.section]
-        let note        = notebook.sortedNotes[indexPath.row]
+        let note = self.getNote(section: indexPath.section, row: indexPath.row)
         
         /* delegate */
         if (delegate != nil) { // Delegate
@@ -220,7 +217,8 @@ extension NoteTableViewController {
                 image:      UIImage(named: "trash_img"),
                 hidden:     (trashedNotesCount <= 0),
                 handler:    { (alertAction) in
-                    //self.present(imagePicker, animated: true, completion: nil)
+                    let noteTrashVC = NoteTrashViewController()
+                    self.present(noteTrashVC.wrappedInNavigation(), animated: true, completion: nil)
                 }
             ),
             (
@@ -245,6 +243,8 @@ extension NoteTableViewController {
         /* done */
         return
     }
+    
+    // Fetch Data
     func fetchAll() {
         fetchAllNotebooks()
         fetchAllNotes()
@@ -268,24 +268,29 @@ extension NoteTableViewController {
         try! self.fetchedNotesController.performFetch()
     }
     
+    // Get Notebook(s)/Note(s)
+    func getNotebooks() -> [Notebook] {
+        let notebooks = fetchedNotebooksController.fetchedObjects?.filter() {
+            return($0.activeNotes.count > 0)
+        }
+        return(notebooks!)
+    }
+    func getNotebook(section: Int) -> Notebook {
+        return(self.getNotebooks()[section])
+    }
+    func getNote(section: Int, row: Int) -> Note {
+        return(self.getNotebook(section: section).sortedNotes[row])
+    }
+    
     // MARK: - Table View DISPLAY Delegate Functions
     
     /* SECTIONS */
     override func numberOfSections(in tableView: UITableView) -> Int {
-        //let notebooks = fetchedNotebooksController.fetchedObjects?.filter() {
-        //    return($0.activeNotes.count > 0)
-        //}
-        //print("numberOfSections: ", notebooks!.count)
-        //return(notebooks!.count)
-        
         print("!!! numberOfSections: ", fetchedNotesController.sections!.count)
         return(fetchedNotesController.sections!.count)
     }
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        var notebooks = fetchedNotebooksController.fetchedObjects?.filter() {
-            return($0.activeNotes.count > 0)
-        }
-        let notebook = notebooks![section]
+        let notebook = self.getNotebook(section: section)
         
         /* set */
         let backView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.width, height: SECTIONHEADER_HEIGHT))
@@ -344,12 +349,6 @@ extension NoteTableViewController {
     
     /* ROWS */
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        //var notebooks = fetchedNotebooksController.fetchedObjects?.filter() {
-        //    return($0.activeNotes.count > 0)
-        //}
-        //print("!!! numberOfRowsInSection: ", section, notebooks![section].activeNotes.count)
-        //return(notebooks![section].activeNotes.count)
-        
         print("!!! numberOfRowsInSection: ", section, fetchedNotesController.sections![section].numberOfObjects)
         return(fetchedNotesController.sections![section].numberOfObjects)
     }
@@ -360,23 +359,21 @@ extension NoteTableViewController {
         let cell = NoteTableViewCell.newLoadedCell
         
         /* set */
-        let notebooks = fetchedNotebooksController.fetchedObjects?.filter() {
-            return($0.activeNotes.count > 0)
-        }
-        let notebook    = notebooks![indexPath.section]
-        let note        = notebook.sortedNotes[indexPath.row]
+        let note = self.getNote(section: indexPath.section, row: indexPath.row)
         
         /* set */
         cell.titleLabel.text    = note.title
         cell.dateLabel.text     = "23 mar'18"
         cell.contentLabel.text  = note.content
+        
+        /* set */
         cell.setImages(images: [UIImage]())
+        cell.cellDelegate = self
         
         /* TEST */
         print("!!!CELL FOR ROW AT: row=", indexPath.row, ", title='", note.title ?? "", "'")
         if (indexPath.row == 2) {
             cell.setImages(images: [UIImage(named: "Image_0")!,UIImage(named: "Image_1")!,UIImage(named: "Image_2")!,UIImage(named: "Image_3")!,UIImage(named: "Image_4")!])
-            cell.cellDelegate = self
         }
 
         /* donde */
@@ -404,16 +401,11 @@ extension NoteTableViewController {
             self.editButtonItem.title = i18NString("com.apple.UIKit.Edit")
         }
     }
-     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return(true)
-     }
+     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool { return(true) }
      override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            var notebooks = fetchedNotebooksController.fetchedObjects?.filter() {
-                return($0.activeNotes.count > 0)
-            }
-            let notebook    = notebooks![indexPath.section]
+            var notebooks   = self.getNotebooks()
+            let notebook    = notebooks[indexPath.section]
             var notes       = notebook.sortedNotes
             let note        = notes[indexPath.row]
             
@@ -423,9 +415,9 @@ extension NoteTableViewController {
             
             /* check */
             if (notes.count <= 0) {
-                notebooks!.remove(at: notebooks!.index(of: notebook)!)
-                if (notebook.isActive() && (notebooks!.count > 0)) {
-                    notebooks![0].setActive()
+                notebooks.remove(at: notebooks.index(of: notebook)!)
+                if (notebook.isActive() && (notebooks.count > 0)) {
+                    notebooks[0].setActive()
                 }
             }
             
@@ -508,9 +500,6 @@ extension NoteTableViewController: NSFetchedResultsControllerDelegate {
             break
         case .move:
             print("!!!controllerDidChangeObject: MOVE")
-            //self.tableView.deleteRows(at: [indexPath!], with: .none)
-            //self.tableView.insertRows(at: [newIndexPath!], with: .none)
-            //self.tableView.reloadData()
             if (newIndexPath != indexPath) {
                 print("!!!controllerDidChangeObject: MOVING from ", indexPath!, " to ", newIndexPath!)
                 self.tableView.moveRow(at: indexPath!, to: newIndexPath!)
@@ -523,22 +512,22 @@ extension NoteTableViewController: NSFetchedResultsControllerDelegate {
     // End Updates on UITableView
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         print("!!!controllerDidChangeContent: numberOfSections", self.tableView.numberOfSections)
-        //DispatchQueue.main.async {
         
-            /* */
-            self.tableView.endUpdates()
-            self.tableView.reloadData()
+        /* */
+        self.tableView.endUpdates()
+        self.tableView.reloadData()
         
-            /* check */
-            if (controller.fetchedObjects!.count <= 0) {
-                self.editButtonItem.setHidden(true)
-                self.menuBarButtonItem.setHidden(Note.listTrashed().count <= 0)
-            }
-            else {
-                self.editButtonItem.setHidden(false)
-                self.menuBarButtonItem.setHidden(false)
-            }
-        //}
+        /* check */
+        if (controller.fetchedObjects!.count <= 0) {
+            self.editButtonItem.setHidden(true)
+            self.menuBarButtonItem.setHidden(Note.listTrashed().count <= 0)
+        }
+        else {
+            self.editButtonItem.setHidden(false)
+            self.menuBarButtonItem.setHidden(false)
+        }
+        
+        /* */
         var i = 0
         while (i < self.tableView.numberOfSections) {
             print("!!!controllerDidChangeContent: numberOfObjects[", i, "]=", self.tableView.numberOfRows(inSection: i))
@@ -547,6 +536,7 @@ extension NoteTableViewController: NSFetchedResultsControllerDelegate {
     }
 }
 
+// NoteDetailViewController Delegate
 extension NoteTableViewController: NoteDetailViewControllerDelegate {
     func noteDetailViewController(_ vc: NoteDetailViewController, willCreateNote note: Note) {
         print("!!!willCreateNote: numberOfSections", self.tableView.numberOfSections)

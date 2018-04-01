@@ -30,3 +30,9 @@
 "NotebookSelectorTableViewController.confirmMsg" = "¿Estás seguro que quieres trasladar esta nota hacia la libreta";
 "NotebookSelectorTableViewController.moveMsg" = "Trasladar";
 
+// NoteTrashViewController
+"NoteTrashViewController.title" = "Papelera";
+"NoteTrashViewController.confirmRecoverMsg" = "¿Restaurar esta nota hacia la libreta";
+"NoteTrashViewController.recoverMsg" = "Restaurar";
+"NoteTrashViewController.confirmDeleteMsg" = "¿Eliminar definitivamente esta nota?";
+"NoteTrashViewController.deleteMsg" = "Eliminar";
