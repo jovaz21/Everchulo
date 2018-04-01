@@ -11,6 +11,7 @@
 "com.apple.UIKit.Done" = "Cancelar";
 
 // App Globals
+"es.atenet.app.Create" = "Crear";
 "es.atenet.app.Delete" = "Eliminar";
 "es.atenet.app.Cancel" = "Cancelar";
 
@@ -36,3 +37,6 @@
 "NoteTrashViewController.recoverMsg" = "Restaurar";
 "NoteTrashViewController.confirmDeleteMsg" = "¿Eliminar definitivamente esta nota?";
 "NoteTrashViewController.deleteMsg" = "Eliminar";
+
+// NewNotebookViewController
+"NewNotebookViewController.title" = "Nueva Libreta";

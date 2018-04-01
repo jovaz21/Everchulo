@@ -153,6 +153,8 @@ extension NotebookSelectorTableViewController {
         self.presentingViewController?.dismiss(animated: false)
     }
     @objc func addNotebookAction() {
+        let newNotebookVC = NewNotebookViewController()
+        self.present(newNotebookVC.wrappedInNavigation(), animated: true, completion: nil)
     }
     
     // MARK: - Instance Methods

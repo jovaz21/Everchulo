@@ -35,6 +35,8 @@
 		C741C1B82061AF680049E279 /* NoteTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C741C1B62061AF680049E279 /* NoteTableViewController.xib */; };
 		C75AC7A8207128DA00312D22 /* NoteTrashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75AC7A6207128DA00312D22 /* NoteTrashViewController.swift */; };
 		C75AC7A9207128DA00312D22 /* NoteTrashViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C75AC7A7207128DA00312D22 /* NoteTrashViewController.xib */; };
+		C75AC7AC207144CC00312D22 /* NewNotebookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75AC7AA207144CC00312D22 /* NewNotebookViewController.swift */; };
+		C75AC7AD207144CC00312D22 /* NewNotebookViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C75AC7AB207144CC00312D22 /* NewNotebookViewController.xib */; };
 		C7613E9F2067A82500AAEE2E /* UIBarButtonItem+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7613E9E2067A82500AAEE2E /* UIBarButtonItem+Additions.swift */; };
 		C7613EA22067B3AA00AAEE2E /* ImageDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7613EA02067B3AA00AAEE2E /* ImageDetailViewController.swift */; };
 		C7613EA32067B3AA00AAEE2E /* ImageDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C7613EA12067B3AA00AAEE2E /* ImageDetailViewController.xib */; };
@@ -101,6 +103,8 @@
 		C741C1B62061AF680049E279 /* NoteTableViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoteTableViewController.xib; sourceTree = "<group>"; };
 		C75AC7A6207128DA00312D22 /* NoteTrashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteTrashViewController.swift; sourceTree = "<group>"; };
 		C75AC7A7207128DA00312D22 /* NoteTrashViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoteTrashViewController.xib; sourceTree = "<group>"; };
+		C75AC7AA207144CC00312D22 /* NewNotebookViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewNotebookViewController.swift; sourceTree = "<group>"; };
+		C75AC7AB207144CC00312D22 /* NewNotebookViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewNotebookViewController.xib; sourceTree = "<group>"; };
 		C7613E9E2067A82500AAEE2E /* UIBarButtonItem+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+Additions.swift"; sourceTree = "<group>"; };
 		C7613EA02067B3AA00AAEE2E /* ImageDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDetailViewController.swift; sourceTree = "<group>"; };
 		C7613EA12067B3AA00AAEE2E /* ImageDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageDetailViewController.xib; sourceTree = "<group>"; };
@@ -217,11 +221,11 @@
 			children = (
 				C741C1B92061AF720049E279 /* Views */,
 				C7157F8F205EBFEE00C652D8 /* EverchuloViewController.swift */,
+				C75AC7A6207128DA00312D22 /* NoteTrashViewController.swift */,
 				C741C1B52061AF680049E279 /* NoteTableViewController.swift */,
 				C7613EA42069A98000AAEE2E /* NoteDetailViewController.swift */,
 				C715BE69206BBD25009071FD /* NotebookSelectorTableViewController.swift */,
-				C75AC7A6207128DA00312D22 /* NoteTrashViewController.swift */,
-				C75AC7A7207128DA00312D22 /* NoteTrashViewController.xib */,
+				C75AC7AA207144CC00312D22 /* NewNotebookViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -229,9 +233,11 @@
 		C741C1B92061AF720049E279 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				C75AC7A7207128DA00312D22 /* NoteTrashViewController.xib */,
 				C7613E9D2067A43400AAEE2E /* NoteTableViewController */,
 				C7613EA52069A98000AAEE2E /* NoteDetailViewController.xib */,
 				C715BE6A206BBD25009071FD /* NotebookSelectorTableViewController.xib */,
+				C75AC7AB207144CC00312D22 /* NewNotebookViewController.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -358,6 +364,7 @@
 				C7613EA72069A98000AAEE2E /* NoteDetailViewController.xib in Resources */,
 				C74160242064F7CB00DBEEEE /* NoteTableViewCell.xib in Resources */,
 				C741C1B82061AF680049E279 /* NoteTableViewController.xib in Resources */,
+				C75AC7AD207144CC00312D22 /* NewNotebookViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -399,6 +406,7 @@
 				C7157FB5205EC91000C652D8 /* UIViewController+Additions.swift in Sources */,
 				C7613E9F2067A82500AAEE2E /* UIBarButtonItem+Additions.swift in Sources */,
 				C75AC7A8207128DA00312D22 /* NoteTrashViewController.swift in Sources */,
+				C75AC7AC207144CC00312D22 /* NewNotebookViewController.swift in Sources */,
 				C7BEAD4E206C3D60008483A0 /* Image+CoreDataClass.swift in Sources */,
 				C7157FB3205EC8EC00C652D8 /* Date+Additions.swift in Sources */,
 				C7BEAD50206C3D60008483A0 /* Image+CoreDataProperties.swift in Sources */,
