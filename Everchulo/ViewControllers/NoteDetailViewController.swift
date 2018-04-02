@@ -323,7 +323,6 @@ extension NoteDetailViewController {
 extension NoteDetailViewController: NotebookSelectorTableViewControllerDelegate {
     func notebookSelectorTableViewController(_ vc: NotebookSelectorTableViewController, didSelectNotebook notebook: Notebook) {
         print("!!! didSelectNotebook: Entering, notebook=", notebook)
-        //self.model.notebook?.removeFromNotes(self.model)
         self.note!.moveToNotebook(notebook)
         print("!!! didSelectNotebook: Done")
     }

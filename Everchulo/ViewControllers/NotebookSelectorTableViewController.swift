@@ -21,6 +21,10 @@ class NotebookSelectorTableViewController: UITableViewController {
     // MARK: - Properties
     var viewMode: ViewMode = .move
     var fetchedResultsController: NSFetchedResultsController<Notebook>!
+    
+    var selectedNotebook: Notebook? = nil
+    var lastTappedNotebook: Notebook? = nil
+    
     var selectedRow: Int = -1
     var lastTappedRow: Int = -1
     
@@ -60,8 +64,10 @@ class NotebookSelectorTableViewController: UITableViewController {
             DispatchQueue.main.async {
                 
                 /* set */
+                self.selectedNotebook = self.lastTappedNotebook
                 self.selectedRow = self.lastTappedRow
-                let notebook = self.fetchedResultsController.object(at: IndexPath(row: self.selectedRow, section: 0))
+                //let notebook = self.fetchedResultsController.object(at: IndexPath(row: self.selectedRow, section: 0))
+                let notebook = self.selectedNotebook!
                 
                 /* delegate */
                 if (self.delegate != nil) { // Delegate
@@ -75,15 +81,17 @@ class NotebookSelectorTableViewController: UITableViewController {
         }
         
         // Declare Alert message
-        let dialogMessage = UIAlertController(title: "\(i18NString("NotebookSelectorTableViewController.confirmMsg")) '\(fetchedResultsController.object(at: IndexPath(row: self.lastTappedRow, section: 0)).name!)'?", message: "", preferredStyle: .alert)
+        let dialogMessage = UIAlertController(title: "\(i18NString("NotebookSelectorTableViewController.confirmMsg")) '\(self.lastTappedNotebook!.name!)'?", message: "", preferredStyle: .alert)
         
         // Create OK button with action handler
         let ok = UIAlertAction(title: i18NString("NotebookSelectorTableViewController.moveMsg"), style: .default, handler: { (action) -> Void in
             DispatchQueue.main.async {
                 
                 /* set */
+                self.selectedNotebook = self.lastTappedNotebook
                 self.selectedRow = self.lastTappedRow
-                let notebook = self.fetchedResultsController.object(at: IndexPath(row: self.selectedRow, section: 0))
+                //let notebook = self.fetchedResultsController.object(at: IndexPath(row: self.selectedRow, section: 0))
+                let notebook = self.selectedNotebook!
 
                 /* delegate */
                 if (self.delegate != nil) { // Delegate
@@ -99,9 +107,12 @@ class NotebookSelectorTableViewController: UITableViewController {
         // Create Cancel button with action handlder
         let cancel = UIAlertAction(title: i18NString("es.atenet.app.Cancel"), style: .cancel) { (action) -> Void in
             DispatchQueue.main.async {
-                self.tableView.cellForRow(at: IndexPath(row: self.lastTappedRow, section: 0))?.accessoryType = .none
-                self.tableView.cellForRow(at: IndexPath(row: self.selectedRow, section: 0))?.accessoryType = .checkmark
+                //self.tableView.cellForRow(at: IndexPath(row: self.lastTappedRow, section: 0))?.accessoryType = .none
+                //self.tableView.cellForRow(at: IndexPath(row: self.selectedRow, section: 0))?.accessoryType = .checkmark
+                self.tableView.cellForRow(at: self.fetchedResultsController.indexPath(forObject: self.lastTappedNotebook!)!)?.accessoryType = .none
+                self.tableView.cellForRow(at: self.fetchedResultsController.indexPath(forObject: self.selectedNotebook!)!)?.accessoryType = .checkmark
                 self.lastTappedRow = self.selectedRow
+                self.lastTappedNotebook = self.selectedNotebook
             }
         }
         cancel.setValue(Styles.activeColor, forKey: "titleTextColor")
@@ -150,6 +161,15 @@ extension NotebookSelectorTableViewController {
         self.fetchAllNotebooks()
     }
     @objc func cancelAction() {
+        
+        /* cleanup */
+        Notebook.listAll().forEach() {
+            if ($0.activeNotes.count <= 0) {
+                $0.delete()
+            }
+        }
+        
+        /* */
         self.presentingViewController?.dismiss(animated: true)
     }
     @objc func addNotebookAction() {
@@ -201,10 +221,17 @@ extension NotebookSelectorTableViewController {
         /* set */
         cell.imageView?.image = UIImage(named: "notebook")
         cell.textLabel?.text = "\(notebook.name ?? "") (\(notebook.activeNotes.count))"
+        
         if (self.model.notebook == notebook) {
             cell.accessoryType = UITableViewCellAccessoryType.checkmark
             self.selectedRow = indexPath.row
             self.lastTappedRow = self.selectedRow
+            
+            self.selectedNotebook = notebook
+            self.lastTappedNotebook = self.selectedNotebook
+        }
+        else {
+            cell.accessoryType = UITableViewCellAccessoryType.none
         }
         cell.tintColor = Styles.activeColor
         
@@ -212,8 +239,13 @@ extension NotebookSelectorTableViewController {
         return(cell)
     }
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        if (self.lastTappedRow >= 0) {
-            let oldIndex = IndexPath(row: self.lastTappedRow, section: 0)
+
+        //if (self.lastTappedRow >= 0) {
+        //    let oldIndex = IndexPath(row: self.lastTappedRow, section: 0)
+        //    tableView.cellForRow(at: oldIndex)?.accessoryType = .none
+        //}
+        if (self.lastTappedNotebook != nil) {
+            let oldIndex = self.fetchedResultsController.indexPath(forObject: self.lastTappedNotebook!)!
             tableView.cellForRow(at: oldIndex)?.accessoryType = .none
         }
         tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
@@ -221,7 +253,8 @@ extension NotebookSelectorTableViewController {
     }
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.lastTappedRow = indexPath.row
-        tableView.deselectRow(at: IndexPath(row: self.lastTappedRow, section: 0), animated: true)
+        self.lastTappedNotebook = self.fetchedResultsController.object(at: indexPath)
+        tableView.deselectRow(at: indexPath, animated: true)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.025, execute: {
             self.onRowSelected(at: indexPath)
         })
@@ -241,7 +274,7 @@ extension NotebookSelectorTableViewController: NSFetchedResultsControllerDelegat
 extension NotebookSelectorTableViewController: NewNotebookViewControllerDelegate {
     
     // New Notebook Did Create
-    func newNotebookViewController(_ vc: NewNotebookViewController, didCreateNotebook notebook: Notebook) {
+    func newNotebookViewControllerXXX(_ vc: NewNotebookViewController, didCreateNotebook notebook: Notebook) {
         
         /* check */
         if (self.viewMode == .select) {
@@ -285,5 +318,23 @@ extension NotebookSelectorTableViewController: NewNotebookViewControllerDelegate
         // Present dialog message to user
         self.present(dialogMessage, animated: true, completion: nil)
 
+    }
+    func newNotebookViewController(_ vc: NewNotebookViewController, didCreateNotebook notebook: Notebook) {
+        
+        /* check */
+        if (self.viewMode == .select) {
+            
+            /* delegate */
+            if (self.delegate != nil) { // Delegate
+                self.delegate!.notebookSelectorTableViewController(self, didSelectNotebook: notebook)
+            }
+            
+            /* */
+            self.presentingViewController?.dismiss(animated: false)
+            return
+        }
+        
+        /* */
+        print("!!!<NotebookSelectorTableViewController> didCreateNotebook: notebook=", notebook)
     }
 }
