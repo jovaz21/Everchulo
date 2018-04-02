@@ -22,6 +22,7 @@
 "NoteTableViewController.trashMsg" = "Papelera";
 
 // NoteDetailViewController
+"NoteDetailsViewController.backButtonTitle" = "Notas";
 "NoteDetailsViewController.titlePlaceHolder" = "Título";
 "NoteDetailsViewController.contentPlaceHolder" = "Empieza a escribir...";
 

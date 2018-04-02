@@ -102,6 +102,14 @@ class NoteDetailViewController: UIViewController {
         let titleText = self.titleTextField.text
         let contentText = self.contentTextField.text
         
+        /* focus */
+        if (self.titleTextField.isFirstResponder) {
+            self.titleTextField.resignFirstResponder()
+        }
+        if (self.contentTextField.isFirstResponder) {
+            self.contentTextField.resignFirstResponder()
+        }
+        
         /* check */
         if (titleText!.count > 0) {
             self.note!.title = titleText
@@ -115,6 +123,13 @@ class NoteDetailViewController: UIViewController {
             
             /* delete */
             self.note!.delete()
+            
+            /* cleanup */
+            Notebook.listAll().forEach() {
+                if ($0.activeNotes.count <= 0) {
+                    $0.delete()
+                }
+            }
             
             /* done */
             self.presentingViewController?.dismiss(animated: false)
@@ -132,16 +147,24 @@ class NoteDetailViewController: UIViewController {
         /* save */
         print("!!!<NoteDetailViewController> onNoteDone: Setting New Note ACTIVE, notebookActiveNotesCount=", self.note!.notebook!.activeNotes.count)
         if (self.delegate != nil) { // Delegate
-            self.delegate!.noteDetailViewController(self, willCreateNote: self.note!)
+            if (self.viewMode == .new) {
+                self.delegate!.noteDetailViewController(self, willCreateNote: self.note!)
+            }
         }
-        self.note!.notebook!.setActive()
-        self.note!.notebook!.save()
-        self.note!.setActive()
+        if (!self.note!.notebook!.isActive()) {
+            self.note!.notebook!.setActive()
+            self.note!.notebook!.save()
+        }
+        if (!self.note!.isActive()) {
+            self.note!.setActive()
+        }
         print("!!!<NoteDetailViewController> onNoteDone: Saving Data, notebookActiveNotesCount=", self.note!.notebook!.activeNotes.count)
         self.note!.save()
         print("!!!<NoteDetailViewController> onNoteDone: New Note Added, notebookActiveNotesCount=", self.note!.notebook!.activeNotes.count)
         if (self.delegate != nil) { // Delegate
-            self.delegate!.noteDetailViewController(self, didCreateNote: self.note!)
+            if (self.viewMode == .new) {
+                self.delegate!.noteDetailViewController(self, didCreateNote: self.note!)
+            }
         }
         
         /* cleanup */
@@ -151,8 +174,13 @@ class NoteDetailViewController: UIViewController {
             }
         }
 
-        /* done */
-        self.presentingViewController?.dismiss(animated: false)
+        /* check */
+        if (self.viewMode == .new) {
+            self.presentingViewController?.dismiss(animated: true)
+        }
+        else {
+            self.navigationController?.popViewController(animated: true)
+        }
     }
 
     // Paint UIView
@@ -168,9 +196,11 @@ class NoteDetailViewController: UIViewController {
         ))
         
         /* focus */
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.025, execute: {
-            self.contentTextField.becomeFirstResponder()
-        })
+        if (self.viewMode == .new) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.025, execute: {
+                self.contentTextField.becomeFirstResponder()
+            })
+        }
         
         /* keyboard */
         let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(closeKeyboard))
@@ -228,14 +258,21 @@ extension NoteDetailViewController {
         titleTextField.placeholder = i18NString("NoteDetailsViewController.titlePlaceHolder")
         
         contentTextField.tintColor = Styles.activeColor
-        contentTextField.placeholder = i18NString("NoteDetailsViewController.contentPlaceHolder")
+        if (self.viewMode == .new) {
+            contentTextField.placeholder = i18NString("NoteDetailsViewController.contentPlaceHolder")
+        }
         
         /* NAVIGATIONBAR */
-        self.okButtonItem = UIBarButtonItem(title: "OK", style: .done, target: self, action: #selector(noteDoneAction))
-        self.okButtonItem.tintColor = Styles.activeColor
-        self.navigationItem.leftBarButtonItem = self.okButtonItem
-        self.navigationItem.leftBarButtonItem?.tintColor = Styles.activeColor
-        
+        if (self.viewMode == .new) {
+            self.okButtonItem = UIBarButtonItem(title: "OK", style: .done, target: self, action: #selector(noteDoneAction))
+            self.navigationItem.leftBarButtonItem = self.okButtonItem
+            self.navigationItem.leftBarButtonItem?.tintColor = Styles.activeColor
+        }
+        else {
+            self.okButtonItem = UIBarButtonItem(title: "OK", style: .done, target: self, action: #selector(noteDoneAction))
+            self.navigationItem.leftBarButtonItem = self.okButtonItem
+            self.navigationItem.leftBarButtonItem?.tintColor = Styles.activeColor
+        }
         self.menuBarButtonItem = UIBarButtonItem(image: UIImage(named: "dots-horizontal")!, style: .done, target: self, action: #selector(displayNoteMenuAction))
         self.menuBarButtonItem.tintColor = Styles.activeColor
         self.infosButtonItem = UIBarButtonItem(image: UIImage(named: "information-outline")!, style: .done, target: self, action: #selector(displayInfosAction))
@@ -289,5 +326,36 @@ extension NoteDetailViewController: NotebookSelectorTableViewControllerDelegate 
         //self.model.notebook?.removeFromNotes(self.model)
         self.note!.moveToNotebook(notebook)
         print("!!! didSelectNotebook: Done")
+    }
+}
+
+// MARK: - NoteTableViewControllerDelegate
+extension NoteDetailViewController: NoteTableViewControllerDelegate {
+    func noteTableViewController(_ vc: NoteTableViewController, didSelectNote note: Note) {
+        
+        /* set */
+        self.notebook   = note.notebook
+        self.note       = note
+        
+        /* check */
+        if (vc.splitViewController == nil) {
+            vc.navigationController?.pushViewController(self, animated: true)
+        }
+        else if (vc.splitViewController!.isCollapsed) {
+            vc.showDetailViewController(self, sender: vc)
+        }
+        else {
+            
+            /* paint */
+            paintUIView()
+            
+            /* check */
+            if (vc.splitViewController!.displayMode == .primaryOverlay) {
+                vc.splitViewController?.preferredDisplayMode = .primaryHidden
+            }
+        }
+        
+        /* done */
+        return
     }
 }

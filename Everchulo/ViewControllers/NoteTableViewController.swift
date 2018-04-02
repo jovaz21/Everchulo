@@ -87,7 +87,7 @@ class NoteTableViewController: UITableViewController {
         self.splitViewController?.preferredDisplayMode = .automatic
     }
     
-    // On Row Selected:
+    // MARK: - On Row Selected:
     //  - Invoke Delegate
     //  - Notify Observers
     //  - Remember Row as Last Selected
@@ -359,7 +359,9 @@ extension NoteTableViewController {
         let cell = NoteTableViewCell.newLoadedCell
         
         /* set */
+        print("!!!<NoteTableViewController> cellForRowAt: About to getNote at indexPath=", indexPath)
         let note = self.getNote(section: indexPath.section, row: indexPath.row)
+        print("!!!<NoteTableViewController> cellForRowAt: note=", note)
         
         /* set */
         cell.titleLabel.text    = note.title
