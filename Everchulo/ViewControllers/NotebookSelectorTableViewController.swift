@@ -16,7 +16,7 @@ protocol NotebookSelectorTableViewControllerDelegate: AnyObject {
 
 // MARK: - Controller Stuff
 class NotebookSelectorTableViewController: UITableViewController {
-    let model: Note
+    let notebook: Notebook
         
     // MARK: - Properties
     var viewMode: ViewMode = .move
@@ -32,10 +32,10 @@ class NotebookSelectorTableViewController: UITableViewController {
     weak var delegate: NotebookSelectorTableViewControllerDelegate?
     
     // MARK: - Init
-    init(model: Note) {
+    init(notebook: Notebook) {
         
         /* set */
-        self.model = model
+        self.notebook = notebook
         
         /* set */
         super.init(style: UITableViewStyle.plain)
@@ -60,6 +60,11 @@ class NotebookSelectorTableViewController: UITableViewController {
     func onRowSelected(at indexPath: IndexPath) {
         
         /* check */
+        if (self.lastTappedNotebook == self.notebook) {
+            return
+        }
+        
+        /* check */
         if (self.viewMode == .select) {
             DispatchQueue.main.async {
                 
@@ -80,49 +85,41 @@ class NotebookSelectorTableViewController: UITableViewController {
             return
         }
         
-        // Declare Alert message
-        let dialogMessage = UIAlertController(title: "\(i18NString("NotebookSelectorTableViewController.confirmMsg")) '\(self.lastTappedNotebook!.name!)'?", message: "", preferredStyle: .alert)
+        /* confirm */
+        let confirmDialog = makeConfirmDialog(title: "\(i18NString("NotebookSelectorTableViewController.confirmMsg")) '\(self.lastTappedNotebook!.name!)'?", message: "", okAction: (
+                title:      i18NString("NotebookSelectorTableViewController.moveMsg"),
+                style:      .default,
+                handler:    { (action) in DispatchQueue.main.async {
+                    
+                    /* set */
+                    self.selectedNotebook = self.lastTappedNotebook
+                    self.selectedRow = self.lastTappedRow
+                    //let notebook = self.fetchedResultsController.object(at: IndexPath(row: self.selectedRow, section: 0))
+                    let notebook = self.selectedNotebook!
+                    
+                    /* delegate */
+                    if (self.delegate != nil) { // Delegate
+                        self.delegate!.notebookSelectorTableViewController(self, didSelectNotebook: notebook)
+                    }
+                    
+                    /* */
+                    self.presentingViewController?.dismiss(animated: true)
+                }}
+            
+            ), cancelAction: (
+                title:      i18NString("es.atenet.app.Cancel"),
+                style:      .default,
+                handler:    { (action) in DispatchQueue.main.async {
+                    self.tableView.cellForRow(at: self.fetchedResultsController.indexPath(forObject: self.lastTappedNotebook!)!)?.accessoryType = .none
+                    self.tableView.cellForRow(at: self.fetchedResultsController.indexPath(forObject: self.selectedNotebook!)!)?.accessoryType = .checkmark
+                    self.lastTappedRow = self.selectedRow
+                    self.lastTappedNotebook = self.selectedNotebook
+                }}
+            )
+        )
         
-        // Create OK button with action handler
-        let ok = UIAlertAction(title: i18NString("NotebookSelectorTableViewController.moveMsg"), style: .default, handler: { (action) -> Void in
-            DispatchQueue.main.async {
-                
-                /* set */
-                self.selectedNotebook = self.lastTappedNotebook
-                self.selectedRow = self.lastTappedRow
-                //let notebook = self.fetchedResultsController.object(at: IndexPath(row: self.selectedRow, section: 0))
-                let notebook = self.selectedNotebook!
-
-                /* delegate */
-                if (self.delegate != nil) { // Delegate
-                    self.delegate!.notebookSelectorTableViewController(self, didSelectNotebook: notebook)
-                }
-                
-                /* */
-                self.presentingViewController?.dismiss(animated: true)
-            }
-        })
-        ok.setValue(Styles.activeColor, forKey: "titleTextColor")
-        
-        // Create Cancel button with action handlder
-        let cancel = UIAlertAction(title: i18NString("es.atenet.app.Cancel"), style: .cancel) { (action) -> Void in
-            DispatchQueue.main.async {
-                //self.tableView.cellForRow(at: IndexPath(row: self.lastTappedRow, section: 0))?.accessoryType = .none
-                //self.tableView.cellForRow(at: IndexPath(row: self.selectedRow, section: 0))?.accessoryType = .checkmark
-                self.tableView.cellForRow(at: self.fetchedResultsController.indexPath(forObject: self.lastTappedNotebook!)!)?.accessoryType = .none
-                self.tableView.cellForRow(at: self.fetchedResultsController.indexPath(forObject: self.selectedNotebook!)!)?.accessoryType = .checkmark
-                self.lastTappedRow = self.selectedRow
-                self.lastTappedNotebook = self.selectedNotebook
-            }
-        }
-        cancel.setValue(Styles.activeColor, forKey: "titleTextColor")
-        
-        //Add OK and Cancel button to dialog message
-        dialogMessage.addAction(ok)
-        dialogMessage.addAction(cancel)
-        
-        // Present dialog message to user
-        self.present(dialogMessage, animated: true, completion: nil)
+        /* present */
+        self.present(confirmDialog, animated: true, completion: nil)
     }
     
     // Action Buttons
@@ -144,15 +141,14 @@ extension NotebookSelectorTableViewController {
     func setupUIView() {
         
         /* NAVIGATIONBAR */
-        self.cancelButtonItem = UIBarButtonItem(title: "X", style: .done, target: self, action: #selector(cancelAction))
-        let normalTextAttributes: [NSAttributedStringKey: Any] =
-            [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 28.0),
-             NSAttributedStringKey.foregroundColor: Styles.activeColor]
-        self.cancelButtonItem.setTitleTextAttributes(normalTextAttributes, for: UIControlState.normal)
+        self.cancelButtonItem = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(cancelAction))
         self.navigationItem.leftBarButtonItem = self.cancelButtonItem
         self.navigationItem.leftBarButtonItem?.tintColor = Styles.activeColor
         
         self.addNotebookButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNotebookAction))
+        let normalTextAttributes: [NSAttributedStringKey: Any] =
+            [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 28.0),
+             NSAttributedStringKey.foregroundColor: Styles.activeColor]
         self.addNotebookButtonItem.setTitleTextAttributes(normalTextAttributes, for: UIControlState.normal)
         self.navigationItem.rightBarButtonItem = self.addNotebookButtonItem
         self.navigationItem.rightBarButtonItem?.tintColor = Styles.activeColor
@@ -222,7 +218,7 @@ extension NotebookSelectorTableViewController {
         cell.imageView?.image = UIImage(named: "notebook")
         cell.textLabel?.text = "\(notebook.name ?? "") (\(notebook.activeNotes.count))"
         
-        if (self.model.notebook == notebook) {
+        if (self.notebook == notebook) {
             cell.accessoryType = UITableViewCellAccessoryType.checkmark
             self.selectedRow = indexPath.row
             self.lastTappedRow = self.selectedRow

@@ -84,11 +84,7 @@ extension NoteTrashViewController {
         tableView.sectionHeaderHeight = SECTIONHEADER_HEIGHT
         
         /* NAVIGATIONBAR */
-        self.cancelButtonItem = UIBarButtonItem(title: "X", style: .done, target: self, action: #selector(cancelAction))
-        let normalTextAttributes: [NSAttributedStringKey: Any] =
-            [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 28.0),
-             NSAttributedStringKey.foregroundColor: Styles.activeColor]
-        self.cancelButtonItem.setTitleTextAttributes(normalTextAttributes, for: UIControlState.normal)
+        self.cancelButtonItem = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(cancelAction))
         self.navigationItem.leftBarButtonItem = self.cancelButtonItem
         self.navigationItem.leftBarButtonItem?.tintColor = Styles.activeColor
         

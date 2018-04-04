@@ -8,14 +8,14 @@
 
 import UIKit
 
-typealias UIAlertActionItem = (title: String, style: UIAlertActionStyle, hidden: Bool, image: UIImage?, handler: ((UIAlertAction) -> Void)?)
+typealias UIActionSheetMenuItem = (title: String, style: UIAlertActionStyle, hidden: Bool, image: UIImage?, handler: ((UIAlertAction) -> Void)?)
 
 // Make ActionSheet Menu
-func makeActionSheetMenu(title: String?, message: String?, items: UIAlertActionItem...) -> UIAlertController {
+func makeActionSheetMenu(title: String?, message: String?, items: UIActionSheetMenuItem...) -> UIAlertController {
     let actionSheetMenu = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
     
     /* add */
-    items.map({ (item: UIAlertActionItem) -> UIAlertAction? in
+    items.map({ (item: UIActionSheetMenuItem) -> UIAlertAction? in
         
         /* check */
         if (item.hidden) {
@@ -37,4 +37,21 @@ func makeActionSheetMenu(title: String?, message: String?, items: UIAlertActionI
 
     /* done */
     return(actionSheetMenu)
+}
+
+typealias UIConfirmActionItem = (title: String, style: UIAlertActionStyle?, handler: ((UIAlertAction) -> Void)?)
+
+// Make Confirm Dialog
+func makeConfirmDialog(title: String?, message: String?, okAction: UIConfirmActionItem, cancelAction: UIConfirmActionItem) -> UIAlertController {
+    let confirmDialog = UIAlertController(title: title, message: message, preferredStyle: .alert)
+    
+    /* add */
+    confirmDialog.addAction(UIAlertAction(title: okAction.title, style: okAction.style ?? .default, handler: okAction.handler))
+    //ok.setValue(Styles.activeColor, forKey: "titleTextColor")
+    confirmDialog.addAction(UIAlertAction(title: cancelAction.title, style: cancelAction.style ?? .cancel, handler: cancelAction.handler))
+    //cancel.setValue(Styles.activeColor, forKey: "titleTextColor")
+    confirmDialog.view.tintColor = Styles.activeColor
+    
+    /* done */
+    return(confirmDialog)
 }

@@ -199,7 +199,9 @@ extension NoteTableViewController {
                 image:      UIImage(named: "notebook"),
                 hidden:     (self.fetchedNotesController.sections!.count != 1),
                 handler:    { (alertAction) in
-                    //self.present(imagePicker, animated: true, completion: nil)
+                    let notebook = self.getNotebook(section: 0)
+                    let notebookDetailVC = NotebookDetailViewController(notebook: notebook)
+                    self.present(notebookDetailVC.wrappedInNavigation(), animated: true, completion: nil)
                 }
             ),
             (

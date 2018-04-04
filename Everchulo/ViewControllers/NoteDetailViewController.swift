@@ -59,7 +59,7 @@ class NoteDetailViewController: UIViewController {
         if (self.note == nil) {
             
             /* New Note */
-            self.viewMode = .new
+            self.setViewMode(.new)
             
             /* create */
             self.note = Note.create(notebook!)!
@@ -85,7 +85,7 @@ class NoteDetailViewController: UIViewController {
     func onSelectNotebook() {
         
         /* set */
-        let notebookSelectorVC = NotebookSelectorTableViewController(model: self.note!)
+        let notebookSelectorVC = NotebookSelectorTableViewController(notebook: self.note!.notebook!)
         notebookSelectorVC.delegate = self
         
         /* check */
@@ -221,8 +221,10 @@ class NoteDetailViewController: UIViewController {
     
     // Action Buttons
     var okButtonItem: UIBarButtonItem!
+    var backButtonItem: UIBarButtonItem!
     var infosButtonItem: UIBarButtonItem!
     var menuBarButtonItem: UIBarButtonItem!
+    var cameraButtonItem: UIBarButtonItem!
 }
 
 // MARK: - View Stuff
@@ -263,21 +265,31 @@ extension NoteDetailViewController {
         }
         
         /* NAVIGATIONBAR */
+        self.navigationController?.navigationBar.tintColor = Styles.activeColor
+        
+        self.okButtonItem = UIBarButtonItem(title: "OK", style: .done, target: self, action: #selector(noteDoneAction))
+        self.okButtonItem.tintColor = Styles.activeColor
+        self.backButtonItem = UIBarButtonItem(image: UIImage(named: "back-icon")!, style: .done, target: self, action: #selector(noteDoneAction))
+        self.backButtonItem.tintColor = Styles.activeColor
         if (self.viewMode == .new) {
-            self.okButtonItem = UIBarButtonItem(title: "OK", style: .done, target: self, action: #selector(noteDoneAction))
             self.navigationItem.leftBarButtonItem = self.okButtonItem
-            self.navigationItem.leftBarButtonItem?.tintColor = Styles.activeColor
         }
         else {
-            self.okButtonItem = UIBarButtonItem(title: "OK", style: .done, target: self, action: #selector(noteDoneAction))
-            self.navigationItem.leftBarButtonItem = self.okButtonItem
-            self.navigationItem.leftBarButtonItem?.tintColor = Styles.activeColor
+            self.navigationItem.leftBarButtonItem = self.backButtonItem
         }
-        self.menuBarButtonItem = UIBarButtonItem(image: UIImage(named: "dots-horizontal")!, style: .done, target: self, action: #selector(displayNoteMenuAction))
-        self.menuBarButtonItem.tintColor = Styles.activeColor
         self.infosButtonItem = UIBarButtonItem(image: UIImage(named: "information-outline")!, style: .done, target: self, action: #selector(displayInfosAction))
         self.infosButtonItem.tintColor = Styles.activeColor
-        self.navigationItem.rightBarButtonItems = [self.menuBarButtonItem, self.infosButtonItem]
+        self.navigationItem.rightBarButtonItems = [self.infosButtonItem]
+        
+        /* TOOLBAR */
+        navigationController?.toolbar.isHidden  = false
+        navigationController?.isToolbarHidden   = false
+        self.menuBarButtonItem = UIBarButtonItem(image: UIImage(named: "dots-horizontal")!, style: .done, target: self, action: #selector(displayNoteMenuAction))
+        self.menuBarButtonItem.tintColor = Styles.activeColor
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        self.cameraButtonItem = UIBarButtonItem(barButtonSystemItem: .camera, target: nil, action: nil)
+        self.cameraButtonItem.tintColor = Styles.activeColor
+        self.setToolbarItems([self.menuBarButtonItem, flexibleSpace, self.cameraButtonItem], animated: false)
     }
     @objc func selectNotebookAction() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.025, execute: {
@@ -313,6 +325,16 @@ extension NoteDetailViewController {
         
         /* set */
         self.viewMode = value
+        
+        /* check */
+        if (self.viewMode == .new) {
+            self.navigationItem.leftBarButtonItem = self.okButtonItem
+            self.menuBarButtonItem.setHidden(true)
+        }
+        else {
+            self.navigationItem.leftBarButtonItem = self.backButtonItem
+            self.menuBarButtonItem.setHidden(false)
+        }
         
         /* done */
         return

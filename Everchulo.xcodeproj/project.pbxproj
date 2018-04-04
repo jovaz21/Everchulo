@@ -23,6 +23,8 @@
 		C715BE6C206BBD25009071FD /* NotebookSelectorTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C715BE6A206BBD25009071FD /* NotebookSelectorTableViewController.xib */; };
 		C71E09772060154C00FE3D52 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E09762060154C00FE3D52 /* DataManager.swift */; };
 		C71E097920602D4F00FE3D52 /* NotebookTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E097820602D4F00FE3D52 /* NotebookTests.swift */; };
+		C7286EF320727B2F005EB1B1 /* NotebookDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7286EF120727B2F005EB1B1 /* NotebookDetailViewController.swift */; };
+		C7286EF420727B2F005EB1B1 /* NotebookDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C7286EF220727B2F005EB1B1 /* NotebookDetailViewController.xib */; };
 		C7415FE62062B6A200DBEEEE /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C7415FE52062B6A200DBEEEE /* Localizable.strings */; };
 		C7415FE82062CE8C00DBEEEE /* NSLocalizedString+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7415FE72062CE8C00DBEEEE /* NSLocalizedString+Helpers.swift */; };
 		C7415FEA2062D54000DBEEEE /* UIAlertController+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7415FE92062D54000DBEEEE /* UIAlertController+Helpers.swift */; };
@@ -91,6 +93,8 @@
 		C715BE6A206BBD25009071FD /* NotebookSelectorTableViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotebookSelectorTableViewController.xib; sourceTree = "<group>"; };
 		C71E09762060154C00FE3D52 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		C71E097820602D4F00FE3D52 /* NotebookTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotebookTests.swift; sourceTree = "<group>"; };
+		C7286EF120727B2F005EB1B1 /* NotebookDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotebookDetailViewController.swift; sourceTree = "<group>"; };
+		C7286EF220727B2F005EB1B1 /* NotebookDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotebookDetailViewController.xib; sourceTree = "<group>"; };
 		C7415FE52062B6A200DBEEEE /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		C7415FE72062CE8C00DBEEEE /* NSLocalizedString+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSLocalizedString+Helpers.swift"; sourceTree = "<group>"; };
 		C7415FE92062D54000DBEEEE /* UIAlertController+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Helpers.swift"; sourceTree = "<group>"; };
@@ -226,6 +230,7 @@
 				C7613EA42069A98000AAEE2E /* NoteDetailViewController.swift */,
 				C715BE69206BBD25009071FD /* NotebookSelectorTableViewController.swift */,
 				C75AC7AA207144CC00312D22 /* NewNotebookViewController.swift */,
+				C7286EF120727B2F005EB1B1 /* NotebookDetailViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -238,6 +243,7 @@
 				C7613EA52069A98000AAEE2E /* NoteDetailViewController.xib */,
 				C715BE6A206BBD25009071FD /* NotebookSelectorTableViewController.xib */,
 				C75AC7AB207144CC00312D22 /* NewNotebookViewController.xib */,
+				C7286EF220727B2F005EB1B1 /* NotebookDetailViewController.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -362,6 +368,7 @@
 				C7157F98205EBFEE00C652D8 /* Assets.xcassets in Resources */,
 				C715BE6C206BBD25009071FD /* NotebookSelectorTableViewController.xib in Resources */,
 				C7613EA72069A98000AAEE2E /* NoteDetailViewController.xib in Resources */,
+				C7286EF420727B2F005EB1B1 /* NotebookDetailViewController.xib in Resources */,
 				C74160242064F7CB00DBEEEE /* NoteTableViewCell.xib in Resources */,
 				C741C1B82061AF680049E279 /* NoteTableViewController.xib in Resources */,
 				C75AC7AD207144CC00312D22 /* NewNotebookViewController.xib in Resources */,
@@ -398,6 +405,7 @@
 				C7157F90205EBFEE00C652D8 /* EverchuloViewController.swift in Sources */,
 				C74160232064F7CB00DBEEEE /* NoteTableViewCell.swift in Sources */,
 				C7BEAD42206C3D60008483A0 /* Notebook+CoreDataClass.swift in Sources */,
+				C7286EF320727B2F005EB1B1 /* NotebookDetailViewController.swift in Sources */,
 				C7157F8E205EBFEE00C652D8 /* AppDelegate.swift in Sources */,
 				C715BE64206AB83C009071FD /* UITextView+Additions.swift in Sources */,
 				C7BEAD48206C3D60008483A0 /* Tag+CoreDataProperties.swift in Sources */,

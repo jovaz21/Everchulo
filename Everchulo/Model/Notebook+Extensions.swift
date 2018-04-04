@@ -127,6 +127,22 @@ extension Notebook {
         return(DataManager.delete(from: givenCtx, object: self, commit: commit))
     }
     
+    // Set Name
+    func setName(with givenCtx: NSManagedObjectContext? = nil, _ name: String, commit: Bool? = false) {
+        
+        /* set */
+        self.name = name
+        self.notes?.forEach() {(o: Any) in
+            let note = o as! Note
+            note.notebookDidUpdate()
+        }
+        
+        /* */
+        if (commit!) {
+            self.save(from: givenCtx)
+        }
+    }
+    
     // Set Active
     func setActive(with givenCtx: NSManagedObjectContext? = nil, commit: Bool? = false) {
         

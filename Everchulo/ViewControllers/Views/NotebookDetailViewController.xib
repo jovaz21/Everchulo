@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NotebookDetailViewController" customModule="Everchulo" customModuleProvider="target">
+            <connections>
+                <outlet property="activeLabel" destination="6cv-la-KY8" id="AgH-b7-Snu"/>
+                <outlet property="activeSwitch" destination="UEe-SI-ToB" id="BFM-al-zQH"/>
+                <outlet property="infosLabel" destination="oGo-Qe-aWQ" id="zka-rq-qRU"/>
+                <outlet property="nameLabel" destination="gOK-uP-dB1" id="TLi-VT-DTO"/>
+                <outlet property="nameTextField" destination="d5N-EE-TJB" id="KBN-oP-PY0"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="cnm-yp-a4K" userLabel="Form">
+                    <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Fec-iC-UZV" userLabel="Spacer1">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="20"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="20" id="xaq-TD-c65"/>
+                            </constraints>
+                        </view>
+                        <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="Ks6-6B-phX" userLabel="NameFieldSet">
+                            <rect key="frame" x="0.0" y="20" width="375" height="91.5"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text=" NOMBRE DE LIBRETA" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gOK-uP-dB1" userLabel="TitleLabel">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="18"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                    <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oKQ-KN-jg2">
+                                    <rect key="frame" x="0.0" y="22" width="375" height="51"/>
+                                    <subviews>
+                                        <textField opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Mi Libreta" textAlignment="natural" minimumFontSize="19" translatesAutoresizingMaskIntoConstraints="NO" id="d5N-EE-TJB" userLabel="NameTextField">
+                                            <rect key="frame" x="5" y="14" width="370" height="23"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="textColor"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                            <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="yes"/>
+                                        </textField>
+                                    </subviews>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="d5N-EE-TJB" secondAttribute="trailing" id="9ab-ya-k7x"/>
+                                        <constraint firstItem="d5N-EE-TJB" firstAttribute="top" secondItem="oKQ-KN-jg2" secondAttribute="top" constant="14" id="HSF-xP-lWZ"/>
+                                        <constraint firstAttribute="bottom" secondItem="d5N-EE-TJB" secondAttribute="bottom" constant="14" id="W3a-fK-gOR"/>
+                                        <constraint firstItem="d5N-EE-TJB" firstAttribute="leading" secondItem="oKQ-KN-jg2" secondAttribute="leading" constant="5" id="g1b-A1-5nM"/>
+                                    </constraints>
+                                </view>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="  1 Nota" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oGo-Qe-aWQ" userLabel="InfosLabel">
+                                    <rect key="frame" x="0.0" y="77" width="375" height="14.5"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                    <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                        </stackView>
+                        <view contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wdC-mK-61i" userLabel="Spacer2">
+                            <rect key="frame" x="0.0" y="111.5" width="375" height="10"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="10" id="s7c-dg-uLw"/>
+                            </constraints>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ql6-re-Vj6">
+                            <rect key="frame" x="0.0" y="121.5" width="375" height="50"/>
+                            <subviews>
+                                <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wp6-Um-7Bx" userLabel="ActiveFieldSet">
+                                    <rect key="frame" x="5" y="10" width="360" height="30"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6cv-la-KY8">
+                                            <rect key="frame" x="0.0" y="0.0" width="311" height="30"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UEe-SI-ToB">
+                                            <rect key="frame" x="311" y="0.0" width="51" height="30"/>
+                                        </switch>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </stackView>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstItem="wp6-Um-7Bx" firstAttribute="top" secondItem="Ql6-re-Vj6" secondAttribute="top" constant="10" id="KOy-es-g00"/>
+                                <constraint firstAttribute="bottom" secondItem="wp6-Um-7Bx" secondAttribute="bottom" constant="10" id="cis-Ag-8Oa"/>
+                                <constraint firstAttribute="height" constant="50" id="kTY-Bp-D9q"/>
+                                <constraint firstAttribute="trailing" secondItem="wp6-Um-7Bx" secondAttribute="trailing" constant="10" id="oPf-7C-16C"/>
+                                <constraint firstItem="wp6-Um-7Bx" firstAttribute="leading" secondItem="Ql6-re-Vj6" secondAttribute="leading" constant="5" id="sn8-am-BAu"/>
+                            </constraints>
+                        </view>
+                        <view contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="HNC-we-WVl" userLabel="Spacer3">
+                            <rect key="frame" x="0.0" y="171.5" width="375" height="80"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="80" id="A57-ij-X6J"/>
+                            </constraints>
+                        </view>
+                        <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5ZU-xR-DyQ" userLabel="DeleteButton">
+                            <rect key="frame" x="0.0" y="251.5" width="375" height="40"/>
+                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="4vf-7F-FH2"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                            <color key="tintColor" red="1" green="0.18386638089999999" blue="0.12572940599999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <state key="normal" title="Borrar Libreta"/>
+                            <connections>
+                                <action selector="deleteAction:" destination="-1" eventType="touchUpInside" id="K01-pT-FMz"/>
+                            </connections>
+                        </button>
+                        <view contentMode="scaleToFill" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="qEb-cy-yac" userLabel="Spacer4">
+                            <rect key="frame" x="0.0" y="291.5" width="375" height="355.5"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        </view>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="qEb-cy-yac" firstAttribute="top" secondItem="5ZU-xR-DyQ" secondAttribute="bottom" id="8sP-Vc-aQo"/>
+                        <constraint firstAttribute="bottom" secondItem="qEb-cy-yac" secondAttribute="bottom" id="A2f-yj-IJC"/>
+                        <constraint firstItem="5ZU-xR-DyQ" firstAttribute="top" secondItem="HNC-we-WVl" secondAttribute="bottom" id="G9F-aW-YAI"/>
+                        <constraint firstItem="Ks6-6B-phX" firstAttribute="top" secondItem="Fec-iC-UZV" secondAttribute="bottom" id="JG0-VS-qdD"/>
+                        <constraint firstItem="Fec-iC-UZV" firstAttribute="top" secondItem="cnm-yp-a4K" secondAttribute="top" id="Ncr-Ds-XhN"/>
+                        <constraint firstItem="wdC-mK-61i" firstAttribute="top" secondItem="Ks6-6B-phX" secondAttribute="bottom" id="eQd-ke-73M"/>
+                    </constraints>
+                </stackView>
+            </subviews>
+            <color key="backgroundColor" red="0.88347705663248732" green="0.88347705663248732" blue="0.88347705663248732" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="cnm-yp-a4K" secondAttribute="bottom" id="MMf-Zt-pKH"/>
+                <constraint firstItem="cnm-yp-a4K" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="No2-cW-eEU"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="cnm-yp-a4K" secondAttribute="trailing" id="h8h-1J-8la"/>
+                <constraint firstItem="cnm-yp-a4K" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="nbb-C1-Jio"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+        </view>
+    </objects>
+</document>

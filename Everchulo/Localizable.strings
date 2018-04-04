@@ -13,6 +13,7 @@
 // App Globals
 "es.atenet.app.Create" = "Crear";
 "es.atenet.app.Delete" = "Eliminar";
+"es.atenet.app.DeleteAll" = "Eliminar Todo";
 "es.atenet.app.Cancel" = "Cancelar";
 
 // NoteTableViewController
@@ -41,3 +42,15 @@
 
 // NewNotebookViewController
 "NewNotebookViewController.title" = "Nueva Libreta";
+
+// NotebookDetailViewController
+"NotebookDetailViewController.title" = "Ajustes de Libreta";
+"NotebookDetailViewController.nameLabel" = "NOMBRE DE LIBRETA";
+"NotebookDetailViewController.infosSingleLabel" = "Nota";
+"NotebookDetailViewController.infosMultipleLabel" = "Notas";
+"NotebookDetailViewController.activeLabel" = "Libreta por defecto";
+"NotebookDetailViewController.confirmMsg" = "¿Estás seguro que quieres eliminar la libreta";
+"NotebookDetailViewController.moveMsg" = "¡Trasladar Nota(s), Primero!";
+"NotebookDetailViewController.confirmMoveInfo" = "(Se eliminarán tanto la libreta como las notas de forma definitiva)";
+"NotebookDetailViewController.confirmMoveMsg" = "¿Quieres trasladar las Notas de esta libreta a otra libreta antes de eliminarla?";
+
