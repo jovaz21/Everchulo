@@ -29,8 +29,10 @@
 
 // NotebookSelectorTableViewController
 "NotebookSelectorTableViewController.move.title" = "Trasladar Nota";
+"NotebookSelectorTableViewController.moveAll.title" = "Trasladar Nota(s)";
 "NotebookSelectorTableViewController.select.title" = "Seleccionar Libreta";
-"NotebookSelectorTableViewController.confirmMsg" = "¿Estás seguro que quieres trasladar esta nota hacia la libreta";
+"NotebookSelectorTableViewController.move.confirmMsg" = "¿Estás seguro de que quieres trasladar esta nota hacia la libreta";
+"NotebookSelectorTableViewController.moveAll.confirmMsg" = "¿Estás seguro de que quieres trasladar las notas hacia la libreta";
 "NotebookSelectorTableViewController.moveMsg" = "Trasladar";
 
 // NoteTrashViewController
@@ -49,8 +51,8 @@
 "NotebookDetailViewController.infosSingleLabel" = "Nota";
 "NotebookDetailViewController.infosMultipleLabel" = "Notas";
 "NotebookDetailViewController.activeLabel" = "Libreta por defecto";
-"NotebookDetailViewController.confirmMsg" = "¿Estás seguro que quieres eliminar la libreta";
-"NotebookDetailViewController.moveMsg" = "¡Trasladar Nota(s), Primero!";
+"NotebookDetailViewController.confirmMsg" = "¿Estás seguro de que quieres eliminar la libreta";
+"NotebookDetailViewController.moveMsg" = "¡Trasladar Notas, Primero!";
 "NotebookDetailViewController.confirmMoveInfo" = "(Se eliminarán tanto la libreta como las notas de forma definitiva)";
 "NotebookDetailViewController.confirmMoveMsg" = "¿Quieres trasladar las Notas de esta libreta a otra libreta antes de eliminarla?";
 

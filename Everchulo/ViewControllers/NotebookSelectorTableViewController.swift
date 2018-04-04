@@ -11,6 +11,7 @@ import CoreData
 
 // NotebookSelectorTableViewController Delegate
 protocol NotebookSelectorTableViewControllerDelegate: AnyObject {
+    func notebookSelectorTableViewController(_ vc: NotebookSelectorTableViewController, didCancel notebook: Notebook, presentingViewController: UIViewController)
     func notebookSelectorTableViewController(_ vc: NotebookSelectorTableViewController, didSelectNotebook notebook: Notebook)
 }
 
@@ -86,27 +87,24 @@ class NotebookSelectorTableViewController: UITableViewController {
         }
         
         /* confirm */
-        let confirmDialog = makeConfirmDialog(title: "\(i18NString("NotebookSelectorTableViewController.confirmMsg")) '\(self.lastTappedNotebook!.name!)'?", message: "", okAction: (
+        let confirmDialog = makeConfirmDialog(title: "\(i18NString("NotebookSelectorTableViewController.\(self.viewMode.rawValue).confirmMsg")) '\(self.lastTappedNotebook!.name!)'?", message: "", okAction: (
                 title:      i18NString("NotebookSelectorTableViewController.moveMsg"),
                 style:      .default,
-                handler:    { (action) in DispatchQueue.main.async {
-                    
-                    /* set */
-                    self.selectedNotebook = self.lastTappedNotebook
-                    self.selectedRow = self.lastTappedRow
-                    //let notebook = self.fetchedResultsController.object(at: IndexPath(row: self.selectedRow, section: 0))
-                    let notebook = self.selectedNotebook!
-                    
-                    /* delegate */
-                    if (self.delegate != nil) { // Delegate
-                        self.delegate!.notebookSelectorTableViewController(self, didSelectNotebook: notebook)
-                    }
-                    
-                    /* */
+                handler:    { (action) in
                     self.presentingViewController?.dismiss(animated: true)
-                }}
-            
-            ), cancelAction: (
+                    DispatchQueue.main.async {
+                    
+                        /* set */
+                        self.selectedNotebook = self.lastTappedNotebook
+                        self.selectedRow = self.lastTappedRow
+                        let notebook = self.selectedNotebook!
+                    
+                        /* delegate */
+                        if (self.delegate != nil) { // Delegate
+                            self.delegate!.notebookSelectorTableViewController(self,    didSelectNotebook: notebook)
+                        }
+                    }
+            }), cancelAction: (
                 title:      i18NString("es.atenet.app.Cancel"),
                 style:      .default,
                 handler:    { (action) in DispatchQueue.main.async {
@@ -134,6 +132,7 @@ extension NotebookSelectorTableViewController {
     enum ViewMode: String {
         case select
         case move
+        case moveAll
     }
     
     // Setup UIView:
@@ -166,7 +165,13 @@ extension NotebookSelectorTableViewController {
         }
         
         /* */
-        self.presentingViewController?.dismiss(animated: true)
+        let presentingViewController = self.presentingViewController!
+        presentingViewController.dismiss(animated: false)
+        
+        /* delegate */
+        if (self.delegate != nil) { // Delegate
+            self.delegate!.notebookSelectorTableViewController(self, didCancel: notebook, presentingViewController: presentingViewController)
+        }
     }
     @objc func addNotebookAction() {
         let newNotebookVC = NewNotebookViewController()
@@ -270,51 +275,6 @@ extension NotebookSelectorTableViewController: NSFetchedResultsControllerDelegat
 extension NotebookSelectorTableViewController: NewNotebookViewControllerDelegate {
     
     // New Notebook Did Create
-    func newNotebookViewControllerXXX(_ vc: NewNotebookViewController, didCreateNotebook notebook: Notebook) {
-        
-        /* check */
-        if (self.viewMode == .select) {
-
-            /* delegate */
-            if (self.delegate != nil) { // Delegate
-                self.delegate!.notebookSelectorTableViewController(self, didSelectNotebook: notebook)
-            }
-                
-            /* */
-            self.presentingViewController?.dismiss(animated: false)
-            return
-        }
-        
-        // Declare Alert message
-        let dialogMessage = UIAlertController(title: "\(i18NString("NotebookSelectorTableViewController.confirmMsg")) '\(notebook.name!)'?", message: "", preferredStyle: .alert)
-        
-        // Create OK button with action handler
-        let ok = UIAlertAction(title: i18NString("NotebookSelectorTableViewController.moveMsg"), style: .default, handler: { (action) -> Void in
-            DispatchQueue.main.async {
-                
-                /* delegate */
-                if (self.delegate != nil) { // Delegate
-                    self.delegate!.notebookSelectorTableViewController(self, didSelectNotebook: notebook)
-                }
-                
-                /* */
-                self.presentingViewController?.dismiss(animated: true)
-            }
-        })
-        ok.setValue(Styles.activeColor, forKey: "titleTextColor")
-        
-        // Create Cancel button with action handlder
-        let cancel = UIAlertAction(title: i18NString("es.atenet.app.Cancel"), style: .cancel)
-        cancel.setValue(Styles.activeColor, forKey: "titleTextColor")
-        
-        //Add OK and Cancel button to dialog message
-        dialogMessage.addAction(ok)
-        dialogMessage.addAction(cancel)
-        
-        // Present dialog message to user
-        self.present(dialogMessage, animated: true, completion: nil)
-
-    }
     func newNotebookViewController(_ vc: NewNotebookViewController, didCreateNotebook notebook: Notebook) {
         
         /* check */

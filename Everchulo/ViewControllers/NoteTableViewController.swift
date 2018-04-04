@@ -422,6 +422,7 @@ extension NoteTableViewController {
                 if (notebook.isActive() && (notebooks.count > 0)) {
                     notebooks[0].setActive()
                 }
+                notebook.delete()
             }
             
             /* commit */

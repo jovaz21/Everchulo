@@ -343,6 +343,8 @@ extension NoteDetailViewController {
 
 // NotebookSelectorTableViewController Delegate
 extension NoteDetailViewController: NotebookSelectorTableViewControllerDelegate {
+    func notebookSelectorTableViewController(_ vc: NotebookSelectorTableViewController, didCancel notebook: Notebook, presentingViewController: UIViewController) {
+    }
     func notebookSelectorTableViewController(_ vc: NotebookSelectorTableViewController, didSelectNotebook notebook: Notebook) {
         print("!!! didSelectNotebook: Entering, notebook=", notebook)
         self.note!.moveToNotebook(notebook)

@@ -92,7 +92,7 @@ class NotebookDetailViewController: UIViewController {
         
         /* set */
         let notebookSelectorVC = NotebookSelectorTableViewController(notebook: self.notebook)
-        notebookSelectorVC.setViewMode(.select)
+        notebookSelectorVC.setViewMode(.moveAll)
         notebookSelectorVC.delegate = self
         
         /* show */
@@ -225,13 +225,16 @@ extension NotebookDetailViewController {
 
 // NotebookSelectorTableViewController Delegate
 extension NotebookDetailViewController: NotebookSelectorTableViewControllerDelegate {
+    func notebookSelectorTableViewController(_ vc: NotebookSelectorTableViewController, didCancel notebook: Notebook, presentingViewController: UIViewController) {
+    }
     func notebookSelectorTableViewController(_ vc: NotebookSelectorTableViewController, didSelectNotebook notebook: Notebook) {
-        print("!!! didSelectNotebook: Entering, notebook=", notebook)
         (self.notebook.notes?.allObjects as! [Note]).forEach() {
             $0.moveToNotebook(notebook)
         }
+        if (self.notebook.isActive()) {
+            notebook.setActive()
+        }
         self.notebook.delete(commit: true)
         self.presentingViewController?.dismiss(animated: true)
-        print("!!! didSelectNotebook: Done")
     }
 }
