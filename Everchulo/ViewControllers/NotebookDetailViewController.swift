@@ -11,9 +11,11 @@ import UIKit
 // MARK: - Controller Stuff
 class NotebookDetailViewController: UIViewController {
     let notebook: Notebook
+    let isModal: Bool
     
     // MARK: - View Delegate Management
-    init(notebook: Notebook) {
+    init(notebook: Notebook, isModal: Bool? = false) {
+        self.isModal = isModal!
         self.notebook = notebook
         
         /* set */
@@ -38,8 +40,8 @@ class NotebookDetailViewController: UIViewController {
     
     // MARK: - User Actions
     
-    // On Back
-    func onBack() {
+    // On Dismiss
+    func onDismiss() {
         
         /* focus */
         if (self.nameTextField.isFirstResponder) {
@@ -75,8 +77,25 @@ class NotebookDetailViewController: UIViewController {
                 title:      i18NString("es.atenet.app.DeleteAll"),
                 style:      .destructive,
                 handler:    { (action) in DispatchQueue.main.async {
+
+                    /* delete */
+                    if (self.notebook.isActive()) {
+                        var notebooks = Notebook.listAll().filter() {
+                            return($0.activeNotes.count > 0)
+                        }
+                        notebooks.remove(at: notebooks.index(of: self.notebook)!)
+                        if (notebooks.count > 0) {
+                            notebooks[0].setActive()
+                        }
+                    }
                     self.notebook.delete(commit: true)
-                    self.presentingViewController?.dismiss(animated: true)
+                    
+                    /* check */
+                    if (self.isModal) {
+                        self.presentingViewController?.dismiss(animated: true)
+                    } else {
+                        self.navigationController?.popViewController(animated: true)
+                    }
                 }
             }), cancelAction: (
                 title:      i18NString("NotebookDetailViewController.moveMsg"),
@@ -116,8 +135,12 @@ class NotebookDetailViewController: UIViewController {
         self.notebook.setName(nameTextField.text!)
         self.notebook.save()
         
-        /* */
-        self.presentingViewController?.dismiss(animated: true)
+        /* check */
+        if (self.isModal) {
+            self.presentingViewController?.dismiss(animated: true)
+        } else {
+            self.navigationController?.popViewController(animated: true)
+        }
     }
     
     // MARK: - Outlets
@@ -141,6 +164,8 @@ class NotebookDetailViewController: UIViewController {
     }
     
     // Action Buttons
+    var backButtonItem: UIBarButtonItem!
+    var closeButtonItem: UIBarButtonItem!
     var okButtonItem: UIBarButtonItem!
 }
 
@@ -177,11 +202,22 @@ extension NotebookDetailViewController {
         self.okButtonItem = UIBarButtonItem(title: "OK", style: .done, target: self, action: #selector(notebookDoneAction))
         self.navigationItem.rightBarButtonItem = self.okButtonItem
         self.navigationItem.rightBarButtonItem?.tintColor = Styles.activeColor
-        self.navigationItem.rightBarButtonItem?.isEnabled = false
         
-        let backButton = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(backAction))
-        self.navigationItem.leftBarButtonItem = backButton
-        self.navigationItem.leftBarButtonItem?.tintColor = Styles.activeColor
+        self.closeButtonItem = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(dismissAction))
+        self.closeButtonItem.tintColor = Styles.activeColor
+        self.backButtonItem = UIBarButtonItem(image: UIImage(named: "back-icon")!, style: .done, target: self, action: #selector(notebookDoneAction))
+        self.backButtonItem.tintColor = Styles.activeColor
+        
+        /* check */
+        if (self.isModal) {
+            self.navigationItem.leftBarButtonItem = self.closeButtonItem
+            self.navigationItem.rightBarButtonItem!.setHidden(false)
+        }
+        else {
+            self.navigationItem.leftBarButtonItem = self.backButtonItem
+            self.navigationItem.rightBarButtonItem!.setHidden(true)
+        }
+        self.navigationItem.rightBarButtonItem?.isEnabled = false
         
         /* check */
         if (self.notebook.isActive()) {
@@ -193,9 +229,9 @@ extension NotebookDetailViewController {
             self.activeSwitch.isEnabled = true
         }
     }
-    @objc func backAction() {
+    @objc func dismissAction() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.025, execute: {
-            self.onBack()
+            self.onDismiss()
         })
     }
     @objc func notebookDoneAction() {
@@ -228,13 +264,23 @@ extension NotebookDetailViewController: NotebookSelectorTableViewControllerDeleg
     func notebookSelectorTableViewController(_ vc: NotebookSelectorTableViewController, didCancel notebook: Notebook, presentingViewController: UIViewController) {
     }
     func notebookSelectorTableViewController(_ vc: NotebookSelectorTableViewController, didSelectNotebook notebook: Notebook) {
-        (self.notebook.notes?.allObjects as! [Note]).forEach() {
-            $0.moveToNotebook(notebook)
-        }
+        
+        /* move */
         if (self.notebook.isActive()) {
             notebook.setActive()
         }
+        self.notebook.activeNotes.forEach() {
+            $0.moveToNotebook(notebook)
+        }
+        
+        /* delete */
         self.notebook.delete(commit: true)
-        self.presentingViewController?.dismiss(animated: true)
+
+        /* check */
+        if (self.isModal) {
+            self.presentingViewController?.dismiss(animated: true)
+        } else {
+            self.navigationController?.popViewController(animated: true)
+        }
     }
 }

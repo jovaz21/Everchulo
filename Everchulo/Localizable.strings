@@ -45,6 +45,9 @@
 // NewNotebookViewController
 "NewNotebookViewController.title" = "Nueva Libreta";
 
+// NotebookTableViewController
+"NotebookTableViewController.title" = "Ajustes de Libretas";
+
 // NotebookDetailViewController
 "NotebookDetailViewController.title" = "Ajustes de Libreta";
 "NotebookDetailViewController.nameLabel" = "NOMBRE DE LIBRETA";

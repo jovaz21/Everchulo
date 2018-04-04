@@ -39,6 +39,8 @@
 		C75AC7A9207128DA00312D22 /* NoteTrashViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C75AC7A7207128DA00312D22 /* NoteTrashViewController.xib */; };
 		C75AC7AC207144CC00312D22 /* NewNotebookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75AC7AA207144CC00312D22 /* NewNotebookViewController.swift */; };
 		C75AC7AD207144CC00312D22 /* NewNotebookViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C75AC7AB207144CC00312D22 /* NewNotebookViewController.xib */; };
+		C75B2E6A207521DC009E4CF7 /* NotebookTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75B2E68207521DC009E4CF7 /* NotebookTableViewController.swift */; };
+		C75B2E6B207521DC009E4CF7 /* NotebookTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C75B2E69207521DC009E4CF7 /* NotebookTableViewController.xib */; };
 		C7613E9F2067A82500AAEE2E /* UIBarButtonItem+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7613E9E2067A82500AAEE2E /* UIBarButtonItem+Additions.swift */; };
 		C7613EA22067B3AA00AAEE2E /* ImageDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7613EA02067B3AA00AAEE2E /* ImageDetailViewController.swift */; };
 		C7613EA32067B3AA00AAEE2E /* ImageDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C7613EA12067B3AA00AAEE2E /* ImageDetailViewController.xib */; };
@@ -109,6 +111,8 @@
 		C75AC7A7207128DA00312D22 /* NoteTrashViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoteTrashViewController.xib; sourceTree = "<group>"; };
 		C75AC7AA207144CC00312D22 /* NewNotebookViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewNotebookViewController.swift; sourceTree = "<group>"; };
 		C75AC7AB207144CC00312D22 /* NewNotebookViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewNotebookViewController.xib; sourceTree = "<group>"; };
+		C75B2E68207521DC009E4CF7 /* NotebookTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotebookTableViewController.swift; sourceTree = "<group>"; };
+		C75B2E69207521DC009E4CF7 /* NotebookTableViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotebookTableViewController.xib; sourceTree = "<group>"; };
 		C7613E9E2067A82500AAEE2E /* UIBarButtonItem+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+Additions.swift"; sourceTree = "<group>"; };
 		C7613EA02067B3AA00AAEE2E /* ImageDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDetailViewController.swift; sourceTree = "<group>"; };
 		C7613EA12067B3AA00AAEE2E /* ImageDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageDetailViewController.xib; sourceTree = "<group>"; };
@@ -230,6 +234,7 @@
 				C7613EA42069A98000AAEE2E /* NoteDetailViewController.swift */,
 				C715BE69206BBD25009071FD /* NotebookSelectorTableViewController.swift */,
 				C75AC7AA207144CC00312D22 /* NewNotebookViewController.swift */,
+				C75B2E68207521DC009E4CF7 /* NotebookTableViewController.swift */,
 				C7286EF120727B2F005EB1B1 /* NotebookDetailViewController.swift */,
 			);
 			path = ViewControllers;
@@ -243,6 +248,7 @@
 				C7613EA52069A98000AAEE2E /* NoteDetailViewController.xib */,
 				C715BE6A206BBD25009071FD /* NotebookSelectorTableViewController.xib */,
 				C75AC7AB207144CC00312D22 /* NewNotebookViewController.xib */,
+				C75B2E69207521DC009E4CF7 /* NotebookTableViewController.xib */,
 				C7286EF220727B2F005EB1B1 /* NotebookDetailViewController.xib */,
 			);
 			path = Views;
@@ -365,6 +371,7 @@
 				C7613EA32067B3AA00AAEE2E /* ImageDetailViewController.xib in Resources */,
 				C7157F9B205EBFEE00C652D8 /* LaunchScreen.storyboard in Resources */,
 				C7415FE62062B6A200DBEEEE /* Localizable.strings in Resources */,
+				C75B2E6B207521DC009E4CF7 /* NotebookTableViewController.xib in Resources */,
 				C7157F98205EBFEE00C652D8 /* Assets.xcassets in Resources */,
 				C715BE6C206BBD25009071FD /* NotebookSelectorTableViewController.xib in Resources */,
 				C7613EA72069A98000AAEE2E /* NoteDetailViewController.xib in Resources */,
@@ -389,6 +396,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C75B2E6A207521DC009E4CF7 /* NotebookTableViewController.swift in Sources */,
 				C7157FBF205ED11A00C652D8 /* Image+Extensions.swift in Sources */,
 				C7613EA62069A98000AAEE2E /* NoteDetailViewController.swift in Sources */,
 				C7415FF2206437BA00DBEEEE /* Styles.swift in Sources */,

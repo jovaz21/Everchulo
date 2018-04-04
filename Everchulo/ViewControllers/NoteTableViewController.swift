@@ -200,7 +200,7 @@ extension NoteTableViewController {
                 hidden:     (self.fetchedNotesController.sections!.count != 1),
                 handler:    { (alertAction) in
                     let notebook = self.getNotebook(section: 0)
-                    let notebookDetailVC = NotebookDetailViewController(notebook: notebook)
+                    let notebookDetailVC = NotebookDetailViewController(notebook: notebook, isModal: true)
                     self.present(notebookDetailVC.wrappedInNavigation(), animated: true, completion: nil)
                 }
             ),
@@ -210,7 +210,9 @@ extension NoteTableViewController {
                 image:      UIImage(named: "notebook"),
                 hidden:     (self.fetchedNotesController.sections!.count <= 1),
                 handler:    { (alertAction) in
-                    //self.present(imagePicker, animated: true, completion: nil)
+                    let notebook = self.getNotebook(section: 0)
+                    let notebookTableVC = NotebookTableViewController(notebook: notebook)
+                    self.present(notebookTableVC.wrappedInNavigation(), animated: true, completion: nil)
                 }
             ),
             (
@@ -504,10 +506,13 @@ extension NoteTableViewController: NSFetchedResultsControllerDelegate {
             break
         case .move:
             print("!!!controllerDidChangeObject: MOVE")
-            if (newIndexPath != indexPath) {
+            //if (newIndexPath != indexPath) {
+            // He tenido que comentar porque daba error al ignorar un movimiento
+            // de (0, 0) a (0, 0) cuando tras crear una Nota 'A' dentro de 'Segunda libreta',
+            // cojo y MUEVO esa Nota hacia la 'Primera libreta'
                 print("!!!controllerDidChangeObject: MOVING from ", indexPath!, " to ", newIndexPath!)
                 self.tableView.moveRow(at: indexPath!, to: newIndexPath!)
-            }
+            //}
             break;
         }
         print("!!!controllerDidChangeObject: Done (UITableView Updated)")
