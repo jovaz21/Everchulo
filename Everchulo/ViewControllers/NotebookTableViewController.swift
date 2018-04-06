@@ -15,6 +15,8 @@ import CoreData
 class NotebookTableViewController: UITableViewController {
     let notebook: Notebook
     
+    var notebookController: NotebookController?
+    
     // MARK: - Properties
     var fetchedResultsController: NSFetchedResultsController<Notebook>!
     
@@ -32,6 +34,9 @@ class NotebookTableViewController: UITableViewController {
     
     // View Did Load
     override func viewDidLoad() { super.viewDidLoad()
+        
+        /* set */
+        self.notebookController = NotebookController(vc: self)
         
         /* setup */
         self.setupUIView()
@@ -108,6 +113,7 @@ extension NotebookTableViewController {
         cell.imageView?.image = UIImage(named: "notebook")
         cell.textLabel?.text = "\(notebook.name ?? "") (\(notebook.activeNotes.count))"
         cell.tintColor = Styles.activeColor
+        cell.accessoryType = .disclosureIndicator
         
         /* donde */
         return(cell)
@@ -117,6 +123,26 @@ extension NotebookTableViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.025, execute: {
             self.onRowSelected(at: indexPath)
         })
+    }
+    
+    // Table View EDIT Delegate Functions
+    override func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? { return(i18NString("es.atenet.app.Delete")) }
+    override func setEditing(_ editing: Bool, animated: Bool) { super.setEditing(editing, animated: animated)
+        
+        /* check */
+        if (self.isEditing) {
+            self.editButtonItem.title = i18NString("com.apple.UIKit.Done")
+        }
+        else {
+            self.editButtonItem.title = i18NString("com.apple.UIKit.Edit")
+        }
+    }
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool { return(true) }
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let notebook = self.fetchedResultsController.object(at: indexPath)
+            notebookController!.deleteNotebook(notebook: notebook, isModal: false)
+        }
     }
 }
 

@@ -25,6 +25,7 @@
 		C71E097920602D4F00FE3D52 /* NotebookTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E097820602D4F00FE3D52 /* NotebookTests.swift */; };
 		C7286EF320727B2F005EB1B1 /* NotebookDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7286EF120727B2F005EB1B1 /* NotebookDetailViewController.swift */; };
 		C7286EF420727B2F005EB1B1 /* NotebookDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C7286EF220727B2F005EB1B1 /* NotebookDetailViewController.xib */; };
+		C73920122077E576008FFFBC /* NotebookController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C73920112077E576008FFFBC /* NotebookController.swift */; };
 		C7415FE62062B6A200DBEEEE /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C7415FE52062B6A200DBEEEE /* Localizable.strings */; };
 		C7415FE82062CE8C00DBEEEE /* NSLocalizedString+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7415FE72062CE8C00DBEEEE /* NSLocalizedString+Helpers.swift */; };
 		C7415FEA2062D54000DBEEEE /* UIAlertController+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7415FE92062D54000DBEEEE /* UIAlertController+Helpers.swift */; };
@@ -97,6 +98,7 @@
 		C71E097820602D4F00FE3D52 /* NotebookTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotebookTests.swift; sourceTree = "<group>"; };
 		C7286EF120727B2F005EB1B1 /* NotebookDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotebookDetailViewController.swift; sourceTree = "<group>"; };
 		C7286EF220727B2F005EB1B1 /* NotebookDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotebookDetailViewController.xib; sourceTree = "<group>"; };
+		C73920112077E576008FFFBC /* NotebookController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotebookController.swift; sourceTree = "<group>"; };
 		C7415FE52062B6A200DBEEEE /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		C7415FE72062CE8C00DBEEEE /* NSLocalizedString+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSLocalizedString+Helpers.swift"; sourceTree = "<group>"; };
 		C7415FE92062D54000DBEEEE /* UIAlertController+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Helpers.swift"; sourceTree = "<group>"; };
@@ -227,6 +229,7 @@
 		C7157FB7205EC9C200C652D8 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				C73920102077E531008FFFBC /* Controllers */,
 				C741C1B92061AF720049E279 /* Views */,
 				C7157F8F205EBFEE00C652D8 /* EverchuloViewController.swift */,
 				C75AC7A6207128DA00312D22 /* NoteTrashViewController.swift */,
@@ -238,6 +241,14 @@
 				C7286EF120727B2F005EB1B1 /* NotebookDetailViewController.swift */,
 			);
 			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		C73920102077E531008FFFBC /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				C73920112077E576008FFFBC /* NotebookController.swift */,
+			);
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 		C741C1B92061AF720049E279 /* Views */ = {
@@ -426,6 +437,7 @@
 				C7BEAD4E206C3D60008483A0 /* Image+CoreDataClass.swift in Sources */,
 				C7157FB3205EC8EC00C652D8 /* Date+Additions.swift in Sources */,
 				C7BEAD50206C3D60008483A0 /* Image+CoreDataProperties.swift in Sources */,
+				C73920122077E576008FFFBC /* NotebookController.swift in Sources */,
 				C715BE6B206BBD25009071FD /* NotebookSelectorTableViewController.swift in Sources */,
 				C7BEAD44206C3D60008483A0 /* Notebook+CoreDataProperties.swift in Sources */,
 				C7157FBB205ED0FD00C652D8 /* Notebook+Extensions.swift in Sources */,

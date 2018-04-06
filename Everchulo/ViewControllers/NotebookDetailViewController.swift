@@ -13,6 +13,8 @@ class NotebookDetailViewController: UIViewController {
     let notebook: Notebook
     let isModal: Bool
     
+    var notebookController: NotebookController?
+    
     // MARK: - View Delegate Management
     init(notebook: Notebook, isModal: Bool? = false) {
         self.isModal = isModal!
@@ -27,6 +29,11 @@ class NotebookDetailViewController: UIViewController {
     // View Is Loaded:
     // Setup UIView Layer
     override func viewDidLoad() { super.viewDidLoad()
+        
+        /* set */
+        self.notebookController = NotebookController(vc: self)
+        
+        /* */
         self.setupUIView()
     }
     
@@ -54,68 +61,7 @@ class NotebookDetailViewController: UIViewController {
     
     // On Delete Notebook
     func onDeleteNotebook() {
-        
-        /* confirm */
-        let confirmDialog = makeConfirmDialog(title: "\(i18NString("NotebookDetailViewController.confirmMsg")) '\(self.notebook.name!)'?", message: "", okAction: (
-                title:      i18NString("es.atenet.app.Delete"),
-                style:      .destructive,
-                handler:    { (action) in DispatchQueue.main.async { self.doDeleteNotebook() }
-            }), cancelAction: (
-                title:      i18NString("es.atenet.app.Cancel"),
-                style:      nil,
-                handler:    { (action) in DispatchQueue.main.async { }
-            })
-        )
-        
-        /* present */
-        self.present(confirmDialog, animated: true, completion: nil)
-    }
-    func doDeleteNotebook() {
-        
-        /* confirm */
-        let confirmDialog = makeConfirmDialog(title: "\(i18NString("NotebookDetailViewController.confirmMoveMsg"))", message: i18NString("NotebookDetailViewController.confirmMoveInfo"), okAction: (
-                title:      i18NString("es.atenet.app.DeleteAll"),
-                style:      .destructive,
-                handler:    { (action) in DispatchQueue.main.async {
-
-                    /* delete */
-                    if (self.notebook.isActive()) {
-                        var notebooks = Notebook.listAll().filter() {
-                            return($0.activeNotes.count > 0)
-                        }
-                        notebooks.remove(at: notebooks.index(of: self.notebook)!)
-                        if (notebooks.count > 0) {
-                            notebooks[0].setActive()
-                        }
-                    }
-                    self.notebook.delete(commit: true)
-                    
-                    /* check */
-                    if (self.isModal) {
-                        self.presentingViewController?.dismiss(animated: true)
-                    } else {
-                        self.navigationController?.popViewController(animated: true)
-                    }
-                }
-            }), cancelAction: (
-                title:      i18NString("NotebookDetailViewController.moveMsg"),
-                style:      .default,
-                handler:    { (action) in DispatchQueue.main.async { self.doMoveNotes() }
-            })
-        )
-        
-        /* present */
-        self.present(confirmDialog, animated: true, completion: nil)
-    }
-    func doMoveNotes() {
-        
-        /* set */
-        let notebookSelectorVC = NotebookSelectorTableViewController(notebook: self.notebook)
-        notebookSelectorVC.setViewMode(.moveAll)
-        notebookSelectorVC.delegate = self
-        
-        /* show */
-        self.present(notebookSelectorVC.wrappedInNavigation(), animated: true)
+        notebookController!.deleteNotebook(notebook: self.notebook, isModal: self.isModal)
     }
     
     // On Notebook Done
@@ -256,31 +202,5 @@ extension NotebookDetailViewController {
     func setUIViewData(_ data: NotebookViewData) {
         self.nameTextField.text = data.notebookName
         self.activeSwitch.isOn = data.isActive
-    }
-}
-
-// NotebookSelectorTableViewController Delegate
-extension NotebookDetailViewController: NotebookSelectorTableViewControllerDelegate {
-    func notebookSelectorTableViewController(_ vc: NotebookSelectorTableViewController, didCancel notebook: Notebook, presentingViewController: UIViewController) {
-    }
-    func notebookSelectorTableViewController(_ vc: NotebookSelectorTableViewController, didSelectNotebook notebook: Notebook) {
-        
-        /* move */
-        if (self.notebook.isActive()) {
-            notebook.setActive()
-        }
-        self.notebook.activeNotes.forEach() {
-            $0.moveToNotebook(notebook)
-        }
-        
-        /* delete */
-        self.notebook.delete(commit: true)
-
-        /* check */
-        if (self.isModal) {
-            self.presentingViewController?.dismiss(animated: true)
-        } else {
-            self.navigationController?.popViewController(animated: true)
-        }
     }
 }
