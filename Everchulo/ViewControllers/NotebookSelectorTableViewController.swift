@@ -66,25 +66,21 @@ class NotebookSelectorTableViewController: UITableViewController {
         }
         
         /* check */
-        if (self.viewMode == .select) {
-            DispatchQueue.main.async {
+        if (self.viewMode == .select) { DispatchQueue.main.async {
                 
-                /* set */
-                self.selectedNotebook = self.lastTappedNotebook
-                self.selectedRow = self.lastTappedRow
-                //let notebook = self.fetchedResultsController.object(at: IndexPath(row: self.selectedRow, section: 0))
-                let notebook = self.selectedNotebook!
+            /* set */
+            self.selectedNotebook = self.lastTappedNotebook
+            self.selectedRow = self.lastTappedRow
+            let notebook = self.selectedNotebook!
                 
-                /* delegate */
-                if (self.delegate != nil) { // Delegate
-                    self.delegate!.notebookSelectorTableViewController(self, didSelectNotebook: notebook)
-                }
-                
-                /* */
-                self.presentingViewController?.dismiss(animated: true)
+            /* delegate */
+            if (self.delegate != nil) { // Delegate
+                self.delegate!.notebookSelectorTableViewController(self, didSelectNotebook: notebook)
             }
-            return
-        }
+                
+            /* */
+            self.presentingViewController?.dismiss(animated: true)
+        }}
         
         /* confirm */
         let confirmDialog = makeConfirmDialog(title: "\(i18NString("NotebookSelectorTableViewController.\(self.viewMode.rawValue).confirmMsg")) '\(self.lastTappedNotebook!.name!)'?", message: "", okAction: (

@@ -81,6 +81,8 @@ class NoteDetailViewController: UIViewController {
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var contentTextField: UITextView!
     
+    // MARK: - User Actions
+    
     // On Select Notebook
     func onSelectNotebook() {
         
@@ -145,22 +147,22 @@ class NoteDetailViewController: UIViewController {
         }
             
         /* save */
-        print("!!!<NoteDetailViewController> onNoteDone: Setting New Note ACTIVE, notebookActiveNotesCount=", self.note!.notebook!.activeNotes.count)
         if (self.delegate != nil) { // Delegate
             if (self.viewMode == .new) {
                 self.delegate!.noteDetailViewController(self, willCreateNote: self.note!)
             }
         }
-        if (!self.note!.notebook!.isActive()) {
-            self.note!.notebook!.setActive()
-            self.note!.notebook!.save()
-        }
         if (!self.note!.isActive()) {
+            print("!!!<NoteDetailViewController> onNoteDone: Setting New Note ACTIVE, notebookActiveNotesCount=", self.note!.notebook!.activeNotes.count)
             self.note!.setActive()
+        }
+        if ((self.notebook != self.note!.notebook!) && !self.note!.notebook!.isActive()) {
+            print("!!!<NoteDetailViewController> onNoteDone: Setting Notebook ACTIVE, notebookActiveNotesCount=", self.note!.notebook!.activeNotes.count)
+            self.note!.notebook!.setActive()
+            //self.note!.notebook!.save()
         }
         print("!!!<NoteDetailViewController> onNoteDone: Saving Data, notebookActiveNotesCount=", self.note!.notebook!.activeNotes.count)
         self.note!.save()
-        print("!!!<NoteDetailViewController> onNoteDone: New Note Added, notebookActiveNotesCount=", self.note!.notebook!.activeNotes.count)
         if (self.delegate != nil) { // Delegate
             if (self.viewMode == .new) {
                 self.delegate!.noteDetailViewController(self, didCreateNote: self.note!)
@@ -219,7 +221,7 @@ class NoteDetailViewController: UIViewController {
         }
     }
     
-    // Action Buttons
+    // MARK: - Action Buttons
     var okButtonItem: UIBarButtonItem!
     var backButtonItem: UIBarButtonItem!
     var infosButtonItem: UIBarButtonItem!

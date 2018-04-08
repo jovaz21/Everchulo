@@ -32,6 +32,11 @@ extension Notebook {
     // List All
     static func listAll(from givenCtx: NSManagedObjectContext? = nil, returnsObjectsAsFaults: Bool? = true) -> [Notebook] {
         let (ctx, fetchRequest) = Notebook.fetchRequestForAllResults(from: givenCtx)
+        
+        /* set */
+        let sortByStatus = NSSortDescriptor(key: "status", ascending: true, selector: nil)
+        let sortByName = NSSortDescriptor(key: "name", ascending: true, selector: #selector(NSString.caseInsensitiveCompare))
+        fetchRequest.sortDescriptors = [sortByStatus, sortByName]
 
         /* set */
         fetchRequest.returnsObjectsAsFaults = returnsObjectsAsFaults!

@@ -92,7 +92,7 @@ class NoteTableViewController: UITableViewController {
     //  - Notify Observers
     //  - Remember Row as Last Selected
     func onRowSelected(at indexPath: IndexPath) {
-        let note = self.getNote(section: indexPath.section, row: indexPath.row)
+        let note = self.getNote(section: indexPath.section, row: indexPath.row)!
         
         /* delegate */
         if (delegate != nil) { // Delegate
@@ -199,7 +199,7 @@ extension NoteTableViewController {
                 image:      UIImage(named: "notebook"),
                 hidden:     (self.fetchedNotesController.sections!.count != 1),
                 handler:    { (alertAction) in
-                    let notebook = self.getNotebook(section: 0)
+                    let notebook = self.getNotebook(section: 0)!
                     let notebookDetailVC = NotebookDetailViewController(notebook: notebook, isModal: true)
                     self.present(notebookDetailVC.wrappedInNavigation(), animated: true, completion: nil)
                 }
@@ -210,7 +210,7 @@ extension NoteTableViewController {
                 image:      UIImage(named: "notebook"),
                 hidden:     (self.fetchedNotesController.sections!.count <= 1),
                 handler:    { (alertAction) in
-                    let notebook = self.getNotebook(section: 0)
+                    let notebook = self.getNotebook(section: 0)!
                     let notebookTableVC = NotebookTableViewController(notebook: notebook)
                     self.present(notebookTableVC.wrappedInNavigation(), animated: true, completion: nil)
                 }
@@ -274,16 +274,35 @@ extension NoteTableViewController {
     
     // Get Notebook(s)/Note(s)
     func getNotebooks() -> [Notebook] {
-        let notebooks = fetchedNotebooksController.fetchedObjects?.filter() {
+        let notebooks = Notebook.listAll().filter() {
+        //let notebooks = fetchedNotebooksController.fetchedObjects?.filter() {
             return($0.activeNotes.count > 0)
         }
-        return(notebooks!)
+        return(notebooks)
+        //return(notebooks!)
     }
-    func getNotebook(section: Int) -> Notebook {
-        return(self.getNotebooks()[section])
+    func getNotebook(section: Int) -> Notebook? {
+        print("!!!<NoteTableViewController> getNotebook: About to getNotebook at section=", section)
+        let notebooks = self.getNotebooks()
+        if (section >= notebooks.count) {
+            return(nil)
+        }
+        let notebook = notebooks[section]
+        print("!!!<NoteTableViewController> getNotebook: Got notebook=", notebook)
+        return(notebook)
     }
-    func getNote(section: Int, row: Int) -> Note {
-        return(self.getNotebook(section: section).sortedNotes[row])
+    func getNote(section: Int, row: Int) -> Note? {
+        print("!!!<NoteTableViewController> getNote: About to getNote at section=", section, ", row=", row)
+        let notebook = self.getNotebook(section: section)
+        if (notebook == nil) {
+            return(nil)
+        }
+        let sortedNotes = notebook!.sortedNotes
+        print("!!!<NoteTableViewController> getNote: Got sortedNotes=", sortedNotes)
+        if (row >= sortedNotes.count) {
+            return(nil)
+        }
+        return(sortedNotes[row])
     }
     
     // MARK: - Table View DISPLAY Delegate Functions
@@ -294,11 +313,16 @@ extension NoteTableViewController {
         return(fetchedNotesController.sections!.count)
     }
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let notebook = self.getNotebook(section: section)
+        let foundNotebook = self.getNotebook(section: section)
         
         /* set */
         let backView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.width, height: SECTIONHEADER_HEIGHT))
         backView.layer.insertSublayer(Styles.whiteBackgroundGradientLayerForView(backView), at: 0)
+        
+        /* check */
+        guard let notebook = foundNotebook else {
+            return(backView)
+        }
         
         /* ICON */
         let icon = UIImageView()
@@ -363,8 +387,13 @@ extension NoteTableViewController {
         
         /* set */
         print("!!!<NoteTableViewController> cellForRowAt: About to getNote at indexPath=", indexPath)
-        let note = self.getNote(section: indexPath.section, row: indexPath.row)
-        print("!!!<NoteTableViewController> cellForRowAt: note=", note)
+        let foundNote = self.getNote(section: indexPath.section, row: indexPath.row)
+        print("!!!<NoteTableViewController> cellForRowAt: foundNote=", foundNote as Any)
+        
+        /* set */
+        guard let note = foundNote else {
+            return(cell)
+        }
         
         /* set */
         cell.titleLabel.text    = note.title
