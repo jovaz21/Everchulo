@@ -20,6 +20,8 @@ class NoteDetailViewController: UIViewController {
     var notebook: Notebook? = nil
     var note: Note? = nil
     
+    var noteController: NoteController?
+    
     // Delegate
     weak var delegate: NoteDetailViewControllerDelegate?
     
@@ -37,6 +39,11 @@ class NoteDetailViewController: UIViewController {
     // View Is Loaded:
     // Setup UIView Layer
     override func viewDidLoad() { super.viewDidLoad()
+        
+        /* set */
+        self.noteController = NoteController(vc: self)
+        
+        /* */
         self.setupUIView()
     }
     
@@ -156,10 +163,9 @@ class NoteDetailViewController: UIViewController {
             print("!!!<NoteDetailViewController> onNoteDone: Setting New Note ACTIVE, notebookActiveNotesCount=", self.note!.notebook!.activeNotes.count)
             self.note!.setActive()
         }
-        if ((self.notebook != self.note!.notebook!) && !self.note!.notebook!.isActive()) {
+        if (((self.viewMode == .new) || (self.notebook != self.note!.notebook!)) && !self.note!.notebook!.isActive()) {
             print("!!!<NoteDetailViewController> onNoteDone: Setting Notebook ACTIVE, notebookActiveNotesCount=", self.note!.notebook!.activeNotes.count)
             self.note!.notebook!.setActive()
-            //self.note!.notebook!.save()
         }
         print("!!!<NoteDetailViewController> onNoteDone: Saving Data, notebookActiveNotesCount=", self.note!.notebook!.activeNotes.count)
         self.note!.save()
@@ -189,12 +195,19 @@ class NoteDetailViewController: UIViewController {
     //  - Map Model Properties with View Data
     //  - Set UIView Data
     func paintUIView() {
+        var alarmDate: Date? = Date(timeIntervalSince1970: note!.alarmTimestamp)
+        
+        /* check */
+        if (note!.alarmTimestamp <= 0) {
+            alarmDate = nil
+        }
         
         /* set */
         self.setUIViewData(NoteViewData(
             notebookName:   note!.notebook?.name,
             title:          note!.title,
-            content:        note!.content
+            content:        note!.content,
+            alarmDate:      alarmDate
         ))
         
         /* focus */
@@ -224,6 +237,7 @@ class NoteDetailViewController: UIViewController {
     // MARK: - Action Buttons
     var okButtonItem: UIBarButtonItem!
     var backButtonItem: UIBarButtonItem!
+    var alarmButtonItem: UIBarButtonItem!
     var infosButtonItem: UIBarButtonItem!
     var menuBarButtonItem: UIBarButtonItem!
     var cameraButtonItem: UIBarButtonItem!
@@ -234,6 +248,7 @@ struct NoteViewData {
     let notebookName:   String?
     let title:          String?
     let content:        String?
+    let alarmDate:      Date?
 }
 extension NoteDetailViewController {
     
@@ -279,9 +294,12 @@ extension NoteDetailViewController {
         else {
             self.navigationItem.leftBarButtonItem = self.backButtonItem
         }
+        
+        self.alarmButtonItem = UIBarButtonItem(image: UIImage(named: "alarm")!, style: .done, target: self, action: #selector(displayAlarmMenuAction))
+        self.alarmButtonItem.tintColor = Styles.activeColor
         self.infosButtonItem = UIBarButtonItem(image: UIImage(named: "information-outline")!, style: .done, target: self, action: #selector(displayInfosAction))
         self.infosButtonItem.tintColor = Styles.activeColor
-        self.navigationItem.rightBarButtonItems = [self.infosButtonItem]
+        self.navigationItem.rightBarButtonItems = [self.infosButtonItem, self.alarmButtonItem]
         
         /* TOOLBAR */
         navigationController?.toolbar.isHidden  = false
@@ -303,15 +321,126 @@ extension NoteDetailViewController {
             self.onNoteDone()
         })
     }
-    @objc func displayNoteMenuAction() {
-    }
+    @objc func displayAlarmMenuAction() { DispatchQueue.main.asyncAfter(deadline: .now() + 0.025, execute: {
+
+        /* menu */
+        let actionSheetMenu = makeActionSheetMenu(title: nil, message: nil, items:
+            (
+                title:      i18NString("NoteDetailsViewController.alarm.setAlarmMsg"),
+                style:      .default,
+                image:      nil,
+                hidden:     false,
+                handler:    { (alertAction) in
+                }
+            ),
+            (
+                title:      i18NString("NoteDetailsViewController.alarm.deleteAlarmMsg"),
+                style:      .default,
+                image:      nil,
+                hidden:     false,
+                handler:    { (alertAction) in
+                    
+                    /* set */
+                    self.note!.resetAlarm()
+                    
+                    // Paint UIView
+                    self.paintUIView()
+                }
+            ),
+            (
+                title:      i18NString("es.atenet.app.Cancel"),
+                style:      .cancel,
+                image:      nil,
+                hidden:     false,
+                handler:    nil
+            )
+        )
+        
+        /* present */
+        self.present(actionSheetMenu, animated: true, completion: nil)
+
+    })}
+    @objc func displayNoteMenuAction() { DispatchQueue.main.asyncAfter(deadline: .now() + 0.025, execute: {
+        
+        /* menu */
+        let actionSheetMenu = makeActionSheetMenu(title: nil, message: nil, items:
+            (
+                title:      i18NString("NoteDetailsViewController.menu.setAlarmMsg"),
+                style:      .default,
+                image:      nil,
+                hidden:     (self.note!.alarmTimestamp > 0),
+                handler:    { (alertAction) in
+                    
+                    /* set */
+                    self.note!.setAlarm(Date())
+                    
+                    // Paint UIView
+                    self.paintUIView()
+                }
+            ),
+            (
+                title:      i18NString("NoteDetailsViewController.menu.duplicateMsg"),
+                style:      .default,
+                image:      nil,
+                hidden:     false,
+                handler:    { (alertAction) in
+                    
+                    /* duplicate */
+                    self.note = self.noteController?.duplicate(fromNote: self.note!)
+                    
+                    // Paint UIView
+                    self.paintUIView()
+                }
+            ),
+            (
+                title:      i18NString("NoteDetailsViewController.menu.moveMsg"),
+                style:      .default,
+                image:      nil,
+                hidden:     false,
+                handler:    { (alertAction) in
+                    self.onSelectNotebook()
+                }
+            ),
+            (
+                title:      i18NString("NoteDetailsViewController.menu.moveToTrashMsg"),
+                style:      .destructive,
+                image:      nil,
+                hidden:     false,
+                handler:    { (alertAction) in
+                    
+                    /* trash */
+                    self.noteController?.moveToTrash(note: self.note!)
+                    
+                    /* */
+                    self.navigationController?.popViewController(animated: true)
+                }
+            ),
+            (
+                title:      i18NString("es.atenet.app.Cancel"),
+                style:      .cancel,
+                image:      nil,
+                hidden:     false,
+                handler:    nil
+            )
+        )
+        
+        /* present */
+        self.present(actionSheetMenu, animated: true, completion: nil)
+    })}
     @objc func displayInfosAction() {
     }
     
     // Set UIView Data
     //  - Makes UIView Display ViewData
     func setUIViewData(_ data: NoteViewData) {
+        
+        /* */
         print("!!! setUIViewData: Entering, data=", data)
+        
+        /* alarm */
+        self.alarmButtonItem.setHidden(data.alarmDate == nil)
+        
+        /* set */
         self.selectTextButton.setTitle(data.notebookName, for: .normal)
         if (data.title != nil) {
             self.titleTextField.text = data.title
@@ -319,7 +448,10 @@ extension NoteDetailViewController {
         if (data.content != nil) {
             self.contentTextField.text = data.content
         }
+        
+        /* */
         print("!!! setUIViewData: Done")
+        return
     }
     
     // MARK: - Instance Methods

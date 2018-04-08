@@ -77,7 +77,7 @@ extension NotebookTableViewController {
         self.fetchAllNotebooks()
     }
     @objc func cancelAction() {
-        self.presentingViewController?.dismiss(animated: false)
+        self.presentingViewController?.dismiss(animated: true)
     }
     
     // MARK: - Instance Methods
@@ -113,6 +113,12 @@ extension NotebookTableViewController {
         cell.imageView?.image = UIImage(named: "notebook")
         cell.textLabel?.text = "\(notebook.name ?? "") (\(notebook.activeNotes.count))"
         cell.tintColor = Styles.activeColor
+        if (notebook.isActive()) {
+            cell.textLabel?.textColor = Styles.activeColor
+        }
+        else {
+            cell.textLabel?.textColor = UIColor.black
+        }
         cell.accessoryType = .disclosureIndicator
         
         /* donde */

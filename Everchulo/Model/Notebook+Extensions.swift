@@ -58,7 +58,7 @@ extension Notebook {
 
         /* set */
         let fetchRequest: NSFetchRequest<Notebook> = Notebook.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "name == %@", name)
+        fetchRequest.predicate = NSPredicate(format: "name LIKE[cd] %@", name)
         
         /* fetch */
         guard let resArray = try? ctx.fetch(fetchRequest) else { return(nil) }
@@ -79,14 +79,20 @@ extension Notebook {
     }
     
     // Create
-    static func create(into givenCtx: NSManagedObjectContext? = nil, name: String, commit: Bool? = false) -> Notebook? {
+    static func create(into givenCtx: NSManagedObjectContext? = nil, name givenName: String, commit: Bool? = false) -> Notebook? {
         let ctx: NSManagedObjectContext = givenCtx ?? DataManager.shared.viewContext
         
+        /* set */
+        let name = givenName.trimmingCharacters(in: .whitespaces)
+        
         /* check */
+        print("<Notebook> create: Entering, name='", name, "'...")
         if let obj = Notebook.findByName(from: ctx, name: name) {
+            print("<Notebook> create: NAME FOUND!!!!")
             return(obj)
         }
-        
+        print("<Notebook> create: NEW NAME")
+
         /* insert */
         guard let nsObj = NSEntityDescription.insertNewObject(forEntityName: "Notebook", into: ctx) as? Notebook else { return(nil) }
         

@@ -47,7 +47,7 @@
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oKQ-KN-jg2">
                                     <rect key="frame" x="0.0" y="22" width="375" height="51"/>
                                     <subviews>
-                                        <textField opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Mi Libreta" textAlignment="natural" minimumFontSize="19" translatesAutoresizingMaskIntoConstraints="NO" id="d5N-EE-TJB" userLabel="NameTextField">
+                                        <textField opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Mi Libreta" textAlignment="natural" minimumFontSize="19" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="d5N-EE-TJB" userLabel="NameTextField">
                                             <rect key="frame" x="5" y="14" width="370" height="23"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="textColor"/>
@@ -141,7 +141,7 @@
                     </constraints>
                 </stackView>
             </subviews>
-            <color key="backgroundColor" red="0.88347705663248732" green="0.88347705663248732" blue="0.88347705663248732" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" red="0.9192678243989848" green="0.9192678243989848" blue="0.9192678243989848" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="cnm-yp-a4K" secondAttribute="bottom" id="MMf-Zt-pKH"/>
                 <constraint firstItem="cnm-yp-a4K" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="No2-cW-eEU"/>

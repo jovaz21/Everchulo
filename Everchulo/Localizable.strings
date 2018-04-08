@@ -14,6 +14,7 @@
 "es.atenet.app.Create" = "Crear";
 "es.atenet.app.Delete" = "Eliminar";
 "es.atenet.app.DeleteAll" = "Eliminar Todo";
+"es.atenet.app.MoveToTrash" = "Mover a la Papelera";
 "es.atenet.app.Cancel" = "Cancelar";
 
 // NoteTableViewController
@@ -26,6 +27,15 @@
 "NoteDetailsViewController.backButtonTitle" = "Notas";
 "NoteDetailsViewController.titlePlaceHolder" = "Título";
 "NoteDetailsViewController.contentPlaceHolder" = "Empieza a escribir...";
+
+"NoteDetailsViewController.menu.setAlarmMsg" = "Establecer Alarma";
+"NoteDetailsViewController.menu.duplicateMsg" = "Duplicar Nota";
+"NoteDetailsViewController.menu.moveMsg" = "Trasladar Nota";
+"NoteDetailsViewController.menu.moveToTrashMsg" = "Mover a la Papelera";
+
+"NoteDetailsViewController.alarm.setAlarmMsg" = "Cambiar Fecha";
+"NoteDetailsViewController.alarm.deleteAlarmMsg" = "Borrar Alarma";
+
 
 // NotebookSelectorTableViewController
 "NotebookSelectorTableViewController.move.title" = "Trasladar Nota";
@@ -54,8 +64,13 @@
 "NotebookDetailViewController.infosSingleLabel" = "Nota";
 "NotebookDetailViewController.infosMultipleLabel" = "Notas";
 "NotebookDetailViewController.activeLabel" = "Libreta por defecto";
-"NotebookDetailViewController.confirmMsg" = "¿Estás seguro de que quieres eliminar la libreta";
-"NotebookDetailViewController.moveMsg" = "¡Trasladar Notas, Primero!";
-"NotebookDetailViewController.confirmMoveInfo" = "(Se eliminarán tanto la libreta como las notas de forma definitiva)";
-"NotebookDetailViewController.confirmMoveMsg" = "¿Quieres trasladar las Notas de esta libreta a otra libreta antes de eliminarla?";
 
+// NotebookController
+"NotebookController.confirmMsg" = "¿Estás seguro de que quieres eliminar la libreta";
+"NotebookController.moveMsg" = "¡Trasladar Notas, Primero!";
+"NotebookController.confirmMoveTitle" = "ELIMINAR LIBRETA";
+"NotebookController.confirmMoveInfo" = "(Se eliminarán todas las notas de forma definitiva)";
+"NotebookController.confirmMoveMsg" = "¿Quieres trasladar las Notas de esta libreta a otra libreta antes de eliminarla?";
+
+// NoteController
+"NoteController.copyOfMsgLabel" = "Copia de";

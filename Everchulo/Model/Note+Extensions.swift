@@ -219,6 +219,16 @@ extension Note {
     
     // Is Trashed
     func isTrashed() -> Bool { return(self.status == Status.TRASHED.rawValue) }
+    
+    // Set Alarm
+    func setAlarm(_ date: Date) {
+        self.alarmTimestamp = date.timeIntervalSince1970
+    }
+    
+    // Reset Alarm
+    func resetAlarm() {
+        self.alarmTimestamp = 0
+    }
 }
 
 // MARK: - Proxies

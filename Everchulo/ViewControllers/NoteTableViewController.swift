@@ -48,6 +48,9 @@ class NoteTableViewController: UITableViewController {
     // Delegate
     weak var delegate: NoteTableViewControllerDelegate?
     
+    // Note Controller
+    var noteController: NoteController?
+    
     // MARK: - Init
     init() { super.init(style: UITableViewStyle.plain)
         
@@ -63,6 +66,9 @@ class NoteTableViewController: UITableViewController {
         
         /* register */
         tableView.register(UINib.init(nibName: "NoteTableViewCell", bundle: nil), forCellReuseIdentifier: "NoteTableViewCell")
+        
+        /* set */
+        self.noteController = NoteController(vc: self)
         
         /* setup */
         self.setupUIView()
@@ -275,11 +281,9 @@ extension NoteTableViewController {
     // Get Notebook(s)/Note(s)
     func getNotebooks() -> [Notebook] {
         let notebooks = Notebook.listAll().filter() {
-        //let notebooks = fetchedNotebooksController.fetchedObjects?.filter() {
             return($0.activeNotes.count > 0)
         }
         return(notebooks)
-        //return(notebooks!)
     }
     func getNotebook(section: Int) -> Notebook? {
         print("!!!<NoteTableViewController> getNotebook: About to getNotebook at section=", section)
@@ -424,7 +428,7 @@ extension NoteTableViewController {
     }
     
     // Table View EDIT Delegate Functions
-    override func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? { return(i18NString("es.atenet.app.Delete")) }
+    override func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? { return(i18NString("es.atenet.app.MoveToTrash")) }
     override func setEditing(_ editing: Bool, animated: Bool) { super.setEditing(editing, animated: animated)
         
         /* check */
@@ -438,26 +442,14 @@ extension NoteTableViewController {
      override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool { return(true) }
      override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            var notebooks   = self.getNotebooks()
-            let notebook    = notebooks[indexPath.section]
-            var notes       = notebook.sortedNotes
-            let note        = notes[indexPath.row]
             
-            /* trash */
-            note.moveToTrash()
-            notes.remove(at: notes.index(of: note)!)
-            
-            /* check */
-            if (notes.count <= 0) {
-                notebooks.remove(at: notebooks.index(of: notebook)!)
-                if (notebook.isActive() && (notebooks.count > 0)) {
-                    notebooks[0].setActive()
-                }
-                notebook.delete()
+            /* set */
+            guard let note = self.getNote(section: indexPath.section, row: indexPath.row) else {
+                return
             }
             
-            /* commit */
-            DataManager.save()
+            /* trash */
+            self.noteController?.moveToTrash(note: note)
         }
      }
 }

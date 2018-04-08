@@ -25,7 +25,7 @@ class NotebookController {
         self.isModal = isModal
         
         /* confirm */
-        let confirmDialog = makeConfirmDialog(title: "\(i18NString("NotebookDetailViewController.confirmMsg")) '\(self.notebook!.name!)'?", message: "", okAction: (
+        let confirmDialog = makeConfirmDialog(title: "\(i18NString("NotebookController.confirmMsg")) '\(self.notebook!.name!)'?", message: "", okAction: (
             title:      i18NString("es.atenet.app.Delete"),
             style:      .destructive,
             handler:    { (action) in DispatchQueue.main.async { self.doDeleteNotebook() }
@@ -42,9 +42,9 @@ class NotebookController {
     func doDeleteNotebook() {
         
         /* confirm */
-        let actionSheetMenu = makeActionSheetMenu(title: nil, message: nil, items:
+        let actionSheetMenu = makeActionSheetMenu(title: i18NString("NotebookController.confirmMoveTitle"), message: i18NString("NotebookController.confirmMoveInfo"), items:
             (
-                title:      i18NString("NotebookDetailViewController.moveMsg"),
+                title:      i18NString("NotebookController.moveMsg"),
                 style:      .default,
                 image:      nil,
                 hidden:     false,

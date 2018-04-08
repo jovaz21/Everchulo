@@ -47,6 +47,7 @@
 		C7613EA32067B3AA00AAEE2E /* ImageDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C7613EA12067B3AA00AAEE2E /* ImageDetailViewController.xib */; };
 		C7613EA62069A98000AAEE2E /* NoteDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7613EA42069A98000AAEE2E /* NoteDetailViewController.swift */; };
 		C7613EA72069A98000AAEE2E /* NoteDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C7613EA52069A98000AAEE2E /* NoteDetailViewController.xib */; };
+		C7831508207A490200A6D231 /* NoteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7831507207A490200A6D231 /* NoteController.swift */; };
 		C7BEAD42206C3D60008483A0 /* Notebook+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BEAD3A206C3D60008483A0 /* Notebook+CoreDataClass.swift */; };
 		C7BEAD43206C3D60008483A0 /* Notebook+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BEAD3A206C3D60008483A0 /* Notebook+CoreDataClass.swift */; };
 		C7BEAD44206C3D60008483A0 /* Notebook+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BEAD3B206C3D60008483A0 /* Notebook+CoreDataProperties.swift */; };
@@ -120,6 +121,7 @@
 		C7613EA12067B3AA00AAEE2E /* ImageDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageDetailViewController.xib; sourceTree = "<group>"; };
 		C7613EA42069A98000AAEE2E /* NoteDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDetailViewController.swift; sourceTree = "<group>"; };
 		C7613EA52069A98000AAEE2E /* NoteDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoteDetailViewController.xib; sourceTree = "<group>"; };
+		C7831507207A490200A6D231 /* NoteController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteController.swift; sourceTree = "<group>"; };
 		C7BEAD3A206C3D60008483A0 /* Notebook+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notebook+CoreDataClass.swift"; sourceTree = "<group>"; };
 		C7BEAD3B206C3D60008483A0 /* Notebook+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notebook+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		C7BEAD3C206C3D60008483A0 /* Tag+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tag+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -247,6 +249,7 @@
 			isa = PBXGroup;
 			children = (
 				C73920112077E576008FFFBC /* NotebookController.swift */,
+				C7831507207A490200A6D231 /* NoteController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -411,6 +414,7 @@
 				C7157FBF205ED11A00C652D8 /* Image+Extensions.swift in Sources */,
 				C7613EA62069A98000AAEE2E /* NoteDetailViewController.swift in Sources */,
 				C7415FF2206437BA00DBEEEE /* Styles.swift in Sources */,
+				C7831508207A490200A6D231 /* NoteController.swift in Sources */,
 				C71E09772060154C00FE3D52 /* DataManager.swift in Sources */,
 				C7157FB9205ED0D400C652D8 /* Tag+Extensions.swift in Sources */,
 				C7415FE82062CE8C00DBEEEE /* NSLocalizedString+Helpers.swift in Sources */,
