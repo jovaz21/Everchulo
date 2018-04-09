@@ -49,6 +49,9 @@
 "NoteDetailsViewController.photo.authConfirmDialogMsg" = "If you wish to use the camera you must allow the use of the camera in App Settings";
 "NoteDetailsViewController.photo.gotoAppSettingsBtn" = "Edit Settings";
 
+"NoteDetailsViewController.photo.askForUserAuthTitle" = "Authorize Access to the Camera";
+"NoteDetailsViewController.photo.askForUserAuthMsg" = "Take photos and add them to your notes!!";
+
 "NoteDetailsViewController.photo.askForUserAuthTitle" = "\"Everchulo\" wants to use the camera";
 "NoteDetailsViewController.photo.askForUserAuthMsg" = "Take photos and store them inside your Notes";
 

@@ -341,7 +341,7 @@ extension NoteDetailViewController {
                 image:      nil,
                 hidden:     false,
                 handler:    { (alertAction) in
-                    if (self.isCameraAuthorized()) {
+                    if (self.isCameraAuthorized(for: imagePicker)) {
                         imagePicker.sourceType = .camera
                         self.present(imagePicker, animated: true, completion: nil)
                     }
@@ -370,10 +370,10 @@ extension NoteDetailViewController {
         self.present(actionSheetMenu, animated: true, completion: nil)
         
     })}
-    func isCameraAuthorized() -> Bool {
+    func isCameraAuthorized(for imagePicker: UIImagePickerController) -> Bool {
         let status = AVCaptureDevice.authorizationStatus(for: .video)
         if (status == .notDetermined) {
-            self.askForUserAuth()
+            self.askForUserPermission(for: imagePicker)
             return(false)
         }
         if ((status == .restricted) || (status == .denied)) {
@@ -382,7 +382,7 @@ extension NoteDetailViewController {
         }
         return(true)
     }
-    func askForUserAuth() {
+    func askForUserPermission(for imagePicker: UIImagePickerController) {
         
         /* confirm */
         let confirmDialog = makeConfirmDialog(title: i18NString("NoteDetailsViewController.photo.askForUserAuthTitle"), message: i18NString("NoteDetailsViewController.photo.askForUserAuthMsg"), okAction:
@@ -390,6 +390,8 @@ extension NoteDetailViewController {
                 title:      i18NString("es.atenet.app.Accept"),
                 style:      .default,
                 handler:    { (action) in
+                    imagePicker.sourceType = .camera
+                    self.present(imagePicker, animated: true, completion: nil)
                 }
             ), cancelAction: (
                 title:      i18NString("es.atenet.app.NotNow"),

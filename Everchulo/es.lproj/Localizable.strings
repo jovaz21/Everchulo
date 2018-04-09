@@ -49,8 +49,8 @@
 "NoteDetailsViewController.photo.authConfirmDialogMsg" = "Para poder utilizar la cámara es necesario acceder a Ajustes de la App y permitir el uso de la cámara";
 "NoteDetailsViewController.photo.gotoAppSettingsBtn" = "Modificar Ajustes";
 
-"NoteDetailsViewController.photo.askForUserAuthTitle" = "\"Everchulo\" quiere acceder a la cámara";
-"NoteDetailsViewController.photo.askForUserAuthMsg" = "Te permite hacer fotos y guardarlas en tus notas";
+"NoteDetailsViewController.photo.askForUserAuthTitle" = "Autorizar Acceso a la Cámara";
+"NoteDetailsViewController.photo.askForUserAuthMsg" = "¡¡Podrás sacar una foto y guardarla en tus anotaciones!!";
 
 // NotebookSelectorTableViewController
 "NotebookSelectorTableViewController.move.title" = "Trasladar Nota";
