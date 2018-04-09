@@ -16,6 +16,7 @@
 "es.atenet.app.DeleteAll" = "Eliminar Todo";
 "es.atenet.app.MoveToTrash" = "Mover a la Papelera";
 "es.atenet.app.Cancel" = "Cancelar";
+"es.atenet.app.Done" = "Hecho";
 
 // NoteTableViewController
 "NoteTableViewController.title" = "Notas";
@@ -33,6 +34,7 @@
 "NoteDetailsViewController.menu.moveMsg" = "Trasladar Nota";
 "NoteDetailsViewController.menu.moveToTrashMsg" = "Mover a la Papelera";
 
+"NoteDetailsViewController.alarm.setAlarmTitle" = "Notificarme el";
 "NoteDetailsViewController.alarm.setAlarmMsg" = "Cambiar Fecha";
 "NoteDetailsViewController.alarm.deleteAlarmMsg" = "Borrar Alarma";
 

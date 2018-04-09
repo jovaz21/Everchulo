@@ -39,6 +39,30 @@ func makeActionSheetMenu(title: String?, message: String?, items: UIActionSheetM
     return(actionSheetMenu)
 }
 
+typealias UIPickerActionItem = (title: String, handler: ((UIAlertAction, UIDatePicker) -> Void)?)
+
+// Make ActionSheet DatePicker
+func makeActionSheetDatePicker(title: String?, message: String?, doneAction: UIPickerActionItem, cancelAction: UIPickerActionItem, initialValue: Date) -> UIAlertController {
+    let actionSheetDatePicker = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
+    
+    /* set */
+    let datePicker = UIViewController()
+    let uiDatePicker = UIDatePicker()
+    uiDatePicker.date = initialValue
+    uiDatePicker.timeZone = NSTimeZone.local
+    datePicker.view.addSubview(uiDatePicker)
+    datePicker.preferredContentSize = CGSize(width: actionSheetDatePicker.view.frame.width,height: actionSheetDatePicker.view.frame.height/3)
+    actionSheetDatePicker.setValue(datePicker, forKey: "contentViewController")
+    
+    /* add */
+    actionSheetDatePicker.addAction(UIAlertAction(title: doneAction.title, style: .default, handler: {(action) in doneAction.handler!(action, uiDatePicker) }))
+    actionSheetDatePicker.addAction(UIAlertAction(title: cancelAction.title, style: .cancel, handler: {(action) in cancelAction.handler!(action, uiDatePicker) }))
+    actionSheetDatePicker.view.tintColor = Styles.activeColor
+    
+    /* done */
+    return(actionSheetDatePicker)
+}
+
 typealias UIConfirmActionItem = (title: String, style: UIAlertActionStyle?, handler: ((UIAlertAction) -> Void)?)
 
 // Make Confirm Dialog
@@ -47,11 +71,11 @@ func makeConfirmDialog(title: String?, message: String?, okAction: UIConfirmActi
     
     /* add */
     confirmDialog.addAction(UIAlertAction(title: okAction.title, style: okAction.style ?? .default, handler: okAction.handler))
-    //ok.setValue(Styles.activeColor, forKey: "titleTextColor")
     confirmDialog.addAction(UIAlertAction(title: cancelAction.title, style: cancelAction.style ?? .cancel, handler: cancelAction.handler))
-    //cancel.setValue(Styles.activeColor, forKey: "titleTextColor")
     confirmDialog.view.tintColor = Styles.activeColor
     
     /* done */
     return(confirmDialog)
 }
+
+

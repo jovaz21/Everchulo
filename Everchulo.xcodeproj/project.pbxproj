@@ -48,6 +48,8 @@
 		C7613EA62069A98000AAEE2E /* NoteDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7613EA42069A98000AAEE2E /* NoteDetailViewController.swift */; };
 		C7613EA72069A98000AAEE2E /* NoteDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C7613EA52069A98000AAEE2E /* NoteDetailViewController.xib */; };
 		C7831508207A490200A6D231 /* NoteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7831507207A490200A6D231 /* NoteController.swift */; };
+		C783150B207A5E3300A6D231 /* DatePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7831509207A5E3300A6D231 /* DatePickerViewController.swift */; };
+		C783150C207A5E3300A6D231 /* DatePickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C783150A207A5E3300A6D231 /* DatePickerViewController.xib */; };
 		C7BEAD42206C3D60008483A0 /* Notebook+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BEAD3A206C3D60008483A0 /* Notebook+CoreDataClass.swift */; };
 		C7BEAD43206C3D60008483A0 /* Notebook+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BEAD3A206C3D60008483A0 /* Notebook+CoreDataClass.swift */; };
 		C7BEAD44206C3D60008483A0 /* Notebook+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BEAD3B206C3D60008483A0 /* Notebook+CoreDataProperties.swift */; };
@@ -122,6 +124,8 @@
 		C7613EA42069A98000AAEE2E /* NoteDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDetailViewController.swift; sourceTree = "<group>"; };
 		C7613EA52069A98000AAEE2E /* NoteDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoteDetailViewController.xib; sourceTree = "<group>"; };
 		C7831507207A490200A6D231 /* NoteController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteController.swift; sourceTree = "<group>"; };
+		C7831509207A5E3300A6D231 /* DatePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerViewController.swift; sourceTree = "<group>"; };
+		C783150A207A5E3300A6D231 /* DatePickerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DatePickerViewController.xib; sourceTree = "<group>"; };
 		C7BEAD3A206C3D60008483A0 /* Notebook+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notebook+CoreDataClass.swift"; sourceTree = "<group>"; };
 		C7BEAD3B206C3D60008483A0 /* Notebook+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notebook+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		C7BEAD3C206C3D60008483A0 /* Tag+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tag+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -241,6 +245,8 @@
 				C75AC7AA207144CC00312D22 /* NewNotebookViewController.swift */,
 				C75B2E68207521DC009E4CF7 /* NotebookTableViewController.swift */,
 				C7286EF120727B2F005EB1B1 /* NotebookDetailViewController.swift */,
+				C7831509207A5E3300A6D231 /* DatePickerViewController.swift */,
+				C783150A207A5E3300A6D231 /* DatePickerViewController.xib */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -392,6 +398,7 @@
 				C7286EF420727B2F005EB1B1 /* NotebookDetailViewController.xib in Resources */,
 				C74160242064F7CB00DBEEEE /* NoteTableViewCell.xib in Resources */,
 				C741C1B82061AF680049E279 /* NoteTableViewController.xib in Resources */,
+				C783150C207A5E3300A6D231 /* DatePickerViewController.xib in Resources */,
 				C75AC7AD207144CC00312D22 /* NewNotebookViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -430,6 +437,7 @@
 				C7BEAD42206C3D60008483A0 /* Notebook+CoreDataClass.swift in Sources */,
 				C7286EF320727B2F005EB1B1 /* NotebookDetailViewController.swift in Sources */,
 				C7157F8E205EBFEE00C652D8 /* AppDelegate.swift in Sources */,
+				C783150B207A5E3300A6D231 /* DatePickerViewController.swift in Sources */,
 				C715BE64206AB83C009071FD /* UITextView+Additions.swift in Sources */,
 				C7BEAD48206C3D60008483A0 /* Tag+CoreDataProperties.swift in Sources */,
 				C741C1B72061AF680049E279 /* NoteTableViewController.swift in Sources */,

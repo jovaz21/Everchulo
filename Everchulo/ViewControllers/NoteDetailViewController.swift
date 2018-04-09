@@ -331,6 +331,22 @@ extension NoteDetailViewController {
                 image:      nil,
                 hidden:     false,
                 handler:    { (alertAction) in
+                    
+                    /* Date Picker */
+                    let actionSheet = makeActionSheetDatePicker(title: i18NString("NoteDetailsViewController.alarm.setAlarmTitle"), message: nil, doneAction:
+                        (
+                            title:      i18NString("es.atenet.app.Done"),
+                            handler:    {(action, datePicker) in
+                                self.note!.setAlarm(datePicker.date)
+                        }
+                        ), cancelAction:
+                        (
+                            title:      i18NString("es.atenet.app.Cancel"),
+                            handler:    {(action, datePicker) in
+                        }
+                        ), initialValue: Date(timeIntervalSince1970: self.note!.alarmTimestamp)
+                    )
+                    self.present(actionSheet, animated: true, completion: nil)
                 }
             ),
             (
@@ -370,12 +386,29 @@ extension NoteDetailViewController {
                 image:      nil,
                 hidden:     (self.note!.alarmTimestamp > 0),
                 handler:    { (alertAction) in
+                    let nextFiveMinuteIntervalDate = Date().rounded(minutes: 5, rounding: .ceil)
+                    print(nextFiveMinuteIntervalDate)
                     
-                    /* set */
-                    self.note!.setAlarm(Date())
-                    
-                    // Paint UIView
-                    self.paintUIView()
+                    /* Date Picker */
+                    let actionSheet = makeActionSheetDatePicker(title: i18NString("NoteDetailsViewController.alarm.setAlarmTitle"), message: nil, doneAction:
+                        (
+                            title:      i18NString("es.atenet.app.Done"),
+                            handler:    {(action, datePicker) in
+                                
+                                /* set */
+                                self.note!.setAlarm(datePicker.date)
+                                
+                                // Paint UIView
+                                self.paintUIView()
+                            }
+                        ), cancelAction:
+                        (
+                            title:      i18NString("es.atenet.app.Cancel"),
+                            handler:    {(action, datePicker) in
+                            }
+                        ), initialValue: nextFiveMinuteIntervalDate
+                    )
+                    self.present(actionSheet, animated: true, completion: nil)
                 }
             ),
             (
