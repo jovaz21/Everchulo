@@ -1,0 +1,92 @@
+/*
+ Localizable.strings
+ Everchulo
+ 
+ Created by ATEmobile on 21/3/18.
+ Copyright © 2018 ATEmobile. All rights reserved.
+ */
+
+// Apple UIKit
+"com.apple.UIKit.Edit" = "Edit";
+"com.apple.UIKit.Done" = "Cancel";
+
+// App Globals
+"es.atenet.app.Create" = "Create";
+"es.atenet.app.Delete" = "Delete";
+"es.atenet.app.DeleteAll" = "Delete All";
+"es.atenet.app.MoveToTrash" = "Move to Trash";
+"es.atenet.app.Cancel" = "Cancel";
+"es.atenet.app.Done" = "Done";
+"es.atenet.app.Allow" = "Allow";
+"es.atenet.app.DoNotAllow" = "Don't Allow";
+"es.atenet.app.Accept" = "Acept";
+"es.atenet.app.NotNow" = "Not Yet";
+
+// NoteTableViewController
+"NoteTableViewController.title" = "Notes";
+"NoteTableViewController.notebookSettingsMsg" = "Notebook Settings";
+"NoteTableViewController.notebooksSettingsMsg" = "Notebooks Settings";
+"NoteTableViewController.trashMsg" = "Trash";
+
+// NoteDetailViewController
+"NoteDetailsViewController.backButtonTitle" = "Notes";
+"NoteDetailsViewController.titlePlaceHolder" = "Title";
+"NoteDetailsViewController.contentPlaceHolder" = "Start writing here...";
+
+"NoteDetailsViewController.menu.setAlarmMsg" = "Set Alarm";
+"NoteDetailsViewController.menu.duplicateMsg" = "Duplicate Note";
+"NoteDetailsViewController.menu.moveMsg" = "Move Note";
+"NoteDetailsViewController.menu.moveToTrashMsg" = "Move to Trash";
+
+"NoteDetailsViewController.alarm.setAlarmTitle" = "Notify on";
+"NoteDetailsViewController.alarm.setAlarmMsg" = "Edit Date";
+"NoteDetailsViewController.alarm.deleteAlarmMsg" = "Reset Alarm";
+
+"NoteDetailsViewController.photo.fromCameraMsg" = "Take a Photo";
+"NoteDetailsViewController.photo.fromLibraryMsg" = "Select from Albums";
+
+"NoteDetailsViewController.photo.authConfirmDialogTitle" = "Not Allowed";
+"NoteDetailsViewController.photo.authConfirmDialogMsg" = "If you wish to use the camera you must allow the use of the camera in App Settings";
+"NoteDetailsViewController.photo.gotoAppSettingsBtn" = "Edit Settings";
+
+"NoteDetailsViewController.photo.askForUserAuthTitle" = "\"Everchulo\" wants to use the camera";
+"NoteDetailsViewController.photo.askForUserAuthMsg" = "Take photos and store them inside your Notes";
+
+// NotebookSelectorTableViewController
+"NotebookSelectorTableViewController.move.title" = "Move Note";
+"NotebookSelectorTableViewController.moveAll.title" = "Move Note(s)";
+"NotebookSelectorTableViewController.select.title" = "Select Notebook";
+"NotebookSelectorTableViewController.move.confirmMsg" = "Do you really want to move this Note to Notebook";
+"NotebookSelectorTableViewController.moveAll.confirmMsg" = "Do you really want to move Notes to Notebook";
+"NotebookSelectorTableViewController.moveMsg" = "Move";
+
+// NoteTrashViewController
+"NoteTrashViewController.title" = "Trash";
+"NoteTrashViewController.confirmRecoverMsg" = "Recover this Note in Notebook";
+"NoteTrashViewController.recoverMsg" = "Recover";
+"NoteTrashViewController.confirmDeleteMsg" = "Delete this Note Forever?";
+"NoteTrashViewController.deleteMsg" = "Delete";
+
+// NewNotebookViewController
+"NewNotebookViewController.title" = "New Notebook";
+
+// NotebookTableViewController
+"NotebookTableViewController.title" = "Notebooks Settings";
+
+// NotebookDetailViewController
+"NotebookDetailViewController.title" = "Notebook Settings";
+"NotebookDetailViewController.nameLabel" = "NOTEBOOK NAME";
+"NotebookDetailViewController.infosSingleLabel" = "Note";
+"NotebookDetailViewController.infosMultipleLabel" = "Notes";
+"NotebookDetailViewController.activeLabel" = "Default notebook";
+
+// NotebookController
+"NotebookController.confirmMsg" = "Do you really want to delete notebook";
+"NotebookController.moveMsg" = "Move Notes, First!";
+"NotebookController.confirmMoveTitle" = "DELETE NOTEBOOK";
+"NotebookController.confirmMoveInfo" = "(Every note will be deleted forever)";
+"NotebookController.confirmMoveMsg" = "Do you want to move Notes from this Notebook to another one before Deleting it?";
+
+// NoteController
+"NoteController.copyOfMsgLabel" = "Copy of";
+

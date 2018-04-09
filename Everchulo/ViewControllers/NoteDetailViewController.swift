@@ -6,6 +6,7 @@
 //  Copyright © 2018 ATEmobile. All rights reserved.
 //
 
+import AVFoundation
 import UIKit
 
 // NoteDetailViewControllerDelegate: class {
@@ -104,6 +105,10 @@ class NoteDetailViewController: UIViewController {
         
         /* show */
         self.present(notebookSelectorVC.wrappedInNavigation(), animated: true)
+    }
+    
+    // On Pick Image
+    func onPickImage() {
     }
     
     // On Note Done
@@ -307,7 +312,7 @@ extension NoteDetailViewController {
         self.menuBarButtonItem = UIBarButtonItem(image: UIImage(named: "dots-horizontal")!, style: .done, target: self, action: #selector(displayNoteMenuAction))
         self.menuBarButtonItem.tintColor = Styles.activeColor
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        self.cameraButtonItem = UIBarButtonItem(barButtonSystemItem: .camera, target: nil, action: nil)
+        self.cameraButtonItem = UIBarButtonItem(barButtonSystemItem: .camera, target: self, action: #selector(displayImageMenuAction))
         self.cameraButtonItem.tintColor = Styles.activeColor
         self.setToolbarItems([self.menuBarButtonItem, flexibleSpace, self.cameraButtonItem], animated: false)
     }
@@ -320,6 +325,102 @@ extension NoteDetailViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.025, execute: {
             self.onNoteDone()
         })
+    }
+    @objc func displayImageMenuAction() { DispatchQueue.main.asyncAfter(deadline: .now() + 0.025, execute: {
+        
+        /* set */
+        let imagePicker = UIImagePickerController()
+        imagePicker.navigationBar.tintColor = Styles.activeColor
+        imagePicker.delegate = self
+        
+        /* menu */
+        let actionSheetMenu = makeActionSheetMenu(title: nil, message: nil, items:
+            (
+                title:      i18NString("NoteDetailsViewController.photo.fromCameraMsg"),
+                style:      .default,
+                image:      nil,
+                hidden:     false,
+                handler:    { (alertAction) in
+                    if (self.isCameraAuthorized()) {
+                        imagePicker.sourceType = .camera
+                        self.present(imagePicker, animated: true, completion: nil)
+                    }
+                }
+            ),
+            (
+                title:      i18NString("NoteDetailsViewController.photo.fromLibraryMsg"),
+                style:      .default,
+                image:      nil,
+                hidden:     false,
+                handler:    { (alertAction) in
+                    imagePicker.sourceType = .photoLibrary
+                    self.present(imagePicker, animated: true, completion: nil)
+                }
+            ),
+            (
+                title:      i18NString("es.atenet.app.Cancel"),
+                style:      .cancel,
+                image:      nil,
+                hidden:     false,
+                handler:    nil
+            )
+        )
+        
+        /* present */
+        self.present(actionSheetMenu, animated: true, completion: nil)
+        
+    })}
+    func isCameraAuthorized() -> Bool {
+        let status = AVCaptureDevice.authorizationStatus(for: .video)
+        if (status == .notDetermined) {
+            self.askForUserAuth()
+            return(false)
+        }
+        if ((status == .restricted) || (status == .denied)) {
+            self.goToAppSettings()
+            return(false)
+        }
+        return(true)
+    }
+    func askForUserAuth() {
+        
+        /* confirm */
+        let confirmDialog = makeConfirmDialog(title: i18NString("NoteDetailsViewController.photo.askForUserAuthTitle"), message: i18NString("NoteDetailsViewController.photo.askForUserAuthMsg"), okAction:
+            (
+                title:      i18NString("es.atenet.app.Accept"),
+                style:      .default,
+                handler:    { (action) in
+                }
+            ), cancelAction: (
+                title:      i18NString("es.atenet.app.NotNow"),
+                style:      .default,
+                handler:    { (action) in
+                }
+            )
+        )
+        
+        /* present */
+        self.present(confirmDialog, animated: true, completion: nil)
+    }
+    func goToAppSettings() {
+        
+        /* confirm */
+        let confirmDialog = makeConfirmDialog(title: i18NString("NoteDetailsViewController.photo.authConfirmDialogTitle"), message: i18NString("NoteDetailsViewController.photo.authConfirmDialogMsg"), okAction: (
+                title:      i18NString("NoteDetailsViewController.photo.gotoAppSettingsBtn"),
+                style:      .default,
+                handler:    { (action) in
+                    UIApplication.shared.open(URL(string: UIApplicationOpenSettingsURLString)!)
+                }
+            ), cancelAction: (
+                title:      i18NString("es.atenet.app.Cancel"),
+                style:      .default,
+                handler:    { (action) in
+                }
+            )
+        )
+        
+        /* present */
+        self.present(confirmDialog, animated: true, completion: nil)
     }
     @objc func displayAlarmMenuAction() { DispatchQueue.main.asyncAfter(deadline: .now() + 0.025, execute: {
 
@@ -547,5 +648,14 @@ extension NoteDetailViewController: NoteTableViewControllerDelegate {
         
         /* done */
         return
+    }
+}
+
+// Image Picker Delegate
+extension NoteDetailViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        let image = info[UIImagePickerControllerOriginalImage] as! UIImage
+        //imageView.image = image
+        picker.dismiss(animated: true, completion: nil)
     }
 }

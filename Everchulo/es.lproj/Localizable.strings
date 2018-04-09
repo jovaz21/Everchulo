@@ -1,10 +1,10 @@
-/* 
-  Localizable.strings
-  Everchulo
-
-  Created by ATEmobile on 21/3/18.
-  Copyright © 2018 ATEmobile. All rights reserved.
-*/
+/*
+ Localizable.strings
+ Everchulo
+ 
+ Created by ATEmobile on 21/3/18.
+ Copyright © 2018 ATEmobile. All rights reserved.
+ */
 
 // Apple UIKit
 "com.apple.UIKit.Edit" = "Editar";
@@ -17,6 +17,10 @@
 "es.atenet.app.MoveToTrash" = "Mover a la Papelera";
 "es.atenet.app.Cancel" = "Cancelar";
 "es.atenet.app.Done" = "Hecho";
+"es.atenet.app.Allow" = "Permitir";
+"es.atenet.app.DoNotAllow" = "No permitir";
+"es.atenet.app.Accept" = "Aceptar";
+"es.atenet.app.NotNow" = "Ahora No";
 
 // NoteTableViewController
 "NoteTableViewController.title" = "Notas";
@@ -38,6 +42,15 @@
 "NoteDetailsViewController.alarm.setAlarmMsg" = "Cambiar Fecha";
 "NoteDetailsViewController.alarm.deleteAlarmMsg" = "Borrar Alarma";
 
+"NoteDetailsViewController.photo.fromCameraMsg" = "Tomar una Foto";
+"NoteDetailsViewController.photo.fromLibraryMsg" = "Añadir de Álbumes";
+
+"NoteDetailsViewController.photo.authConfirmDialogTitle" = "Permiso Denegado";
+"NoteDetailsViewController.photo.authConfirmDialogMsg" = "Para poder utilizar la cámara es necesario acceder a Ajustes de la App y permitir el uso de la cámara";
+"NoteDetailsViewController.photo.gotoAppSettingsBtn" = "Modificar Ajustes";
+
+"NoteDetailsViewController.photo.askForUserAuthTitle" = "\"Everchulo\" quiere acceder a la cámara";
+"NoteDetailsViewController.photo.askForUserAuthMsg" = "Te permite hacer fotos y guardarlas en tus notas";
 
 // NotebookSelectorTableViewController
 "NotebookSelectorTableViewController.move.title" = "Trasladar Nota";
@@ -76,3 +89,4 @@
 
 // NoteController
 "NoteController.copyOfMsgLabel" = "Copia de";
+

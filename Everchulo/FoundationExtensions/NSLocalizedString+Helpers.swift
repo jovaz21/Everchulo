@@ -9,6 +9,4 @@
 import Foundation
 
 // Localized String
-func i18NString(_ key: String) -> String {
-    return(NSLocalizedString(key, comment: ""))
-}
+func i18NString(_ key: String) -> String { return(key.localized) }

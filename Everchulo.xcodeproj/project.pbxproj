@@ -26,7 +26,6 @@
 		C7286EF320727B2F005EB1B1 /* NotebookDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7286EF120727B2F005EB1B1 /* NotebookDetailViewController.swift */; };
 		C7286EF420727B2F005EB1B1 /* NotebookDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C7286EF220727B2F005EB1B1 /* NotebookDetailViewController.xib */; };
 		C73920122077E576008FFFBC /* NotebookController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C73920112077E576008FFFBC /* NotebookController.swift */; };
-		C7415FE62062B6A200DBEEEE /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C7415FE52062B6A200DBEEEE /* Localizable.strings */; };
 		C7415FE82062CE8C00DBEEEE /* NSLocalizedString+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7415FE72062CE8C00DBEEEE /* NSLocalizedString+Helpers.swift */; };
 		C7415FEA2062D54000DBEEEE /* UIAlertController+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7415FE92062D54000DBEEEE /* UIAlertController+Helpers.swift */; };
 		C7415FF2206437BA00DBEEEE /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7415FF1206437BA00DBEEEE /* Styles.swift */; };
@@ -48,8 +47,6 @@
 		C7613EA62069A98000AAEE2E /* NoteDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7613EA42069A98000AAEE2E /* NoteDetailViewController.swift */; };
 		C7613EA72069A98000AAEE2E /* NoteDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C7613EA52069A98000AAEE2E /* NoteDetailViewController.xib */; };
 		C7831508207A490200A6D231 /* NoteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7831507207A490200A6D231 /* NoteController.swift */; };
-		C783150B207A5E3300A6D231 /* DatePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7831509207A5E3300A6D231 /* DatePickerViewController.swift */; };
-		C783150C207A5E3300A6D231 /* DatePickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C783150A207A5E3300A6D231 /* DatePickerViewController.xib */; };
 		C7BEAD42206C3D60008483A0 /* Notebook+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BEAD3A206C3D60008483A0 /* Notebook+CoreDataClass.swift */; };
 		C7BEAD43206C3D60008483A0 /* Notebook+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BEAD3A206C3D60008483A0 /* Notebook+CoreDataClass.swift */; };
 		C7BEAD44206C3D60008483A0 /* Notebook+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BEAD3B206C3D60008483A0 /* Notebook+CoreDataProperties.swift */; };
@@ -66,6 +63,8 @@
 		C7BEAD4F206C3D60008483A0 /* Image+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BEAD40206C3D60008483A0 /* Image+CoreDataClass.swift */; };
 		C7BEAD50206C3D60008483A0 /* Image+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BEAD41206C3D60008483A0 /* Image+CoreDataProperties.swift */; };
 		C7BEAD51206C3D60008483A0 /* Image+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BEAD41206C3D60008483A0 /* Image+CoreDataProperties.swift */; };
+		C7E3F03B207BA9DC00B5540B /* String+Localized.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E3F03A207BA9DC00B5540B /* String+Localized.swift */; };
+		C7E3F041207BD68E00B5540B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C7E3F043207BD68E00B5540B /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -102,7 +101,6 @@
 		C7286EF120727B2F005EB1B1 /* NotebookDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotebookDetailViewController.swift; sourceTree = "<group>"; };
 		C7286EF220727B2F005EB1B1 /* NotebookDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotebookDetailViewController.xib; sourceTree = "<group>"; };
 		C73920112077E576008FFFBC /* NotebookController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotebookController.swift; sourceTree = "<group>"; };
-		C7415FE52062B6A200DBEEEE /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		C7415FE72062CE8C00DBEEEE /* NSLocalizedString+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSLocalizedString+Helpers.swift"; sourceTree = "<group>"; };
 		C7415FE92062D54000DBEEEE /* UIAlertController+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Helpers.swift"; sourceTree = "<group>"; };
 		C7415FF1206437BA00DBEEEE /* Styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
@@ -124,8 +122,6 @@
 		C7613EA42069A98000AAEE2E /* NoteDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDetailViewController.swift; sourceTree = "<group>"; };
 		C7613EA52069A98000AAEE2E /* NoteDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoteDetailViewController.xib; sourceTree = "<group>"; };
 		C7831507207A490200A6D231 /* NoteController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteController.swift; sourceTree = "<group>"; };
-		C7831509207A5E3300A6D231 /* DatePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerViewController.swift; sourceTree = "<group>"; };
-		C783150A207A5E3300A6D231 /* DatePickerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DatePickerViewController.xib; sourceTree = "<group>"; };
 		C7BEAD3A206C3D60008483A0 /* Notebook+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notebook+CoreDataClass.swift"; sourceTree = "<group>"; };
 		C7BEAD3B206C3D60008483A0 /* Notebook+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notebook+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		C7BEAD3C206C3D60008483A0 /* Tag+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tag+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -134,6 +130,10 @@
 		C7BEAD3F206C3D60008483A0 /* Note+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Note+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		C7BEAD40206C3D60008483A0 /* Image+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+CoreDataClass.swift"; sourceTree = "<group>"; };
 		C7BEAD41206C3D60008483A0 /* Image+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		C7E3F03A207BA9DC00B5540B /* String+Localized.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Localized.swift"; sourceTree = "<group>"; };
+		C7E3F040207BD0A600B5540B /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		C7E3F042207BD68E00B5540B /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C7E3F044207BD6D800B5540B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -183,7 +183,7 @@
 				C7415FF1206437BA00DBEEEE /* Styles.swift */,
 				C7157F99205EBFEE00C652D8 /* LaunchScreen.storyboard */,
 				C7157F97205EBFEE00C652D8 /* Assets.xcassets */,
-				C7415FE52062B6A200DBEEEE /* Localizable.strings */,
+				C7E3F043207BD68E00B5540B /* Localizable.strings */,
 				C7157F9C205EBFEE00C652D8 /* Info.plist */,
 			);
 			path = Everchulo;
@@ -203,6 +203,7 @@
 			children = (
 				C7157FB2205EC8EC00C652D8 /* Date+Additions.swift */,
 				C7415FE72062CE8C00DBEEEE /* NSLocalizedString+Helpers.swift */,
+				C7E3F03A207BA9DC00B5540B /* String+Localized.swift */,
 			);
 			path = FoundationExtensions;
 			sourceTree = "<group>";
@@ -245,8 +246,6 @@
 				C75AC7AA207144CC00312D22 /* NewNotebookViewController.swift */,
 				C75B2E68207521DC009E4CF7 /* NotebookTableViewController.swift */,
 				C7286EF120727B2F005EB1B1 /* NotebookDetailViewController.swift */,
-				C7831509207A5E3300A6D231 /* DatePickerViewController.swift */,
-				C783150A207A5E3300A6D231 /* DatePickerViewController.xib */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -390,7 +389,7 @@
 				C75AC7A9207128DA00312D22 /* NoteTrashViewController.xib in Resources */,
 				C7613EA32067B3AA00AAEE2E /* ImageDetailViewController.xib in Resources */,
 				C7157F9B205EBFEE00C652D8 /* LaunchScreen.storyboard in Resources */,
-				C7415FE62062B6A200DBEEEE /* Localizable.strings in Resources */,
+				C7E3F041207BD68E00B5540B /* Localizable.strings in Resources */,
 				C75B2E6B207521DC009E4CF7 /* NotebookTableViewController.xib in Resources */,
 				C7157F98205EBFEE00C652D8 /* Assets.xcassets in Resources */,
 				C715BE6C206BBD25009071FD /* NotebookSelectorTableViewController.xib in Resources */,
@@ -398,7 +397,6 @@
 				C7286EF420727B2F005EB1B1 /* NotebookDetailViewController.xib in Resources */,
 				C74160242064F7CB00DBEEEE /* NoteTableViewCell.xib in Resources */,
 				C741C1B82061AF680049E279 /* NoteTableViewController.xib in Resources */,
-				C783150C207A5E3300A6D231 /* DatePickerViewController.xib in Resources */,
 				C75AC7AD207144CC00312D22 /* NewNotebookViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -435,9 +433,9 @@
 				C7157F90205EBFEE00C652D8 /* EverchuloViewController.swift in Sources */,
 				C74160232064F7CB00DBEEEE /* NoteTableViewCell.swift in Sources */,
 				C7BEAD42206C3D60008483A0 /* Notebook+CoreDataClass.swift in Sources */,
+				C7E3F03B207BA9DC00B5540B /* String+Localized.swift in Sources */,
 				C7286EF320727B2F005EB1B1 /* NotebookDetailViewController.swift in Sources */,
 				C7157F8E205EBFEE00C652D8 /* AppDelegate.swift in Sources */,
-				C783150B207A5E3300A6D231 /* DatePickerViewController.swift in Sources */,
 				C715BE64206AB83C009071FD /* UITextView+Additions.swift in Sources */,
 				C7BEAD48206C3D60008483A0 /* Tag+CoreDataProperties.swift in Sources */,
 				C741C1B72061AF680049E279 /* NoteTableViewController.swift in Sources */,
@@ -487,8 +485,18 @@
 			isa = PBXVariantGroup;
 			children = (
 				C7157F9A205EBFEE00C652D8 /* Base */,
+				C7E3F040207BD0A600B5540B /* es */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		C7E3F043207BD68E00B5540B /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C7E3F042207BD68E00B5540B /* es */,
+				C7E3F044207BD6D800B5540B /* en */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -498,6 +506,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -555,6 +564,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
