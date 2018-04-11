@@ -65,6 +65,10 @@
 		C7BEAD51206C3D60008483A0 /* Image+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BEAD41206C3D60008483A0 /* Image+CoreDataProperties.swift */; };
 		C7E3F03B207BA9DC00B5540B /* String+Localized.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E3F03A207BA9DC00B5540B /* String+Localized.swift */; };
 		C7E3F041207BD68E00B5540B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C7E3F043207BD68E00B5540B /* Localizable.strings */; };
+		C7E3F058207CBE5800B5540B /* NoteTableViewController+Datasource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E3F057207CBE5800B5540B /* NoteTableViewController+Datasource.swift */; };
+		C7E3F05A207CC19E00B5540B /* NoteDetailViewController+ActionsMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E3F059207CC19E00B5540B /* NoteDetailViewController+ActionsMenu.swift */; };
+		C7E3F05C207CC9A000B5540B /* NoteDetailViewController+Photos.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E3F05B207CC9A000B5540B /* NoteDetailViewController+Photos.swift */; };
+		C7E3F063207D565A00B5540B /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E3F062207D565A00B5540B /* ImageViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -134,6 +138,10 @@
 		C7E3F040207BD0A600B5540B /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		C7E3F042207BD68E00B5540B /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C7E3F044207BD6D800B5540B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C7E3F057207CBE5800B5540B /* NoteTableViewController+Datasource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NoteTableViewController+Datasource.swift"; sourceTree = "<group>"; };
+		C7E3F059207CC19E00B5540B /* NoteDetailViewController+ActionsMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NoteDetailViewController+ActionsMenu.swift"; sourceTree = "<group>"; };
+		C7E3F05B207CC9A000B5540B /* NoteDetailViewController+Photos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NoteDetailViewController+Photos.swift"; sourceTree = "<group>"; };
+		C7E3F062207D565A00B5540B /* ImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,6 +166,8 @@
 			isa = PBXGroup;
 			children = (
 				C7157F8C205EBFEE00C652D8 /* Everchulo */,
+				C7E3F055207CB9A700B5540B /* Extensions */,
+				C7E3F056207CBA2500B5540B /* Models */,
 				C7157FA4205EBFEE00C652D8 /* EverchuloTests */,
 				C7157F8B205EBFEE00C652D8 /* Products */,
 			);
@@ -175,16 +185,11 @@
 		C7157F8C205EBFEE00C652D8 /* Everchulo */ = {
 			isa = PBXGroup;
 			children = (
-				C7157FB0205EC8B000C652D8 /* FoundationExtensions */,
-				C7157FB1205EC8C900C652D8 /* UIKitExtensions */,
-				C7157FB6205EC96B00C652D8 /* Model */,
-				C7157FB7205EC9C200C652D8 /* ViewControllers */,
-				C7157F8D205EBFEE00C652D8 /* AppDelegate.swift */,
-				C7415FF1206437BA00DBEEEE /* Styles.swift */,
-				C7157F99205EBFEE00C652D8 /* LaunchScreen.storyboard */,
-				C7157F97205EBFEE00C652D8 /* Assets.xcassets */,
-				C7E3F043207BD68E00B5540B /* Localizable.strings */,
 				C7157F9C205EBFEE00C652D8 /* Info.plist */,
+				C7E3F04F207CB71200B5540B /* ApplicationDelegate */,
+				C7E3F050207CB77D00B5540B /* Controllers */,
+				C7E3F054207CB8F900B5540B /* Supporting Files */,
+				C741C1B92061AF720049E279 /* Views */,
 			);
 			path = Everchulo;
 			sourceTree = "<group>";
@@ -219,49 +224,10 @@
 			path = UIKitExtensions;
 			sourceTree = "<group>";
 		};
-		C7157FB6205EC96B00C652D8 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				C7BEAD39206C3D00008483A0 /* NSModelEntities */,
-				C71E09762060154C00FE3D52 /* DataManager.swift */,
-				C7157F94205EBFEE00C652D8 /* Everchulo.xcdatamodeld */,
-				C7157FBA205ED0FD00C652D8 /* Notebook+Extensions.swift */,
-				C7157FBC205ED10D00C652D8 /* Note+Extensions.swift */,
-				C7157FB8205ED0D400C652D8 /* Tag+Extensions.swift */,
-				C7157FBE205ED11A00C652D8 /* Image+Extensions.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		C7157FB7205EC9C200C652D8 /* ViewControllers */ = {
-			isa = PBXGroup;
-			children = (
-				C73920102077E531008FFFBC /* Controllers */,
-				C741C1B92061AF720049E279 /* Views */,
-				C7157F8F205EBFEE00C652D8 /* EverchuloViewController.swift */,
-				C75AC7A6207128DA00312D22 /* NoteTrashViewController.swift */,
-				C741C1B52061AF680049E279 /* NoteTableViewController.swift */,
-				C7613EA42069A98000AAEE2E /* NoteDetailViewController.swift */,
-				C715BE69206BBD25009071FD /* NotebookSelectorTableViewController.swift */,
-				C75AC7AA207144CC00312D22 /* NewNotebookViewController.swift */,
-				C75B2E68207521DC009E4CF7 /* NotebookTableViewController.swift */,
-				C7286EF120727B2F005EB1B1 /* NotebookDetailViewController.swift */,
-			);
-			path = ViewControllers;
-			sourceTree = "<group>";
-		};
-		C73920102077E531008FFFBC /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				C73920112077E576008FFFBC /* NotebookController.swift */,
-				C7831507207A490200A6D231 /* NoteController.swift */,
-			);
-			path = Controllers;
-			sourceTree = "<group>";
-		};
 		C741C1B92061AF720049E279 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				C7157F99205EBFEE00C652D8 /* LaunchScreen.storyboard */,
 				C75AC7A7207128DA00312D22 /* NoteTrashViewController.xib */,
 				C7613E9D2067A43400AAEE2E /* NoteTableViewController */,
 				C7613EA52069A98000AAEE2E /* NoteDetailViewController.xib */,
@@ -300,6 +266,100 @@
 				C7BEAD41206C3D60008483A0 /* Image+CoreDataProperties.swift */,
 			);
 			path = NSModelEntities;
+			sourceTree = "<group>";
+		};
+		C7E3F04F207CB71200B5540B /* ApplicationDelegate */ = {
+			isa = PBXGroup;
+			children = (
+				C7157F8D205EBFEE00C652D8 /* AppDelegate.swift */,
+			);
+			path = ApplicationDelegate;
+			sourceTree = "<group>";
+		};
+		C7E3F050207CB77D00B5540B /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				C7157F8F205EBFEE00C652D8 /* EverchuloViewController.swift */,
+				C7E3F051207CB7AE00B5540B /* Notebooks */,
+				C7E3F052207CB7C500B5540B /* Notes */,
+				C7E3F053207CB7CC00B5540B /* Trash */,
+				C7E3F061207D562A00B5540B /* Images */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		C7E3F051207CB7AE00B5540B /* Notebooks */ = {
+			isa = PBXGroup;
+			children = (
+				C73920112077E576008FFFBC /* NotebookController.swift */,
+				C715BE69206BBD25009071FD /* NotebookSelectorTableViewController.swift */,
+				C75AC7AA207144CC00312D22 /* NewNotebookViewController.swift */,
+				C75B2E68207521DC009E4CF7 /* NotebookTableViewController.swift */,
+				C7286EF120727B2F005EB1B1 /* NotebookDetailViewController.swift */,
+			);
+			path = Notebooks;
+			sourceTree = "<group>";
+		};
+		C7E3F052207CB7C500B5540B /* Notes */ = {
+			isa = PBXGroup;
+			children = (
+				C7831507207A490200A6D231 /* NoteController.swift */,
+				C741C1B52061AF680049E279 /* NoteTableViewController.swift */,
+				C7E3F057207CBE5800B5540B /* NoteTableViewController+Datasource.swift */,
+				C7613EA42069A98000AAEE2E /* NoteDetailViewController.swift */,
+				C7E3F059207CC19E00B5540B /* NoteDetailViewController+ActionsMenu.swift */,
+				C7E3F05B207CC9A000B5540B /* NoteDetailViewController+Photos.swift */,
+			);
+			path = Notes;
+			sourceTree = "<group>";
+		};
+		C7E3F053207CB7CC00B5540B /* Trash */ = {
+			isa = PBXGroup;
+			children = (
+				C75AC7A6207128DA00312D22 /* NoteTrashViewController.swift */,
+			);
+			path = Trash;
+			sourceTree = "<group>";
+		};
+		C7E3F054207CB8F900B5540B /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				C7157F97205EBFEE00C652D8 /* Assets.xcassets */,
+				C7415FF1206437BA00DBEEEE /* Styles.swift */,
+				C7E3F043207BD68E00B5540B /* Localizable.strings */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		C7E3F055207CB9A700B5540B /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				C7157FB0205EC8B000C652D8 /* FoundationExtensions */,
+				C7157FB1205EC8C900C652D8 /* UIKitExtensions */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		C7E3F056207CBA2500B5540B /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				C7BEAD39206C3D00008483A0 /* NSModelEntities */,
+				C71E09762060154C00FE3D52 /* DataManager.swift */,
+				C7157F94205EBFEE00C652D8 /* Everchulo.xcdatamodeld */,
+				C7157FBA205ED0FD00C652D8 /* Notebook+Extensions.swift */,
+				C7157FBC205ED10D00C652D8 /* Note+Extensions.swift */,
+				C7157FBE205ED11A00C652D8 /* Image+Extensions.swift */,
+				C7157FB8205ED0D400C652D8 /* Tag+Extensions.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		C7E3F061207D562A00B5540B /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				C7E3F062207D565A00B5540B /* ImageViewController.swift */,
+			);
+			path = Images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -437,11 +497,15 @@
 				C7286EF320727B2F005EB1B1 /* NotebookDetailViewController.swift in Sources */,
 				C7157F8E205EBFEE00C652D8 /* AppDelegate.swift in Sources */,
 				C715BE64206AB83C009071FD /* UITextView+Additions.swift in Sources */,
+				C7E3F063207D565A00B5540B /* ImageViewController.swift in Sources */,
+				C7E3F05A207CC19E00B5540B /* NoteDetailViewController+ActionsMenu.swift in Sources */,
 				C7BEAD48206C3D60008483A0 /* Tag+CoreDataProperties.swift in Sources */,
 				C741C1B72061AF680049E279 /* NoteTableViewController.swift in Sources */,
+				C7E3F058207CBE5800B5540B /* NoteTableViewController+Datasource.swift in Sources */,
 				C7415FEA2062D54000DBEEEE /* UIAlertController+Helpers.swift in Sources */,
 				C7157FB5205EC91000C652D8 /* UIViewController+Additions.swift in Sources */,
 				C7613E9F2067A82500AAEE2E /* UIBarButtonItem+Additions.swift in Sources */,
+				C7E3F05C207CC9A000B5540B /* NoteDetailViewController+Photos.swift in Sources */,
 				C75AC7A8207128DA00312D22 /* NoteTrashViewController.swift in Sources */,
 				C75AC7AC207144CC00312D22 /* NewNotebookViewController.swift in Sources */,
 				C7BEAD4E206C3D60008483A0 /* Image+CoreDataClass.swift in Sources */,
