@@ -17,12 +17,16 @@ extension NoteDetailViewController {
         guard let note = self.note else {
             return
         }
+        if (self.imageViewControllers.count > 0) {
+            return
+        }
         
         /* scan */
         note.sortedImages.forEach() { (image) in
             
             /* ImageView Controller */
             let imageVC = ImageViewController(model: image)
+            imageVC.delegate = self
             imageVC.show(in: self.view!)
             
             /* add */
@@ -205,10 +209,50 @@ extension NoteDetailViewController: UIImagePickerControllerDelegate, UINavigatio
             
             /* ImageView Controller */
             let imageVC = ImageViewController(model: cdImage, image: uiImage)
+            imageVC.delegate = self
             imageVC.show(in: self.view!)
             
             /* add */
             self.imageViewControllers.append(imageVC)
         })
+    }
+}
+
+// MARK: - ImageViewControllerDelegate
+extension NoteDetailViewController: ImageViewControllerDelegate {
+    
+    // Foreground
+    func imageViewController(_ vc: ImageViewController, didBringForeground imageView: UIImageView, model: Image) {
+        self.note!.bringImageForegound(model)
+    }
+    
+    // Select
+    func imageViewController(_ vc: ImageViewController, didSelect imageView: UIImageView, model: Image) {
+        
+        /* confirm */
+        let actionSheetMenu = makeActionSheetMenu(title: nil, message: nil, items:
+            (
+                title:      i18NString(i18NString("NoteDetailsViewController.photo.deletePhoto")),
+                style:      .destructive,
+                image:      nil,
+                hidden:     false,
+                handler:    { (action) in DispatchQueue.main.async {
+                    vc.hide(); vc.model.delete(commit: true)
+                    self.imageViewControllers.remove(at: self.imageViewControllers.index(of: vc)!)
+                }}
+            ),
+            (
+                title:      i18NString("es.atenet.app.Cancel"),
+                style:      .cancel,
+                image:      nil,
+                hidden:     false,
+                handler:    { (action) in DispatchQueue.main.async {
+                    vc.setSelected(false)
+                }}
+            )
+        )
+        
+        /* present */
+        self.present(actionSheetMenu, animated: true, completion: nil)
     }
 }

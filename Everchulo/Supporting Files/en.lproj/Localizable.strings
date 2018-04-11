@@ -58,6 +58,8 @@
 "NoteDetailsViewController.photo.jpegErrorTitle" = "Image Loading Impossible";
 "NoteDetailsViewController.photo.jpegErrorMsg" = "Unexpected error raised while trying to put image into the note. Data file format may be wrong.";
 
+"NoteDetailsViewController.photo.deletePhoto" = "Delete Photo";
+
 // NotebookSelectorTableViewController
 "NotebookSelectorTableViewController.move.title" = "Move Note";
 "NotebookSelectorTableViewController.moveAll.title" = "Move Note(s)";

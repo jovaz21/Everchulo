@@ -55,6 +55,8 @@
 "NoteDetailsViewController.photo.jpegErrorTitle" = "Carga de Imagen Imposible";
 "NoteDetailsViewController.photo.jpegErrorMsg" = "Error inesperado al intentar incorporar la imagen a la Nota. Puede que el formato de archivo sea incorrecto.";
 
+"NoteDetailsViewController.photo.deletePhoto" = "Eliminar Foto";
+
 // NotebookSelectorTableViewController
 "NotebookSelectorTableViewController.move.title" = "Trasladar Nota";
 "NotebookSelectorTableViewController.moveAll.title" = "Trasladar Nota(s)";

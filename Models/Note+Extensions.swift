@@ -177,6 +177,14 @@ extension Note {
         return(images.sorted())
     }
     
+    // Bring Image Foregound
+    func bringImageForegound(from givenCtx: NSManagedObjectContext? = nil, _ image: Image, commit: Bool? = false) {
+        let frontImage = self.sortedImages[self.sortedImages.count - 1]
+        if (image != frontImage) {
+            image.frontIndex = Int64(frontImage.frontIndex + 1)
+        }
+    }
+    
     // Save
     func save(from givenCtx: NSManagedObjectContext? = nil) {
         return(DataManager.save(from: givenCtx))
