@@ -2,7 +2,7 @@
 //  Image+CoreDataProperties.swift
 //  Everchulo
 //
-//  Created by ATEmobile on 11/4/18.
+//  Created by ATEmobile on 12/4/18.
 //  Copyright © 2018 ATEmobile. All rights reserved.
 //
 //
@@ -18,10 +18,11 @@ extension Image {
     }
 
     @NSManaged public var data: NSData?
+    @NSManaged public var frontIndex: Int64
     @NSManaged public var heightRatio: Float
     @NSManaged public var leftRatio: Float
     @NSManaged public var topRatio: Float
-    @NSManaged public var frontIndex: Int64
+    @NSManaged public var rotation: Float
     @NSManaged public var note: Note?
 
 }

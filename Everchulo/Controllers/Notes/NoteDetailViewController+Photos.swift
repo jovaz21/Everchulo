@@ -188,6 +188,7 @@ extension NoteDetailViewController: UIImagePickerControllerDelegate, UINavigatio
         let topRatio    = CGFloat(0.25)
         var leftRatio   = CGFloat(0.25)
         var heightRatio = CGFloat(0.5) // Okay for HEIGHT > WIDTH
+        let rotation    = CGFloat(0.0)
         
         /* check */
         if (uiImage.size.width > uiImage.size.height) {
@@ -202,7 +203,7 @@ extension NoteDetailViewController: UIImagePickerControllerDelegate, UINavigatio
         
         /* Add CoreData Image */
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.075, execute: {
-            guard let cdImage = Image.create(for: self.note!, data: imageData, topRatio: topRatio, leftRatio: leftRatio, heightRatio: heightRatio, commit: true) else {
+            guard let cdImage = Image.create(for: self.note!, data: imageData, topRatio: topRatio, leftRatio: leftRatio, heightRatio: heightRatio, rotation: rotation, commit: true) else {
                 showAlertDialog(sender: self, title: i18NString("NoteDetailsViewController.photo.jpegErrorTitle"), message: i18NString("NoteDetailsViewController.photo.jpegErrorMsg"))
                 return
             }
@@ -220,6 +221,11 @@ extension NoteDetailViewController: UIImagePickerControllerDelegate, UINavigatio
 
 // MARK: - ImageViewControllerDelegate
 extension NoteDetailViewController: ImageViewControllerDelegate {
+    
+    // Gesture
+    func imageViewController(_ vc: ImageViewController, willHandleGesture imageView: UIImageView, model: Image) {
+        self.closeKeyboard()
+    }
     
     // Foreground
     func imageViewController(_ vc: ImageViewController, didBringForeground imageView: UIImageView, model: Image) {

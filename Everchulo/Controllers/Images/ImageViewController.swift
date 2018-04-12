@@ -10,6 +10,7 @@ import UIKit
 
 // ImageViewControllerDelegate {
 protocol ImageViewControllerDelegate: AnyObject {
+    func imageViewController(_ vc: ImageViewController, willHandleGesture imageView: UIImageView, model: Image)
     func imageViewController(_ vc: ImageViewController, didBringForeground imageView: UIImageView, model: Image)
     func imageViewController(_ vc: ImageViewController, didSelect imageView: UIImageView, model: Image)
 }
@@ -28,6 +29,8 @@ class ImageViewController: UIViewController {
     
     var curScale: CGFloat = 1.0
     var newScale: CGFloat = 1.0
+    
+    var newRotation: CGFloat = 0.0
     
     weak var backView: UIView?
     var image: UIImage?
@@ -66,6 +69,7 @@ class ImageViewController: UIViewController {
         let topRatio    = CGFloat(self.model.topRatio)
         let leftRatio   = CGFloat(self.model.leftRatio)
         let heightRatio = CGFloat(self.model.heightRatio)
+        let rotation    = CGFloat(self.model.rotation)
         
         /* create */
         self.imageView = UIImageView(image: image)
@@ -74,6 +78,7 @@ class ImageViewController: UIViewController {
         }
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.isUserInteractionEnabled = true
+        imageView.transform = imageView.transform.rotated(by: rotation)
         backView.addSubview(imageView)
         
         /* constraints */
@@ -102,6 +107,10 @@ class ImageViewController: UIViewController {
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(selectImage))
         imageView.addGestureRecognizer(longPressGesture)
         
+        // ROTATION => IMAGE ROTATION
+        let rotationGesture = UIRotationGestureRecognizer(target: self, action: #selector(rotateImage))
+        imageView.addGestureRecognizer(rotationGesture)
+        
         /* done */
         return
     }
@@ -110,6 +119,11 @@ class ImageViewController: UIViewController {
     @objc func selectImage(gesture: UILongPressGestureRecognizer) {
         switch (gesture.state) {
         case .began:
+            
+            /* */
+            if (delegate != nil) { // Delegate
+                delegate!.imageViewController(self, willHandleGesture: self.imageView!, model: self.model)
+            }
             
             /* set */
             self.setSelected(true)
@@ -134,10 +148,67 @@ class ImageViewController: UIViewController {
         }
     }
     
+    // Rotate Gesture
+    @objc func rotateImage(gesture: UIRotationGestureRecognizer) {
+        switch (gesture.state) {
+        case .began:
+            
+            /* */
+            if (delegate != nil) { // Delegate
+                delegate!.imageViewController(self, willHandleGesture: self.imageView!, model: self.model)
+            }
+            
+            /* set */
+            self.newRotation = CGFloat(self.model.rotation)
+            
+            /* foreground */
+            self.backView!.bringSubview(toFront: self.imageView!)
+            if (delegate != nil) { // Delegate
+                delegate!.imageViewController(self, didBringForeground: self.imageView!, model: self.model)
+            }
+            break
+        case .ended, .cancelled:
+            
+            /* set */
+            self.model.rotation = Float(self.newRotation)
+            
+            /* Save Model State */
+            self.model.save()
+            break
+        case .changed:
+            doRotateImageView(gesture.rotation)
+            break
+        default:
+            break
+        }
+    }
+    func doRotateImageView(_ rotation: CGFloat) {
+        guard let imageView = self.imageView else {
+            return
+        }
+        
+        /* set */
+        self.newRotation = CGFloat(self.model.rotation) + rotation
+        
+        /* rotate */
+        imageView.transform = CGAffineTransform.init(rotationAngle: self.newRotation)
+        
+        /* done */
+        return
+    }
+    
     // Pinch Gesture
     @objc func scaleImage(gesture: UIPinchGestureRecognizer) {
         switch (gesture.state) {
         case .began:
+            
+            /* */
+            if (delegate != nil) { // Delegate
+                delegate!.imageViewController(self, willHandleGesture: self.imageView!, model: self.model)
+            }
+            
+            /* */
+            self.imageView!.transform = CGAffineTransform.identity
             
             /* set */
             self.curScale = self.imageView!.frame.width / self.image!.size.width
@@ -156,6 +227,9 @@ class ImageViewController: UIViewController {
             
             /* Save Model State */
             self.saveState()
+            
+            /* rotate */
+            self.imageView!.transform = CGAffineTransform.init(rotationAngle: CGFloat(self.model.rotation))
             break
         case .changed:
             doScaleImageView(gesture.scale)
@@ -215,6 +289,14 @@ class ImageViewController: UIViewController {
         // BEGAN
         if (recognizer.state == .began) {
             
+            /* */
+            if (delegate != nil) { // Delegate
+                delegate!.imageViewController(self, willHandleGesture: self.imageView!, model: self.model)
+            }
+            
+            /* */
+            self.imageView!.transform = CGAffineTransform.identity
+            
             /* foreground */
             self.backView!.bringSubview(toFront: self.imageView!)
             if (delegate != nil) { // Delegate
@@ -241,6 +323,9 @@ class ImageViewController: UIViewController {
             
                 /* Save Model State */
                 self.saveState()
+                
+                /* rotate */
+                self.imageView!.transform = CGAffineTransform.init(rotationAngle: CGFloat(self.model.rotation))
             }
         }
     }
@@ -263,7 +348,7 @@ class ImageViewController: UIViewController {
         let height  = self.imageView!.frame.height
         
         /* check */
-        if ((width < screenWidth + 10+10) && (height < screenHeight + 80+40)) {
+        if ((width < screenWidth + 10+10) && (height < screenHeight + 80+40) && (self.model.rotation.isZero)) {
             if (x - 10 < 0) {
                 x = 10
             }

@@ -13,7 +13,7 @@ import CoreData
 extension Image {
 
     // Create
-    static func create(into givenCtx: NSManagedObjectContext? = nil, for note: Note, data: NSData, topRatio: CGFloat, leftRatio: CGFloat, heightRatio: CGFloat, commit: Bool? = false) -> Image? {
+    static func create(into givenCtx: NSManagedObjectContext? = nil, for note: Note, data: NSData, topRatio: CGFloat, leftRatio: CGFloat, heightRatio: CGFloat, rotation: CGFloat, commit: Bool? = false) -> Image? {
         let ctx: NSManagedObjectContext = givenCtx ?? DataManager.shared.viewContext
         
         /* insert */
@@ -27,6 +27,7 @@ extension Image {
         nsObj.topRatio      = Float(topRatio)
         nsObj.leftRatio     = Float(leftRatio)
         nsObj.heightRatio   = Float(heightRatio)
+        nsObj.rotation      = Float(rotation)
         
         /* set */
         nsObj.frontIndex    = Int64(note.images?.count ?? 0)
