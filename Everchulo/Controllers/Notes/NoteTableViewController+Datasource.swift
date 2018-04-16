@@ -15,28 +15,44 @@ extension NoteTableViewController {
     // Setup Data:
     func setupData() {
         
-        /* Test Data */
-        if (DataManager.getenv() != .testing) {
-            Notebook.deleteAll()
-            let notebook1 = Notebook.create(name: "Primera libreta")
-            _ = Notebook.create(name: "Segunda libreta")
-            _ = Notebook.create(name: "Tercera libreta")
-            //let note1   = Note.create(title: "Lorem ipsum 1/6", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet purus id ex consectetur congue. Nulla ullamcorper mauris ac suscipit eleifend. Aliquam suscipit vehicula dapibus. Suspendisse a varius elit, ut consequat purus. Sed massa arcu, dictum nec ante porta, consequat hendrerit leo. Maecenas risus dolor, aliquam sed sagittis nec, tincidunt sed tellus. Nulla nisl velit, dictum aliquam scelerisque id, dignissim in justo. Praesent eu efficitur nunc. In hac habitasse platea dictumst. Aliquam blandit id ante imperdiet dignissim. Sed fermentum aliquam sapien id tempus. Sed sed nisl vitae velit scelerisque pellentesque.")!
-            let note1   = Note.create(notebook1!, title: "Lorem ipsum 1/6", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ")!;note1.setActive()
-            let note2   = Note.create(notebook1!, title: "Lorem ipsum 2/6", content: "Cras ultrices lorem eget dolor finibus eleifend. Suspendisse bibendum tempus nisi eleifend dictum. Suspendisse potenti. Aenean augue mauris, tempor sit amet orci eu, auctor porta elit. Donec quam metus, lacinia eu urna at, blandit eleifend lorem. Integer semper diam cursus, convallis tortor eget, tempor ipsum. Ut id lorem porttitor, luctus velit at, aliquet eros. Nunc condimentum sagittis est ut varius.")!;note2.setActive()
-            let note3   = Note.create(notebook1!, title: "Lorem ipsum 3/6", content: "Aenean venenatis turpis porta, dictum elit at, posuere quam. Donec fermentum, nulla vel facilisis iaculis, nisi dolor dictum massa, a tincidunt sem sem ac lacus. Cras sit amet laoreet mi, at volutpat mauris. Mauris blandit convallis enim id semper. Mauris et odio ligula. Nam lobortis a elit non semper. Nullam ac viverra enim, semper dictum sem. Integer lobortis eget mi ac eleifend. Aenean eget scelerisque mauris. Vestibulum turpis ligula, elementum vitae hendrerit eu, interdum at mauris.")!;note3.setActive()
-            //let note4   = Note.create(notebook1!, title: "Lorem ipsum 4/6", content: "Sed eleifend id ipsum non vestibulum. Mauris cursus nisi eget lorem laoreet commodo. Sed placerat quam sed quam congue condimentum. Vivamus eget lorem mauris. In feugiat nunc sit amet tortor condimentum volutpat. Etiam consequat odio velit, mattis porttitor dolor porttitor ac. Aliquam a mi augue. Aliquam id lacus laoreet, suscipit nunc ac, pharetra quam. In ut elit nec sem tempor tempus. Morbi velit est, finibus at magna at, blandit commodo ex.")!;note4.setActive()
-            //let note5   = Note.create(notebook1!, title: "Lorem ipsum 5/6", content: "Sed sodales magna eu mauris finibus, eu lacinia nunc condimentum. Vestibulum ornare nisi eros, ac lacinia erat sagittis et. Proin facilisis sed ex sit amet convallis. In scelerisque finibus quam vel placerat. Quisque posuere consequat ornare. Phasellus venenatis risus ac turpis blandit blandit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Integer vel tincidunt ipsum. Nam id odio fringilla orci scelerisque porta. Ut non est eu massa efficitur pretium eu venenatis nulla. Fusce volutpat velit eget tortor pharetra, sed venenatis nisl sollicitudin. Sed tincidunt urna vel egestas ullamcorper. Nam gravida tellus quis urna fermentum varius.")!;note5.setActive()
-            //let note6   = Note.create(notebook1!, title: "Lorem ipsum 6/6", content: "Nullam mi massa, ullamcorper nec interdum at, volutpat convallis ipsum. Etiam in augue non velit auctor feugiat id eget urna. Sed fringilla, quam in lobortis auctor, dui lacus commodo mi, eget interdum ipsum velit at felis. Ut imperdiet mattis nisl et sollicitudin. Suspendisse tincidunt vel est ullamcorper porta. Suspendisse vel nunc quis erat tincidunt faucibus non at nunc. Nullam scelerisque, tortor eget malesuada interdum, nunc quam commodo velit, et lacinia magna leo non enim. Suspendisse consequat in lacus eu lacinia. In in purus in dui rutrum accumsan. Donec erat neque, mollis eget feugiat et, venenatis sed libero.")!;note6.setActive()
-            let note7   = Note.create(notebook1!, title: "Nota Borrada", content: "Un ejemplo de nota enviada a la papelera")!
-            note7.moveToTrash()
-            notebook1?.setActive()
-            notebook1?.save()
-            print("!!!TEST NOTEBOOK", notebook1!.objectID, notebook1!)
+        /* First Launch */
+        if (self.isFirstLaunch) {
+            let notebook = Notebook.create(name: "EVERCHULO")
+            
+            let note1   = Note.create(notebook!, title: "1./ FUNCIONALIDADES:", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ")!;note1.setActive()
+            let note11   = Note.create(notebook!, title: "1.1- Notas", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ")!;note11.setActive()
+            let note12   = Note.create(notebook!, title: "1.2- Libretas", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ")!;note12.setActive()
+
+            let note2   = Note.create(notebook!, title: "2./ DETALLES DE UNA NOTA:", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ")!;note2.setActive()
+            let note21   = Note.create(notebook!, title: "2.1- Selector de Libretas", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ")!;note21.setActive()
+            let note22   = Note.create(notebook!, title: "2.2- Contenidos Básicos", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ")!;note22.setActive()
+            let note23   = Note.create(notebook!, title: "2.3- Imágenes", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ")!;note23.setActive()
+            let note24   = Note.create(notebook!, title: "2.4- Geoposicionamiento", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ")!;note24.setActive()
+            let note25   = Note.create(notebook!, title: "2.5- La Alarma", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ")!;note25.setActive()
+            let note26   = Note.create(notebook!, title: "2.6- Funcionalidades Extras!!", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ")!;note26.setActive()
+            
+            let note3   = Note.create(notebook!, title: "3./ MANEJO DE LIBRETAS:", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ")!;note3.setActive()
+            let note31   = Note.create(notebook!, title: "3.1- Ajustes de Libretas", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ")!;note31.setActive()
+            let note32   = Note.create(notebook!, title: "3.2- Borrado de Libretas", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ")!;note32.setActive()
+
+            notebook!.setActive(commit: true)
+
+            /* set */
+            self.isFirstLaunch = false
         }
         
-        // Fetch All
+        /* Fetch All */
         self.fetchAll()
+        
+        /* check */
+        if (self.fetchedNotesController.fetchedObjects!.count <= 0) {
+            self.editButtonItem.setHidden(true)
+            self.menuBarButtonItem.setHidden(Note.listTrashed().count <= 0)
+        }
+        else {
+            self.editButtonItem.setHidden(false)
+            self.menuBarButtonItem.setHidden(false)
+        }
     }
     
     // Fetch Data

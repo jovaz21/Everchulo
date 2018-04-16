@@ -66,21 +66,24 @@ class NotebookSelectorTableViewController: UITableViewController {
         }
         
         /* check */
-        if (self.viewMode == .select) { DispatchQueue.main.async {
+        if (self.viewMode == .select) {
+            DispatchQueue.main.async {
                 
-            /* set */
-            self.selectedNotebook = self.lastTappedNotebook
-            self.selectedRow = self.lastTappedRow
-            let notebook = self.selectedNotebook!
+                /* set */
+                self.selectedNotebook = self.lastTappedNotebook
+                self.selectedRow = self.lastTappedRow
+                let notebook = self.selectedNotebook!
                 
-            /* delegate */
-            if (self.delegate != nil) { // Delegate
-                self.delegate!.notebookSelectorTableViewController(self, didSelectNotebook: notebook)
+                /* delegate */
+                if (self.delegate != nil) { // Delegate
+                    self.delegate!.notebookSelectorTableViewController(self, didSelectNotebook: notebook)
+                }
+                
+                /* */
+                self.presentingViewController?.dismiss(animated: true)
             }
-                
-            /* */
-            self.presentingViewController?.dismiss(animated: true)
-        }}
+            return
+        }
         
         /* confirm */
         let confirmDialog = makeConfirmDialog(title: "\(i18NString("NotebookSelectorTableViewController.\(self.viewMode.rawValue).confirmMsg")) '\(self.lastTappedNotebook!.name!)'?", message: "", okAction: (
@@ -154,11 +157,11 @@ extension NotebookSelectorTableViewController {
     @objc func cancelAction() {
         
         /* cleanup */
-        Notebook.listAll().forEach() {
-            if ($0.activeNotes.count <= 0) {
-                $0.delete()
-            }
-        }
+//        Notebook.listAll().forEach() {
+//            if (($0 != self.notebook) && ($0.activeNotes.count <= 0)) {
+//                $0.delete()
+//            }
+//        }
         
         /* */
         let presentingViewController = self.presentingViewController!

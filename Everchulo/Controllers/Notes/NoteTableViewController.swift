@@ -24,6 +24,18 @@ class NoteTableViewController: UITableViewController {
     var fetchedNotebooksController: NSFetchedResultsController<Notebook>!
     var fetchedNotesController: NSFetchedResultsController<Note>!
     
+    // First Launch Flag
+    var isFirstLaunch: Bool {
+        get {
+            return(UserDefaults.standard.integer(forKey: "NoteTableView.FirstLaunch") == 0)
+        }
+        set {
+            let firstLaunch = newValue ? 0 : 1
+            UserDefaults.standard.set(firstLaunch, forKey: "NoteTableView.FirstLaunch")
+            UserDefaults.standard.synchronize()
+        }
+    }
+    
     // Last Selected Note/Row+Section
     var lastSelectedNote: Note { return(fetchedNotebooksController.object(at: IndexPath(row: lastSelectedSection, section: 0)).sortedNotes[lastSelectedRow]) }
     var lastSelectedRow: Int {
