@@ -43,7 +43,7 @@ extension NoteDetailViewController {
             ),
             (
                 title:      i18NString("NoteDetailsViewController.alarm.deleteAlarmMsg"),
-                style:      .default,
+                style:      .destructive,
                 image:      nil,
                 hidden:     false,
                 handler:    { (alertAction) in

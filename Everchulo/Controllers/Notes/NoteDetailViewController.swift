@@ -110,6 +110,7 @@ class NoteDetailViewController: UIViewController {
     
     // On Note Done
     func onNoteDone() {
+        var isContentUpdated = false
         let titleText = self.titleTextField.text
         let contentText = self.contentTextField.text
         
@@ -122,11 +123,13 @@ class NoteDetailViewController: UIViewController {
         }
         
         /* check */
-        if (titleText!.count > 0) {
+        if ((titleText!.count > 0) && (titleText! != self.note!.title)) {
             self.note!.title = titleText
+            isContentUpdated = true
         }
-        if (contentText!.count > 0) {
+        if ((contentText!.count > 0) && (contentText! != self.note!.content)) {
             self.note!.content = contentText
+            isContentUpdated = true
         }
         
         /* check */
@@ -150,9 +153,16 @@ class NoteDetailViewController: UIViewController {
         /* check */
         if (self.note!.title == nil) {
             self.note!.title = self.note!.content
+            isContentUpdated = true
         }
         if (self.note!.content == nil) {
             self.note!.content = self.note!.title
+            isContentUpdated = true
+        }
+        
+        /* check */
+        if ((self.viewMode == .edit) && isContentUpdated) {
+            self.note!.updatedTimestamp = Date().timeIntervalSince1970
         }
             
         /* save */
@@ -280,11 +290,13 @@ extension NoteDetailViewController {
         // TEXT FIELDS
         titleTextField.tintColor = Styles.activeColor
         titleTextField.placeholder = i18NString("NoteDetailsViewController.titlePlaceHolder")
+        titleTextField.addTarget(self, action: #selector(titleTextFieldDidEnd), for: UIControlEvents.editingDidEnd)
         
         contentTextField.tintColor = Styles.activeColor
         if (self.viewMode == .new) {
             contentTextField.placeholder = i18NString("NoteDetailsViewController.contentPlaceHolder")
         }
+        contentTextField.delegate = self
         
         /* NAVIGATIONBAR */
         self.navigationController?.navigationBar.tintColor = Styles.activeColor
@@ -325,6 +337,18 @@ extension NoteDetailViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.025, execute: {
             self.onNoteDone()
         })
+    }
+    @objc func titleTextFieldDidEnd(textField: UITextField) {
+        if ((textField.text!.count > 0) && (textField.text! != self.note!.title)) {
+            self.note!.title = textField.text!
+            self.note!.updatedTimestamp = Date().timeIntervalSince1970
+        }
+    }
+    func contentTextFieldDidEnd(_ textView: UITextView) {
+        if ((textView.text!.count > 0) && (textView.text! != self.note!.content)) {
+            self.note!.content = textView.text!
+            self.note!.updatedTimestamp = Date().timeIntervalSince1970
+        }
     }
     
     // Release UIView
@@ -419,5 +443,12 @@ extension NoteDetailViewController: NoteTableViewControllerDelegate {
         
         /* done */
         return
+    }
+}
+
+// MARK: - UITextViewDelegate
+extension NoteDetailViewController: UITextViewDelegate {
+    func textViewDidEndEditing(_ textView: UITextView) {
+        self.contentTextFieldDidEnd(textView)
     }
 }

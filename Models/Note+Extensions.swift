@@ -203,6 +203,7 @@ extension Note {
         self.notebookDidUpdate()
         
         /* */
+        self.updatedTimestamp = Date().timeIntervalSince1970
         if (commit!) {
             self.save(from: givenCtx)
         }

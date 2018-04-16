@@ -68,11 +68,14 @@ class NoteInfosViewController: UIViewController {
     //  - Set UIView Data
     func paintUIView() {
         let createdDate: Date? = Date(timeIntervalSince1970: note.createdTimestamp)
-        let updatedDate: Date? = Date(timeIntervalSince1970: note.updatedTimestamp)
+        var updatedDate: Date? = Date(timeIntervalSince1970: note.updatedTimestamp)
         var alarmDate: Date? = Date(timeIntervalSince1970: note.alarmTimestamp)
         var location: CLLocation? = CLLocation(latitude: note.latitude, longitude: note.longitude)
         
         /* check */
+        if (note.updatedTimestamp <= 0) {
+            updatedDate = nil
+        }
         if (note.alarmTimestamp <= 0) {
             alarmDate = nil
         }
@@ -150,6 +153,14 @@ extension NoteInfosViewController {
         /* */
         print("!!! setUIViewData: Entering, data=", data)
         
+        /* dates */
+        self.createdDateLabel!.text = "\(i18NString("NoteInfosViewController.createdDateLabel")): \(data.createdDate?.toString(withFormat: "dd MMM yyyy hh:mm") ?? "")"
+        self.updateDateLabel!.text = "\(i18NString("NoteInfosViewController.updatedDateLabel")): \(data.updatedDate?.toString(withFormat: "dd MMM yyyy hh:mm") ?? "")"
+        self.alarmDateLabel!.text = "\(i18NString("NoteInfosViewController.alarmDateLabel")): \(data.alarmDate?.toString(withFormat: "dd MMM yyyy hh:mm") ?? "")"
+        
+        self.updateDateLabel!.isHidden = (data.updatedDate == nil)
+        self.alarmDateLabel!.isHidden = (data.alarmDate == nil)
+        
         /* location */
         self.mapView.isHidden = (data.location == nil)
         self.mapPlaceholder.isHidden = (data.location != nil)
@@ -211,6 +222,7 @@ extension NoteInfosViewController: LocationSelectorViewControllerDelegate {
         /* set */
         self.note.latitude = location.coordinate.latitude
         self.note.longitude = location.coordinate.longitude
+        self.note.updatedTimestamp = Date().timeIntervalSince1970
         self.note.save()
         
         /* */

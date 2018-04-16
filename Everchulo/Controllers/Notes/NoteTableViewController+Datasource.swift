@@ -187,6 +187,7 @@ extension NoteTableViewController {
         /* set */
         cell.titleLabel.text    = note.title
         cell.dateLabel.text     = "23 mar'18"
+        cell.dateLabel.text     = Date(timeIntervalSince1970: note.createdTimestamp).toString(withFormat: "dd MMM''yy")
         cell.contentLabel.text  = note.content
         
         /* set */

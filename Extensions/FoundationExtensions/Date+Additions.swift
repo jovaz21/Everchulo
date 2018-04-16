@@ -12,10 +12,10 @@ import Foundation
 extension Date {
     
     // From String
-    static func fromString(_ dateString: String, withFormat format: String) -> Date? {
+    static func fromString(_ dateStr: String, withFormat format: String) -> Date? {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = format
-        return(dateFormatter.date(from: dateString))
+        return(dateFormatter.date(from: dateStr))
     }
     static func fromString(_ dateString: String) -> Date? {
         let dateFormatter = ISO8601DateFormatter()
@@ -24,6 +24,11 @@ extension Date {
     }
     
     // To String
+    func toString(withFormat format: String) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = format
+        return(dateFormatter.string(from: self))
+    }
     func toString() -> String {
         let dateFormatter = ISO8601DateFormatter()
         dateFormatter.formatOptions = [.withFullDate, .withDashSeparatorInDate]

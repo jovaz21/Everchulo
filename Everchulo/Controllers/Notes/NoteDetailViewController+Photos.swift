@@ -215,6 +215,9 @@ extension NoteDetailViewController: UIImagePickerControllerDelegate, UINavigatio
             
             /* add */
             self.imageViewControllers.append(imageVC)
+            
+            /* set */
+            self.note!.updatedTimestamp = Date().timeIntervalSince1970
         })
     }
 }
