@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LocationSelectorViewController" customModule="Everchulo" customModuleProvider="target">
+            <connections>
+                <outlet property="mapView" destination="NnU-jP-Ot9" id="wFn-2q-LBd"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="NbC-EO-gQu">
+                    <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                    <subviews>
+                        <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="NnU-jP-Ot9">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                        </mapView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="NnU-jP-Ot9" firstAttribute="leading" secondItem="NbC-EO-gQu" secondAttribute="leading" id="1fD-0I-BGP"/>
+                        <constraint firstAttribute="trailing" secondItem="NnU-jP-Ot9" secondAttribute="trailing" id="YR5-mo-2jc"/>
+                        <constraint firstItem="NnU-jP-Ot9" firstAttribute="top" secondItem="NbC-EO-gQu" secondAttribute="top" id="YUb-sa-O3a"/>
+                        <constraint firstAttribute="bottom" secondItem="NnU-jP-Ot9" secondAttribute="bottom" id="gU4-5t-N4c"/>
+                    </constraints>
+                </stackView>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="NbC-EO-gQu" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="49J-HS-Jug"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="NbC-EO-gQu" secondAttribute="trailing" id="PjY-av-6Z5"/>
+                <constraint firstItem="NbC-EO-gQu" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="Uhf-y6-40M"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="NbC-EO-gQu" secondAttribute="bottom" id="W1B-zg-57H"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+        </view>
+    </objects>
+</document>

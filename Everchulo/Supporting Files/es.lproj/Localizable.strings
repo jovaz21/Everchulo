@@ -17,6 +17,7 @@
 "es.atenet.app.MoveToTrash" = "Mover a la Papelera";
 "es.atenet.app.Cancel" = "Cancelar";
 "es.atenet.app.Done" = "Hecho";
+"es.atenet.app.Close" = "Cerrar";
 "es.atenet.app.Allow" = "Permitir";
 "es.atenet.app.DoNotAllow" = "No permitir";
 "es.atenet.app.Accept" = "Aceptar";
@@ -95,3 +96,14 @@
 // NoteController
 "NoteController.copyOfMsgLabel" = "Copia de";
 
+// NoteInfosViewController
+"NoteInfosViewController.title" = "Más Detalles";
+"NoteInfosViewController.createdDateLabel" = "Creada";
+"NoteInfosViewController.updatedDateLabel" = "Modificada";
+"NoteInfosViewController.alarmDateLabel" = "Alarma";
+
+// LocationSelectorViewController
+"LocationSelectorViewController.title" = "Mapa";
+"LocationSelectorViewController.setLocationBtn" = "Soltar alfiler";
+"LocationSelectorViewController.resetLocationBtn" = "Eliminar alfiler";
+"LocationSelectorTableViewController.pinLabel" = "¡Mueve el alfiler para posicionar la Nota!";

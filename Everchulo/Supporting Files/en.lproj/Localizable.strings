@@ -17,6 +17,7 @@
 "es.atenet.app.MoveToTrash" = "Move to Trash";
 "es.atenet.app.Cancel" = "Cancel";
 "es.atenet.app.Done" = "Done";
+"es.atenet.app.Close" = "Close";
 "es.atenet.app.Allow" = "Allow";
 "es.atenet.app.DoNotAllow" = "Don't Allow";
 "es.atenet.app.Accept" = "Acept";
@@ -98,3 +99,14 @@
 // NoteController
 "NoteController.copyOfMsgLabel" = "Copy of";
 
+// NoteInfosViewController
+"NoteInfosViewController.title" = "More Details";
+"NoteInfosViewController.createdDateLabel" = "Created";
+"NoteInfosViewController.updatedDateLabel" = "Updated";
+"NoteInfosViewController.alarmDateLabel" = "Alarm";
+
+// LocationSelectorViewController
+"LocationSelectorViewController.title" = "Map";
+"LocationSelectorViewController.setLocationBtn" = "Set location";
+"LocationSelectorViewController.resetLocationBtn" = "Remove location";
+"LocationSelectorTableViewController.pinLabel" = "Move the pin to have the note located!";

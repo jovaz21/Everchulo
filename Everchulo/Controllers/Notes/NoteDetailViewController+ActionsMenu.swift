@@ -71,6 +71,12 @@ extension NoteDetailViewController {
     
     // Infos Menu Action
     @objc func displayInfosAction() {
+        
+        /* set */
+        let noteInfosVC = NoteInfosViewController(note: self.note!)
+        
+        /* show */
+        self.present(noteInfosVC.wrappedInNavigation(), animated: true)
     }
     
     // Note Menu Action

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NoteInfosViewController" customModule="Everchulo" customModuleProvider="target">
+            <connections>
+                <outlet property="alarmDateLabel" destination="q42-Fn-yTg" id="imZ-og-HI1"/>
+                <outlet property="createdDateLabel" destination="fCs-0H-1Oy" id="LhM-vP-30x"/>
+                <outlet property="mapPlaceholder" destination="AYf-fy-7Vl" id="XWM-ke-c0m"/>
+                <outlet property="mapView" destination="cQe-J0-ukO" id="aq5-0O-ALA"/>
+                <outlet property="updateDateLabel" destination="ZRK-Fq-MXp" id="4X4-iq-8KI"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="cWW-cu-iTH">
+                    <rect key="frame" x="5" y="25" width="365" height="642"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" axis="vertical" distribution="fillEqually" spacing="-1" translatesAutoresizingMaskIntoConstraints="NO" id="7Pc-Dg-0ik" userLabel="Stats Stack">
+                            <rect key="frame" x="0.0" y="0.0" width="365" height="52"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Creada: 23 mar 208 7:53" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fCs-0H-1Oy" userLabel="CreatedDateLabel">
+                                    <rect key="frame" x="0.0" y="0.0" width="365" height="18"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Actualizada: 25 mar 2018 10:23" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZRK-Fq-MXp" userLabel="UpdatedDateLabel">
+                                    <rect key="frame" x="0.0" y="17" width="365" height="18"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Alarma: 30 mar 2018 09:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q42-Fn-yTg" userLabel="AlarmDateLabel">
+                                    <rect key="frame" x="0.0" y="34" width="365" height="18"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                        </stackView>
+                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NhJ-uX-Rlg">
+                            <rect key="frame" x="0.0" y="57" width="365" height="585"/>
+                            <subviews>
+                                <mapView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="cQe-J0-ukO">
+                                    <rect key="frame" x="0.0" y="0.0" width="0.0" height="585"/>
+                                </mapView>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="map_placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="AYf-fy-7Vl">
+                                    <rect key="frame" x="0.0" y="0.0" width="365" height="585"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </imageView>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="AYf-fy-7Vl" firstAttribute="top" secondItem="NhJ-uX-Rlg" secondAttribute="top" id="Cmw-GY-Cqe"/>
+                                <constraint firstItem="AYf-fy-7Vl" firstAttribute="leading" secondItem="cQe-J0-ukO" secondAttribute="trailing" id="jYv-Bn-vOy"/>
+                                <constraint firstAttribute="trailing" secondItem="AYf-fy-7Vl" secondAttribute="trailing" id="vTA-ga-yLC"/>
+                                <constraint firstAttribute="bottom" secondItem="AYf-fy-7Vl" secondAttribute="bottom" id="zB4-z1-wVl"/>
+                            </constraints>
+                        </stackView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="7Pc-Dg-0ik" firstAttribute="leading" secondItem="cWW-cu-iTH" secondAttribute="leading" id="Izy-I8-MTq"/>
+                        <constraint firstItem="NhJ-uX-Rlg" firstAttribute="leading" secondItem="cWW-cu-iTH" secondAttribute="leading" constant="-5" id="VOB-Sf-GV3"/>
+                        <constraint firstItem="7Pc-Dg-0ik" firstAttribute="top" secondItem="cWW-cu-iTH" secondAttribute="top" id="jkD-iO-ybh"/>
+                        <constraint firstAttribute="trailing" secondItem="NhJ-uX-Rlg" secondAttribute="trailing" constant="-5" id="l0h-nO-4HL"/>
+                        <constraint firstAttribute="trailing" secondItem="7Pc-Dg-0ik" secondAttribute="trailing" id="qSy-aB-HId"/>
+                    </constraints>
+                </stackView>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="cWW-cu-iTH" secondAttribute="bottom" id="255-A5-sJW"/>
+                <constraint firstItem="cWW-cu-iTH" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="5" id="78D-J7-bQ2"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="cWW-cu-iTH" secondAttribute="trailing" constant="5" id="Du6-1N-V6d"/>
+                <constraint firstItem="cWW-cu-iTH" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="5" id="Q6y-6v-09K"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="map_placeholder" width="750" height="922"/>
+    </resources>
+</document>
