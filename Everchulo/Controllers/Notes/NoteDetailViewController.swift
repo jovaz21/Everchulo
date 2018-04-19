@@ -29,9 +29,14 @@ class NoteDetailViewController: UIViewController {
     weak var delegate: NoteDetailViewControllerDelegate?
     
     // MARK: - Init
-    init(notebook: Notebook? = nil, note: Note? = nil) {
+    init(notebook: Notebook? = nil, note: Note? = nil, viewMode: ViewMode? = nil) {
         self.notebook = notebook
         self.note = note
+        
+        /* check */
+        if (viewMode != nil) {
+            self.viewMode = viewMode!
+        }
         
         /* set */
         super.init(nibName: nil, bundle: Bundle(for: type(of: self)))
@@ -66,7 +71,7 @@ class NoteDetailViewController: UIViewController {
         }
         
         /* check */
-        if (self.note == nil) {
+        if ((self.note == nil) && (self.viewMode != .empty)) {
             
             /* New Note */
             self.setViewMode(.new)
@@ -75,8 +80,15 @@ class NoteDetailViewController: UIViewController {
             self.note = Note.create(notebook!)!
         }
         
+        /* check */
+        if ((self.note != nil) && (self.viewMode == .empty)) {
+            self.setViewMode(.edit)
+        }
+        
         // Paint UIView
-        self.paintUIView()
+        if (self.note != nil) {
+            self.paintUIView()
+        }
     }
     /*
     override func viewDidAppear(_ animated: Bool) { super.viewDidAppear(animated)
@@ -270,6 +282,7 @@ extension NoteDetailViewController {
     // View Mode
     enum ViewMode: String {
         case new
+        case empty
         case edit
     }
     
@@ -351,6 +364,24 @@ extension NoteDetailViewController {
         }
     }
     
+    //
+    func wrappedInNavigationWithToolbarInitialized() -> UINavigationController {
+        let navController = UINavigationController(rootViewController: self)
+        
+        /* TOOLBAR */
+        navigationController?.toolbar.isHidden  = false
+        navigationController?.isToolbarHidden   = false
+        self.menuBarButtonItem = UIBarButtonItem(image: UIImage(named: "dots-horizontal")!, style: .done, target: self, action: #selector(displayNoteMenuAction))
+        self.menuBarButtonItem.tintColor = Styles.activeColor
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        self.cameraButtonItem = UIBarButtonItem(barButtonSystemItem: .camera, target: self, action: #selector(displayImageMenuAction))
+        self.cameraButtonItem.tintColor = Styles.activeColor
+        self.setToolbarItems([self.menuBarButtonItem, flexibleSpace, self.cameraButtonItem], animated: false)
+        
+        /* done */
+        return(navController)
+    }
+    
     // Release UIView
     func releaseUIView() {
         self.releaseImageViews()
@@ -389,6 +420,9 @@ extension NoteDetailViewController {
         /* set */
         self.viewMode = value
         
+        /* */
+        self.setupUIView()
+        
         /* check */
         if (self.viewMode == .new) {
             self.navigationItem.leftBarButtonItem = self.okButtonItem
@@ -426,19 +460,39 @@ extension NoteDetailViewController: NoteTableViewControllerDelegate {
         /* check */
         if (vc.splitViewController == nil) {
             vc.navigationController?.pushViewController(self, animated: true)
+            return
         }
-        else if (vc.splitViewController!.isCollapsed) {
-            vc.showDetailViewController(self, sender: vc)
+        
+        /* */
+        print("!!!!SplitViewController: isCollapsed: ", vc.splitViewController!.isCollapsed)
+        switch (vc.splitViewController!.displayMode) {
+        case .allVisible:
+            print("!!!!All Visible")
+        case .primaryHidden:
+            print("!!!!Primary Hidden")
+        case .primaryOverlay:
+            print("!!!!Primary Overlay")
+        case .automatic:
+            print("!!!!Automatic")
         }
-        else {
-            
-            /* paint */
-            paintUIView()
-            
-            /* check */
-            if (vc.splitViewController!.displayMode == .primaryOverlay) {
-                vc.splitViewController?.preferredDisplayMode = .primaryHidden
-            }
+        
+        /* check */
+        if (vc.splitViewController!.isCollapsed) {
+            vc.navigationController?.pushViewController(self, animated: true)
+            return
+        }
+        
+        /* check */
+        if ((self.navigationController == nil) || self.splitViewController!.viewControllers.index(of: self.navigationController!) == nil) {
+            vc.splitViewController!.viewControllers.append(self.wrappedInNavigation())
+        }
+        
+        /* Paint */
+        self.paintUIView()
+
+        /* check */
+        if (vc.splitViewController!.displayMode == .primaryOverlay) {
+            vc.splitViewController?.preferredDisplayMode = .primaryHidden
         }
         
         /* done */

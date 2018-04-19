@@ -37,6 +37,7 @@ class NoteTableViewController: UITableViewController {
     }
     
     // Last Selected Note/Row+Section
+    var hasUserMadeASelection: Bool = false
     var lastSelectedNote: Note { return(fetchedNotebooksController.object(at: IndexPath(row: lastSelectedSection, section: 0)).sortedNotes[lastSelectedRow]) }
     var lastSelectedRow: Int {
         get {
@@ -89,14 +90,37 @@ class NoteTableViewController: UITableViewController {
     // View Will Appear:
     // Always Set LastSelected Note as Selected
     override func viewWillAppear(_ animated: Bool) { super.viewWillAppear(animated)
+        self.selectLastSelectedIfNeeded()
+    }
+    func selectLastSelectedIfNeeded() {
+        if (!self.hasUserMadeASelection) {
+            return
+        }
+        guard let svc = self.splitViewController else {
+            return
+        }
+        var selectRow: Bool = false
         
         /* check */
-        if (self.viewMode == .SingleView) {
-            return
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.pad) { // iPAD
+            selectRow = true
+        }
+        if (!svc.isCollapsed && (svc.displayMode == .allVisible)) {
+            if (UIDevice.current.orientation.isLandscape) { // iPhone8 - Landscape
+                selectRow = true
+            }
         }
         
         /* select */
-        tableView.selectRow(at: IndexPath(row: self.lastSelectedRow, section: self.lastSelectedSection), animated: false, scrollPosition: .none)
+        if (selectRow) {
+            let indexPath = IndexPath(row: self.lastSelectedRow, section: self.lastSelectedSection)
+            self.tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
+            self.tableView.scrollToRow(at: indexPath, at: .middle, animated: true)
+        }
+    }
+    func reloadTableViewData() {
+        self.tableView.reloadData()
+        self.selectLastSelectedIfNeeded()
     }
     
     // View Will Disappear:
@@ -124,6 +148,9 @@ class NoteTableViewController: UITableViewController {
         /* set */
         self.lastSelectedSection    = indexPath.section
         self.lastSelectedRow        = indexPath.row
+        
+        /* set */
+        self.hasUserMadeASelection  = true
     }
     
     // MARK: - On New Note:
