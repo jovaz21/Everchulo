@@ -16,7 +16,7 @@ extension NoteDetailViewController {
     @objc func displayAlarmMenuAction() { DispatchQueue.main.asyncAfter(deadline: .now() + 0.025, execute: {
         
         /* menu */
-        let actionSheetMenu = makeActionSheetMenu(title: nil, message: nil, items:
+        let actionSheetMenu = makeActionSheetMenu(from: self.alarmButtonItem!, title: nil, message: nil, items:
             (
                 title:      i18NString("NoteDetailsViewController.alarm.setAlarmMsg"),
                 style:      .default,
@@ -83,7 +83,7 @@ extension NoteDetailViewController {
     @objc func displayNoteMenuAction() { DispatchQueue.main.asyncAfter(deadline: .now() + 0.025, execute: {
         
         /* menu */
-        let actionSheetMenu = makeActionSheetMenu(title: nil, message: nil, items:
+        let actionSheetMenu = makeActionSheetMenu(from: self.menuBarButtonItem!, title: nil, message: nil, items:
             (
                 title:      i18NString("NoteDetailsViewController.menu.setAlarmMsg"),
                 style:      .default,

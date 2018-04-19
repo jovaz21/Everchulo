@@ -42,7 +42,7 @@ class NotebookController {
     func doDeleteNotebook() {
         
         /* confirm */
-        let actionSheetMenu = makeActionSheetMenu(title: i18NString("NotebookController.confirmMoveTitle"), message: i18NString("NotebookController.confirmMoveInfo"), items:
+        let actionSheetMenu = makeActionSheetMenu(from: vc.view!, title: i18NString("NotebookController.confirmMoveTitle"), message: i18NString("NotebookController.confirmMoveInfo"), items:
             (
                 title:      i18NString("NotebookController.moveMsg"),
                 style:      .default,

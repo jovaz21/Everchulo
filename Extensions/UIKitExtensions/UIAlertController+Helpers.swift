@@ -32,7 +32,7 @@ func showAlertDialog(sender: UIViewController, title: String?, message: String?)
 typealias UIActionSheetMenuItem = (title: String, style: UIAlertActionStyle, hidden: Bool, image: UIImage?, handler: ((UIAlertAction) -> Void)?)
 
 // Make ActionSheet Menu
-func makeActionSheetMenu(title: String?, message: String?, items: UIActionSheetMenuItem...) -> UIAlertController {
+func makeActionSheetMenu(from source: Any, title: String?, message: String?, items: UIActionSheetMenuItem...) -> UIAlertController {
     let actionSheetMenu = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
     
     /* add */
@@ -55,6 +55,23 @@ func makeActionSheetMenu(title: String?, message: String?, items: UIActionSheetM
         actionSheetMenu.addAction(action)
     }
     actionSheetMenu.view.tintColor = Styles.activeColor
+    
+    /* check */
+    if let popoverController = actionSheetMenu.popoverPresentationController {
+        if (type(of: source) == UIView.self) {
+            let sourceView = source as! UIView
+            popoverController.sourceView = sourceView
+            popoverController.sourceRect = CGRect(x: sourceView.bounds.midX, y: sourceView.bounds.midY, width: 0, height: 0)
+            popoverController.permittedArrowDirections = []
+        }
+        else if (type(of: source) == UIBarButtonItem.self) {
+            let barButtonItem = source as! UIBarButtonItem
+            popoverController.barButtonItem = barButtonItem
+        }
+        else {
+            print("Error: typeOfSource=", type(of: source))
+        }
+    }
 
     /* done */
     return(actionSheetMenu)

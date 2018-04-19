@@ -217,7 +217,7 @@ extension NoteTableViewController {
         let trashedNotesCount = Note.listTrashed().count
         
         /* menu */
-        let actionSheetMenu = makeActionSheetMenu(title: nil, message: nil, items:
+        let actionSheetMenu = makeActionSheetMenu(from: self.menuBarButtonItem!, title: nil, message: nil, items:
             (
                 title:      i18NString("NoteTableViewController.notebookSettingsMsg"),
                 style:      .default,

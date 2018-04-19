@@ -52,7 +52,7 @@ extension NoteDetailViewController {
         })
         
         /* menu */
-        let actionSheetMenu = makeActionSheetMenu(title: nil, message: nil, items:
+        let actionSheetMenu = makeActionSheetMenu(from: self.cameraButtonItem!, title: nil, message: nil, items:
             (
                 title:      i18NString("NoteDetailsViewController.photo.fromCameraMsg"),
                 style:      .default,
@@ -239,7 +239,7 @@ extension NoteDetailViewController: ImageViewControllerDelegate {
     func imageViewController(_ vc: ImageViewController, didSelect imageView: UIImageView, model: Image) {
         
         /* confirm */
-        let actionSheetMenu = makeActionSheetMenu(title: nil, message: nil, items:
+        let actionSheetMenu = makeActionSheetMenu(from: self.view!, title: nil, message: nil, items:
             (
                 title:      i18NString(i18NString("NoteDetailsViewController.photo.deletePhoto")),
                 style:      .destructive,
