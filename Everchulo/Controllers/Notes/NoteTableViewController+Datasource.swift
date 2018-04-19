@@ -341,14 +341,44 @@ extension NoteTableViewController: NSFetchedResultsControllerDelegate {
     
     // End Updates on UITableView
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        print("!!!controllerDidChangeContent: numberOfSections", self.tableView.numberOfSections)
+        let activeNotebook      = Notebook.getActive()
+        let activeNotes         = activeNotebook?.activeNotes
+        let activeNotesCount    = activeNotes?.count ?? 0
+        print("!!!controllerDidChangeContent: numberOfSections", self.tableView.numberOfSections, ", activeNotesCount=", activeNotesCount)
         
         /* */
         self.tableView.endUpdates()
         self.tableView.reloadData()
         
         /* check */
-        if (controller.fetchedObjects!.count <= 0) {
+        if (activeNotesCount <= 0) {
+            
+            /* check */
+            if (self.splitViewController != nil) {
+                var emptyDetailView: Bool = false
+                
+                /* set */
+                let svc = self.splitViewController!
+            
+                /* check */
+                if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.pad) { // iPAD
+                    emptyDetailView = true
+                }
+                if (!svc.isCollapsed && (svc.displayMode == .allVisible)) {
+                    if (UIDevice.current.orientation.isLandscape) { // iPhone8 - Landscape
+                        emptyDetailView = true
+                    }
+                }
+                
+                /* check */
+                if (emptyDetailView) {
+                    if (svc.viewControllers.count > 1) {
+                        svc.viewControllers.remove(at: 1)
+                    }
+                }
+            }
+            
+            /* set */
             self.editButtonItem.setHidden(true)
             self.menuBarButtonItem.setHidden(Note.listTrashed().count <= 0)
         }

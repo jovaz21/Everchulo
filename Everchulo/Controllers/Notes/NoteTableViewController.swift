@@ -93,6 +93,9 @@ class NoteTableViewController: UITableViewController {
         self.selectLastSelectedIfNeeded()
     }
     func selectLastSelectedIfNeeded() {
+        if (self.fetchedNotesController.fetchedObjects!.count <= 0) {
+            return
+        }
         if (!self.hasUserMadeASelection) {
             return
         }
