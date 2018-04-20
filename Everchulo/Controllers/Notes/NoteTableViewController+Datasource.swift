@@ -19,21 +19,64 @@ extension NoteTableViewController {
         if (self.isFirstLaunch) {
             let notebook = Notebook.create(name: "EVERCHULO")
             
-            let note1   = Note.create(notebook!, title: "1./ FUNCIONALIDADES:", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ")!;note1.setActive()
-            let note11   = Note.create(notebook!, title: "1.1- Notas", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ")!;note11.setActive()
-            let note12   = Note.create(notebook!, title: "1.2- Libretas", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ")!;note12.setActive()
-
-            let note2   = Note.create(notebook!, title: "2./ DETALLES DE UNA NOTA:", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ")!;note2.setActive()
-            let note21   = Note.create(notebook!, title: "2.1- Selector de Libretas", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ")!;note21.setActive()
-            let note22   = Note.create(notebook!, title: "2.2- Contenidos Básicos", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ")!;note22.setActive()
-            let note23   = Note.create(notebook!, title: "2.3- Imágenes", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ")!;note23.setActive()
-            let note24   = Note.create(notebook!, title: "2.4- Geoposicionamiento", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ")!;note24.setActive()
-            let note25   = Note.create(notebook!, title: "2.5- La Alarma", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ")!;note25.setActive()
-            let note26   = Note.create(notebook!, title: "2.6- Funcionalidades Extras!!", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ")!;note26.setActive()
+            let note1   = Note.create(notebook!, title: "1./ FUNCIONALIDADES:", content: "Además de implementar las funcionalidades y requisitos obligatorios de la práctica 'iOS Avanzando', la App 'Everchulo' replica un pequeño subconjunto de funcionalidades de 'Evernote', inspirándose de algunas de sus pantallas y diseños.\n\nLo que está implementado es todo lo que está solicitado en el enunciado de la práctica, salvo la 'Fuente de texto de tamaño dinámico' y la 'Notificación local sobre la fecha de Alarma', además de un subconjunto de funcionalidades 'extras' replicadas/copiadas en gran medida de la propia App 'Evernote', como por ejemplo:\n\n- Menús de tipo ActionSheet \n- Listado de notas con CollectionView de fotografías \n- Pantalla 'Ajustes de libreta' \n- Estilo general y colores \n- Papelera de reciclaje \n- Etc...")!;note1.setActive()
+            let note11   = Note.create(notebook!, title: "1.1- Notas", content: "Las Notas representan contenidos de tipo TEXTO (Título + Anotaciones) que junto con IMÁGENES que se pueden insertar sobre el área de Anotaciones, pueden ser GEOLOCALIZADAS también en un Mapa:")!;note11.setActive()
             
-            let note3   = Note.create(notebook!, title: "3./ MANEJO DE LIBRETAS:", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ")!;note3.setActive()
-            let note31   = Note.create(notebook!, title: "3.1- Ajustes de Libretas", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ")!;note31.setActive()
-            let note32   = Note.create(notebook!, title: "3.2- Borrado de Libretas", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ")!;note32.setActive()
+                var image1 = UIImage(named: "Notas_ListaConImagenes")
+                var data1 = NSData(data: UIImageJPEGRepresentation(image1!, 1.0)!)
+                let _ = Image.create(for: note11, data: data1, topRatio: 0.5, leftRatio: 0.027, heightRatio: 0.2, rotation: 0)
+            
+                image1 = UIImage(named: "Nota_Detalles")
+                data1 = NSData(data: UIImageJPEGRepresentation(image1!, 1.0)!)
+                let _ = Image.create(for: note11, data: data1, topRatio: 0.5, leftRatio: 0.52, heightRatio: 0.2, rotation: 0)
+            
+                image1 = UIImage(named: "Nota_Menu")
+                data1 = NSData(data: UIImageJPEGRepresentation(image1!, 1.0)!)
+                let _ = Image.create(for: note11, data: data1, topRatio: 0.5, leftRatio: 0.73, heightRatio: 0.2, rotation: 0)
+            
+                image1 = UIImage(named: "Nota_SetAlarm")
+                data1 = NSData(data: UIImageJPEGRepresentation(image1!, 1.0)!)
+                let _ = Image.create(for: note11, data: data1, topRatio: 0.69, leftRatio: 0.04, heightRatio: 0.2, rotation: 0)
+            
+                image1 = UIImage(named: "Nota_AlarmMenu")
+                data1 = NSData(data: UIImageJPEGRepresentation(image1!, 1.0)!)
+                let _ = Image.create(for: note11, data: data1, topRatio: 0.69, leftRatio: 0.26, heightRatio: 0.2, rotation: 0)
+            
+                image1 = UIImage(named: "Nota_MasDetalles_ConLoc")
+                data1 = NSData(data: UIImageJPEGRepresentation(image1!, 1.0)!)
+                let _ = Image.create(for: note11, data: data1, topRatio: 0.69, leftRatio: 0.48, heightRatio: 0.2, rotation: 0)
+            
+                image1 = UIImage(named: "Nota_MasDetalles_SetLoc")
+                data1 = NSData(data: UIImageJPEGRepresentation(image1!, 1.0)!)
+                let _ = Image.create(for: note11, data: data1, topRatio: 0.69, leftRatio: 0.725, heightRatio: 0.2, rotation: 0)
+            
+                image1 = UIImage(named: "Nota_Trasladar")
+                data1 = NSData(data: UIImageJPEGRepresentation(image1!, 1.0)!)
+                let _ = Image.create(for: note11, data: data1, topRatio: 0.8, leftRatio: 0.07, heightRatio: 0.2, rotation: 0.1213)
+            
+            let note12   = Note.create(notebook!, title: "1.2- Libretas", content: "Las Libretas son una forma de agrupar las Notas. Existe el concepto de 'Libreta por defecto', que es sobre la que se crean automáticamente las Notas que el usuario añade mediante el botón/icono derecho de la TOOLBAR... En 'Ajustes de Libreta' se puede modificar el nombre de la misma, se puede cambiar a 'Libreta por defecto' y también borrar tanto la Libreta como su contenido:")!;note12.setActive()
+            
+                var image2 = UIImage(named: "Libreta_Nueva")
+                var data2 = NSData(data: UIImageJPEGRepresentation(image2!, 1.0)!)
+                let _ = Image.create(for: note12, data: data2, topRatio: 0.79, leftRatio: -0.09, heightRatio: 0.2, rotation: -0.174345)
+            
+                image2 = UIImage(named: "Libretas_Ajustes")
+                data2 = NSData(data: UIImageJPEGRepresentation(image2!, 1.0)!)
+                let _ = Image.create(for: note12, data: data2, topRatio: 0.79, leftRatio: 0.42, heightRatio: 0.2, rotation: 0.373181)
+            
+                image2 = UIImage(named: "Libreta_Ajustes")
+                data2 = NSData(data: UIImageJPEGRepresentation(image2!, 1.0)!)
+                let _ = Image.create(for: note12, data: data2, topRatio: 0.59, leftRatio: 0.027, heightRatio: 0.2, rotation: 0)
+            
+                image2 = UIImage(named: "Libreta_Borrar1")
+                data2 = NSData(data: UIImageJPEGRepresentation(image2!, 1.0)!)
+                let _ = Image.create(for: note12, data: data2, topRatio: 0.81, leftRatio: 0.455, heightRatio: 0.2, rotation: 0)
+            
+                image2 = UIImage(named: "Libreta_Borrar2")
+                data2 = NSData(data: UIImageJPEGRepresentation(image2!, 1.0)!)
+                let _ = Image.create(for: note12, data: data2, topRatio: 0.57, leftRatio: 0.624, heightRatio: 0.2, rotation: -0.336243)
+
+            let note2   = Note.create(notebook!, title: "2./ MÁS FUNCIONALIDADES:", content: "Además de las funcionalidades y requisitos obligatorios de la práctica 'iOS Avanzando', la App 'Everchulo' incluye un pequeño subconjunto de funcionalidades de 'Evernote', inspiradas de algunas de sus pantallas y diseños, y que son:\n\n- Menús de tipo ActionSheet (el de la pantalla principal, ¡con iconos!) \n- Listado de notas con CollectionView de fotografías (¡junto con un visor 'custom' de imágenes cuando pinchas sobre ellas!) \n- Pantalla 'Ajustes de libreta' (fijarse aquí en la gestión de sensitividad del pequeño botón 'OK'... similar a Evernote) \n- Estilo general y colores (se ha creado un archivo 'Styles.swift' para ello) \n- Papelera de reciclaje (¡se pueden recuperar las notas borradas!) \n- Pantalla de edición de notas (el acceso al selector de Libretas arriba es idéntico al de Evernote) \n- Selector de libretas (esconde toda una gestión de selección y creación de Libretas) \n- Duplicar nota \n- Trasladar nota \n- Las fotografías pueden ser eliminadas (manteniendo el dedo sobre una foto aparece un menú para ello) \n- Comportamiento botón de Alarma (el botón de alarma aparece y desaparece y fijarse en el DatePicker 'custom' desarrollado sobre una base de ActionSheet y que redondea los minutos al ofrecer la hora de alarma por defecto) \n- Pantalla 'Más detalles' (muy parecida a la de Evernote, junto con las etiquetas de fechas/horas) \n- Modo de posicionar notas geográficamente (ídem Evernote... con el concepto de 'Alfiler')")!;note2.setActive()
 
             notebook!.setActive(commit: true)
 

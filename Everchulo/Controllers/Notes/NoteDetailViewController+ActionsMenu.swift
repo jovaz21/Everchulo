@@ -25,7 +25,7 @@ extension NoteDetailViewController {
                 handler:    { (alertAction) in
                     
                     /* Date Picker */
-                    let actionSheet = makeActionSheetDatePicker(title: i18NString("NoteDetailsViewController.alarm.setAlarmTitle"), message: nil, doneAction:
+                    let actionSheet = makeActionSheetDatePicker(from: self.alarmButtonItem!, title: i18NString("NoteDetailsViewController.alarm.setAlarmTitle"), message: nil, doneAction:
                         (
                             title:      i18NString("es.atenet.app.Done"),
                             handler:    {(action, datePicker) in
@@ -94,7 +94,7 @@ extension NoteDetailViewController {
                     print(nextFiveMinuteIntervalDate)
                     
                     /* Date Picker */
-                    let actionSheet = makeActionSheetDatePicker(title: i18NString("NoteDetailsViewController.alarm.setAlarmTitle"), message: nil, doneAction:
+                    let actionSheet = makeActionSheetDatePicker(from: self.menuBarButtonItem!, title: i18NString("NoteDetailsViewController.alarm.setAlarmTitle"), message: nil, doneAction:
                         (
                             title:      i18NString("es.atenet.app.Done"),
                             handler:    {(action, datePicker) in

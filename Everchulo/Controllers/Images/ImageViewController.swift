@@ -171,6 +171,7 @@ class ImageViewController: UIViewController {
             
             /* set */
             self.model.rotation = Float(self.newRotation)
+            print("<ImageViewController> rotateImage: rotation=", self.model.rotation)
             
             /* Save Model State */
             self.model.save()
@@ -384,6 +385,7 @@ class ImageViewController: UIViewController {
         let topRatio    = imageView.frame.origin.y / backView.frame.height
         let leftRatio   = imageView.frame.origin.x / backView.frame.width
         let heightRatio = CGFloat(self.model.heightRatio)
+        print("<ImageViewController> saveState: top=", topRatio, ", left=", leftRatio, ", height=", heightRatio)
         
         /* remove */
         backView.removeConstraints([self.topImgConstraint!, self.leftImgConstraint!, self.heightImgConstraint!, self.widthImgConstraint!])

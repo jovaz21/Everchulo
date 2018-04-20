@@ -80,7 +80,7 @@ func makeActionSheetMenu(from source: Any, title: String?, message: String?, ite
 typealias UIPickerActionItem = (title: String, handler: ((UIAlertAction, UIDatePicker) -> Void)?)
 
 // Make ActionSheet DatePicker
-func makeActionSheetDatePicker(title: String?, message: String?, doneAction: UIPickerActionItem, cancelAction: UIPickerActionItem, initialValue: Date) -> UIAlertController {
+func makeActionSheetDatePicker(from source: Any, title: String?, message: String?, doneAction: UIPickerActionItem, cancelAction: UIPickerActionItem, initialValue: Date) -> UIAlertController {
     let actionSheetDatePicker = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
     
     /* set */
@@ -96,6 +96,23 @@ func makeActionSheetDatePicker(title: String?, message: String?, doneAction: UIP
     actionSheetDatePicker.addAction(UIAlertAction(title: doneAction.title, style: .default, handler: {(action) in doneAction.handler!(action, uiDatePicker) }))
     actionSheetDatePicker.addAction(UIAlertAction(title: cancelAction.title, style: .cancel, handler: {(action) in cancelAction.handler!(action, uiDatePicker) }))
     actionSheetDatePicker.view.tintColor = Styles.activeColor
+    
+    /* check */
+    if let popoverController = actionSheetDatePicker.popoverPresentationController {
+        if (type(of: source) == UIView.self) {
+            let sourceView = source as! UIView
+            popoverController.sourceView = sourceView
+            popoverController.sourceRect = CGRect(x: sourceView.bounds.midX, y: sourceView.bounds.midY, width: 0, height: 0)
+            popoverController.permittedArrowDirections = []
+        }
+        else if (type(of: source) == UIBarButtonItem.self) {
+            let barButtonItem = source as! UIBarButtonItem
+            popoverController.barButtonItem = barButtonItem
+        }
+        else {
+            print("Error: typeOfSource=", type(of: source))
+        }
+    }
     
     /* done */
     return(actionSheetDatePicker)
