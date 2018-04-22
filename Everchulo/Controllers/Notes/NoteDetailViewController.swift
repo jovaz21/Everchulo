@@ -221,6 +221,67 @@ class NoteDetailViewController: UIViewController {
             self.navigationController?.popViewController(animated: true)
         }
     }
+    func dismissCurrentNote() {
+        var isContentUpdated = false
+        let titleText = self.titleTextField.text
+        let contentText = self.contentTextField.text
+        
+        /* focus */
+        if (self.titleTextField.isFirstResponder) {
+            self.titleTextField.resignFirstResponder()
+        }
+        if (self.contentTextField.isFirstResponder) {
+            self.contentTextField.resignFirstResponder()
+        }
+        
+        /* check */
+        if ((titleText!.count > 0) && (titleText! != self.note!.title)) {
+            self.note!.title = titleText
+            isContentUpdated = true
+        }
+        if ((contentText!.count > 0) && (contentText! != self.note!.content)) {
+            self.note!.content = contentText
+            isContentUpdated = true
+        }
+        
+        /* check */
+        if (self.note!.title == nil) {
+            self.note!.title = self.note!.content
+            isContentUpdated = true
+        }
+        if (self.note!.content == nil) {
+            self.note!.content = self.note!.title
+            isContentUpdated = true
+        }
+        
+        /* check */
+        if ((self.viewMode == .edit) && isContentUpdated) {
+            self.note!.updatedTimestamp = Date().timeIntervalSince1970
+        }
+        
+        /* save */
+        if (!self.note!.isActive()) {
+            print("!!!<NoteDetailViewController> onNoteDone: Setting New Note ACTIVE, notebookActiveNotesCount=", self.note!.notebook!.activeNotes.count)
+            self.note!.setActive()
+        }
+        if (((self.viewMode == .new) || (self.notebook != self.note!.notebook!)) && !self.note!.notebook!.isActive()) {
+            print("!!!<NoteDetailViewController> onNoteDone: Setting Notebook ACTIVE, notebookActiveNotesCount=", self.note!.notebook!.activeNotes.count)
+            self.note!.notebook!.setActive()
+        }
+        print("!!!<NoteDetailViewController> onNoteDone: Saving Data, notebookActiveNotesCount=", self.note!.notebook!.activeNotes.count)
+        self.note!.save()
+        
+        /* cleanup */
+        Notebook.listAll().forEach() {
+            if ($0.activeNotes.count <= 0) {
+                $0.delete()
+            }
+        }
+        
+        // Release UIView
+        self.releaseUIView()
+    }
+
 
     // Paint UIView
     //  - Map Model Properties with View Data
@@ -392,6 +453,7 @@ extension NoteDetailViewController {
     // Release UIView
     func releaseUIView() {
         self.releaseImageViews()
+        self.painted = false
     }
     
     // Set UIView Data
@@ -464,8 +526,10 @@ extension NoteDetailViewController: NotebookSelectorTableViewControllerDelegate 
 extension NoteDetailViewController: NoteTableViewControllerDelegate {
     func noteTableViewController(_ vc: NoteTableViewController, didSelectNote note: Note) {
         
-        /* set */
-        self.painted = false
+        /* check */
+        if (self.note != nil) {
+            self.dismissCurrentNote()
+        }
         
         /* set */
         self.notebook   = note.notebook
