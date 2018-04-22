@@ -64,6 +64,12 @@ func makeActionSheetMenu(from source: Any, title: String?, message: String?, ite
             popoverController.sourceRect = CGRect(x: sourceView.bounds.midX, y: sourceView.bounds.midY, width: 0, height: 0)
             popoverController.permittedArrowDirections = []
         }
+        else if (type(of: source) == UITableView.self) {
+            let sourceView = source as! UITableView
+            popoverController.sourceView = sourceView
+            popoverController.sourceRect = CGRect(x: sourceView.bounds.midX, y: sourceView.bounds.midY, width: 0, height: 0)
+            popoverController.permittedArrowDirections = []
+        }
         else if (type(of: source) == UIBarButtonItem.self) {
             let barButtonItem = source as! UIBarButtonItem
             popoverController.barButtonItem = barButtonItem
