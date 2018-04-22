@@ -70,14 +70,14 @@ extension NoteDetailViewController {
     })}
     
     // Infos Menu Action
-    @objc func displayInfosAction() {
+    @objc func displayInfosAction() { DispatchQueue.main.asyncAfter(deadline: .now() + 0.025, execute: {
         
         /* set */
         let noteInfosVC = NoteInfosViewController(note: self.note!)
         
         /* show */
         self.present(noteInfosVC.wrappedInNavigation(), animated: true)
-    }
+    })}
     
     // Note Menu Action
     @objc func displayNoteMenuAction() { DispatchQueue.main.asyncAfter(deadline: .now() + 0.025, execute: {

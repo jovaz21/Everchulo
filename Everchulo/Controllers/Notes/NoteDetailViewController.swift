@@ -18,6 +18,7 @@ protocol NoteDetailViewControllerDelegate: AnyObject {
 // MARK: - Controller Stuff
 class NoteDetailViewController: UIViewController {
     var viewMode: ViewMode = .edit
+    var painted: Bool = false
     var notebook: Notebook? = nil
     var note: Note? = nil
     
@@ -86,14 +87,17 @@ class NoteDetailViewController: UIViewController {
         }
         
         // Paint UIView
+        if ((self.note != nil) && !self.painted) {
+            self.paintUIView()
+        }
+    }
+    override func viewDidAppear(_ animated: Bool) { super.viewDidAppear(animated)
+
+        // Paint UIView
         if (self.note != nil) {
             self.paintUIView()
         }
     }
-    /*
-    override func viewDidAppear(_ animated: Bool) { super.viewDidAppear(animated)
-        self.paintUIView()
-    }*/
     
     // MARK: - Outlets
     @IBOutlet weak var notebookImageView: UIImageView!
@@ -289,6 +293,9 @@ extension NoteDetailViewController {
     // Setup UIView
     func setupUIView() {
         
+        /* set */
+        self.painted = false
+        
         // NOTEBOOOK SELECTOR
         notebookImageView.image = UIImage(named: "notebook")!.withRenderingMode(.alwaysTemplate)
         notebookImageView.tintColor = UIColor.gray
@@ -409,6 +416,9 @@ extension NoteDetailViewController {
         /* ImageViews */
         self.paintImageViews(data)
         
+        /* set */
+        self.painted = true
+        
         /* */
         print("!!! setUIViewData: Done")
         return
@@ -445,6 +455,7 @@ extension NoteDetailViewController: NotebookSelectorTableViewControllerDelegate 
     func notebookSelectorTableViewController(_ vc: NotebookSelectorTableViewController, didSelectNotebook notebook: Notebook) {
         print("!!! didSelectNotebook: Entering, notebook=", notebook)
         self.note!.moveToNotebook(notebook)
+        self.painted = false
         print("!!! didSelectNotebook: Done")
     }
 }
@@ -452,6 +463,9 @@ extension NoteDetailViewController: NotebookSelectorTableViewControllerDelegate 
 // MARK: - NoteTableViewControllerDelegate
 extension NoteDetailViewController: NoteTableViewControllerDelegate {
     func noteTableViewController(_ vc: NoteTableViewController, didSelectNote note: Note) {
+        
+        /* set */
+        self.painted = false
         
         /* set */
         self.notebook   = note.notebook
@@ -502,6 +516,9 @@ extension NoteDetailViewController: NoteTableViewControllerDelegate {
 
 // MARK: - UITextViewDelegate
 extension NoteDetailViewController: UITextViewDelegate {
+    public func textViewDidChange(_ textView: UITextView) {
+        textView.textViewDidChange(textView)
+    }
     func textViewDidEndEditing(_ textView: UITextView) {
         self.contentTextFieldDidEnd(textView)
     }
